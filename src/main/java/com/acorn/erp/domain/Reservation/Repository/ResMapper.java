@@ -13,7 +13,7 @@ import com.acorn.erp.domain.Exam.Entity.Exam;
 
 @Mapper
 @Repository
-public interface ExamMapper {
+public interface ResMapper {
 	@Select("select * from exam")
 	List<Exam> getAllExam();
 	
