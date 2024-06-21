@@ -1,9 +1,9 @@
-package com.acorn.erp.domain.Exam.Entity;
+package com.acorn.erp.domain.Financial;
 
 import lombok.Data;
 
 @Data
-public class Exam {
+public class Financial {
 	private Long id;
 	private String useremail;
 	private String userpassword;
