@@ -9,7 +9,7 @@ import com.acorn.erp.domain.Exam.Entity.Exam;
 import com.acorn.erp.domain.Exam.Repository.ExamMapper;
 
 @Service
-public class ResExamService {
+public class ResService {
 	@Autowired
 	private ExamMapper examMapper;
 	
