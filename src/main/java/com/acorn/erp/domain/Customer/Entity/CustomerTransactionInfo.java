@@ -4,16 +4,16 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class Customer_transaction_info {
+public class CustomerTransactionInfo {
 	private String transaction_info_id;
 	private String customer_id;
 	private Date last_transaction_date;
-	private Number total_amount_for_customer;
+	private int total_amount_for_customer;
 	private String top_selling_product; //FK 변수명확인
-	private  Number total_count_for_customer;
+	private  int total_count_for_customer;
 	private String most_purchased_product; //FK 변수명확인
 	
-	public Customer_transaction_info() {}
+	public CustomerTransactionInfo() {}
 
 	@Override
 	public String toString() {

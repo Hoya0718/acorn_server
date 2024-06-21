@@ -7,9 +7,9 @@ import lombok.Data;
 public class CustomerPreferenceData {
 	private String preference_data_id;
 	private String product_name; //FK 변수명확인
-	private Number total_amount_for_product;
-	private  Number total_count_for_product;
-	private Number rating ;
+	private int total_amount_for_product;
+	private  int total_count_for_product;
+	private double rating ;
 	private String gender_preference;
 	private String age_preference; 
 	private String region_preference; 

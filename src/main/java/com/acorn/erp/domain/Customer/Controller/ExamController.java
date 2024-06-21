@@ -35,7 +35,6 @@ public class ExamController {
 		return examService.getNExam(id);
 	}
 	
-	
 	@PostMapping("/exam")
 	public String insertExam(@RequestBody Exam exam) {
 		examService.insertExam(exam);
