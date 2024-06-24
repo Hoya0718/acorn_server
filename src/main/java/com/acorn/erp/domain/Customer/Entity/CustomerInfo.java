@@ -7,11 +7,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name = "CUSTOMER_INFO")
 public class CustomerInfo {
 	public CustomerInfo() {}
 	public CustomerInfo(int customer_id, String customer_name, String customer_gender, Date customer_birth_date,
