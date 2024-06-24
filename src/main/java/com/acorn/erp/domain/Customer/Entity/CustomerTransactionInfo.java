@@ -1,10 +1,17 @@
 package com.acorn.erp.domain.Customer.Entity;
 
 import java.sql.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
+@Entity
+@Table(name = "CUSTOMER_TRANSACTION_INFO")
 public class CustomerTransactionInfo {
+	@Id
 	private String transaction_info_id;
 	private String customer_id;
 	private Date last_transaction_date;

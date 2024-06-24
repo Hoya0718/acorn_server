@@ -1,14 +1,21 @@
 package com.acorn.erp.domain.Customer.Entity;
 
 import java.sql.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
+@Entity
+@Table(name = "CUSTOMER_PREFERENCE_DATA")
 public class CustomerPreferenceData {
+	@Id
 	private String preference_data_id;
 	private String product_name; //FK 변수명확인
 	private int total_amount_for_product;
-	private  int total_count_for_product;
+	private int total_count_for_product;
 	private double rating ;
 	private String gender_preference;
 	private String age_preference; 
