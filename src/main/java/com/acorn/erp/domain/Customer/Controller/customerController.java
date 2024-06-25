@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,7 @@ import com.acorn.erp.domain.Customer.Repository.CustomerInfoRepository;
 public class customerController {
 	@Autowired
 	private CustomerInfoRepository repository;
+	private static final Logger logger = LoggerFactory.getLogger(CustomerInfo.class);
 		@GetMapping("/getCountAll") 
 		public int countAll() {
 			List<CustomerInfo> users =repository.findAll();
@@ -31,6 +34,7 @@ public class customerController {
 	        try {
 	            endDate = dateFormat.parse(year + "-12-31");
 				System.out.println("Parsed end date: " +endDate);
+		        logger.info("Parsed end date: " + endDate);
 	        } catch (ParseException e) {
 	            e.printStackTrace();
 	            return 0L;
