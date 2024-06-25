@@ -1,13 +1,11 @@
 package com.acorn.erp.domain.Customer.Repository;
 
-import java.util.Date;
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import com.acorn.erp.domain.Customer.Entity.CustomerPreferenceData;
+import org.springframework.stereotype.Repository;
 
-public interface PreferenceRepository extends JpaRepository<CustomerPreferenceData, int> {
+import com.acorn.erp.domain.Customer.Entity.CustomerPreferenceData;
+@Repository
+public interface PreferenceRepository extends JpaRepository<CustomerPreferenceData, Integer> {
 
 //    @Query("SELECT SUM(t.amount) FROM CustomerTransactionInfo t WHERE t.productId = :productId")
 //    double sumAmountByProductId(String productId);

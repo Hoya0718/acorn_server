@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
 
-public interface TransactionRepository extends JpaRepository<CustomerTransactionInfo, String> {
+public interface TransactionRepository extends JpaRepository<CustomerTransactionInfo, Integer> {
 
 //    @Query("SELECT MAX(t.transactionDate) FROM Transaction t WHERE t.customerId = :customerId")
 //    Date findMaxTransactionDateByCustomerId(String customerId);
