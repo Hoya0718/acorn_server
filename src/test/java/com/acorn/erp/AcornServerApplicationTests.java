@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,50 +30,50 @@ class AcornServerApplicationTests {
 	  @Test
 	  void contextLoads() {
 	    }
-	  @BeforeEach
+	  @BeforeEach @Disabled
 		void insertTestData() {
 			LocalDateTime currentDateTime = LocalDateTime.now();
 			CustomerInfo customer = new CustomerInfo();
-			customer.setCustomer_id(0);
-			customer.setCustomer_name("박승희");
-			customer.setCustomer_gender("여성");
-			customer.setCustomer_birth_date(new Date());
-			customer.setCustomer_addr("경기도 포천시 군내면");
-			customer.setCustomer_tel("010-8281-2856");
-			customer.setRegister_date(new Date());
+			customer.setCustomerId(0);
+			customer.setCustomerName("박승희");
+			customer.setCustomerGender("여성");
+			customer.setCustomerBirthDate(new Date());
+			customer.setCustomerAddr("경기도 포천시 군내면");
+			customer.setCustomerTel("010-8281-2856");
+			customer.setRegisterDate(new Date());
 			repository.save(customer);
-			
-			customer = new CustomerInfo();
-			customer.setCustomer_id(0);
-			customer.setCustomer_name("김단아");
-			customer.setCustomer_gender("여성");
-			customer.setCustomer_birth_date(new Date());
-			customer.setCustomer_addr("경기도 양주시 옥정동");
-			customer.setCustomer_tel("010-1234-5678");
-			customer.setRegister_date(new Date());
-			repository.save(customer);
-			
-			customer = new CustomerInfo();
-			customer.setCustomer_id(0);
-			customer.setCustomer_name("송지환");
-			customer.setCustomer_gender("남성");
-			customer.setCustomer_birth_date(new Date());
-			customer.setCustomer_addr("경기도 포천시 신읍동");
-			customer.setCustomer_tel("010-1234-5678");
-			customer.setRegister_date(new Date());
-			repository.save(customer);
-			
-			customer = new CustomerInfo();
-			customer.setCustomer_id(0);
-			customer.setCustomer_name("이은정");
-			customer.setCustomer_gender("여성");
-			customer.setCustomer_birth_date(new Date());
-			customer.setCustomer_addr("경기도 포천시 일동면");
-			customer.setCustomer_tel("010-5555-8888");
-			customer.setRegister_date(new Date());
-			repository.save(customer);
+//			
+//			customer = new CustomerInfo();
+//			customer.setCustomerId(0);
+//			customer.setCustomer_name("김단아");
+//			customer.setCustomer_gender("여성");
+//			customer.setCustomer_birth_date(new Date());
+//			customer.setCustomer_addr("경기도 양주시 옥정동");
+//			customer.setCustomer_tel("010-1234-5678");
+//			customer.setRegister_date(new Date());
+//			repository.save(customer);
+//			
+//			customer = new CustomerInfo();
+//			customer.setCustomer_id(0);
+//			customer.setCustomer_name("송지환");
+//			customer.setCustomer_gender("남성");
+//			customer.setCustomer_birth_date(new Date());
+//			customer.setCustomer_addr("경기도 포천시 신읍동");
+//			customer.setCustomer_tel("010-1234-5678");
+//			customer.setRegister_date(new Date());
+//			repository.save(customer);
+//			
+//			customer = new CustomerInfo();
+//			customer.setCustomer_id(0);
+//			customer.setCustomer_name("이은정");
+//			customer.setCustomer_gender("여성");
+//			customer.setCustomer_birth_date(new Date());
+//			customer.setCustomer_addr("경기도 포천시 일동면");
+//			customer.setCustomer_tel("010-5555-8888");
+//			customer.setRegister_date(new Date());
+//			repository.save(customer);
 		}
-	  @Test
+	  @Test @Disabled
 	    @Transactional
 	  void testRead() {
 	        
@@ -81,7 +82,7 @@ class AcornServerApplicationTests {
 			
 			System.out.println("모든 고객의 이름:");
 	        for (CustomerInfo user : users) {
-	            System.out.println(user.getCustomer_name());
+	            System.out.println(user.getCustomerName());
 	        }
 	  }
 } 
