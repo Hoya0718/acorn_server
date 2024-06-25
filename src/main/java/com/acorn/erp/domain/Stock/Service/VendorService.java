@@ -22,8 +22,10 @@ public class VendorService {
         return vendorRepository.findAll();
     }
 
-    public Optional<Vendor> getVendorById(Long id) {
-        return vendorRepository.findById(id);
+    public Vendor getVendorById(Long id) {
+    	// Optional은 NullPointerException을 방지한다
+        Optional<Vendor> vendorOptional = vendorRepository.findById(id);
+        return vendorOptional.orElse(null); // Optional에 값이 없으면 null 반환
     }
 
     public Vendor createVendor(Vendor vendor) {
@@ -32,13 +34,16 @@ public class VendorService {
 
     public Vendor updateVendor(Long id, Vendor updatedVendor) {
         Vendor vendor = vendorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vendor not found"));
+                .orElseThrow(() -> new RuntimeException("Vendor not found")); 
+
+        // 업데이트할 필드들을 설정
         vendor.setVendorCode(updatedVendor.getVendorCode());
         vendor.setVendorName(updatedVendor.getVendorName());
         vendor.setVendorContact(updatedVendor.getVendorContact());
         vendor.setVendorAddress(updatedVendor.getVendorAddress());
         vendor.setVendorRemark(updatedVendor.getVendorRemark());
         vendor.setDeliverableStatus(updatedVendor.isDeliverableStatus());
+
         return vendorRepository.save(vendor);
     }
 
