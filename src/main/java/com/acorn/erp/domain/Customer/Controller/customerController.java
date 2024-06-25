@@ -33,15 +33,12 @@ public class customerController {
 	        Date endDate = null;
 	        try {
 	            endDate = dateFormat.parse(year + "-12-31");
-				System.out.println("Parsed end date: " +endDate);
-		        logger.info("Parsed end date: " + endDate);
 	        } catch (ParseException e) {
 	            e.printStackTrace();
 	            return 0L;
 	        }
 	        try {
 	            long count = repository.countCustomersLastyear(endDate);
-	            System.out.println("Customer count for last year: " + count);
 	            return count;
 	        } catch (Exception e) {
 	            e.printStackTrace();
