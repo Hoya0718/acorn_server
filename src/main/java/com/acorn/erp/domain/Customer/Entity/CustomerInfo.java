@@ -1,24 +1,51 @@
 package com.acorn.erp.domain.Customer.Entity;
 
-import java.sql.Date;
-import lombok.Data;
+import java.util.Date;
 
-@Data
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@Entity
+@Table(name = "CUSTOMER_INFO")
 public class CustomerInfo {
-	private String customer_id;
-	private String customer_name;
-	private String customer_gender;
-	private Date customer_birth_date;
-	private String customer_addr;
-	private String customer_tel;
-	private Date register_date;
-	
 	public CustomerInfo() {}
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_info_seq")
+    @SequenceGenerator(name = "customer_info_seq", sequenceName = "customer_info_seq", allocationSize = 1)
+	private int customerId;
+	private String customerName;
+	private String customerGender;
+	private Date customerBirthDate;
+	private String customerAddr;
+	private String customerTel;
+	private Date registerDate;
 	@Override
 	public String toString() {
-		return "Customer_info [customer_id=" + customer_id + ", customer_name=" + customer_name + ", customer_gender="
-				+ customer_gender + ", customer_birth_date=" + customer_birth_date + ", customer_addr=" + customer_addr
-				+ ", customer_tel=" + customer_tel + ", register_date=" + register_date + "]";
+		return "CustomerInfo [customerId=" + customerId + ", customerName=" + customerName + ", customerGender="
+				+ customerGender + ", customer_birthDate=" + customerBirthDate + ", customerAddr=" + customerAddr
+				+ ", customerTel=" + customerTel + ", registerDate=" + registerDate + "]";
 	}
+	public CustomerInfo(int customerId, String customerName, String customerGender, Date customer_birthDate,
+			String customerAddr, String customerTel, Date registerDate) {
+		super();
+		this.customerId = customerId;
+		this.customerName = customerName;
+		this.customerGender = customerGender;
+		this.customerBirthDate = customerBirthDate;
+		this.customerAddr = customerAddr;
+		this.customerTel = customerTel;
+		this.registerDate = registerDate;
+	}
+	
+	
 	
 }
