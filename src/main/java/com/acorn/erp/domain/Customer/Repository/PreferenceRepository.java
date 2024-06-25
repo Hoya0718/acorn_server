@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import com.acorn.erp.domain.Customer.Entity.CustomerPreferenceData;
 
-public interface PreferenceRepository extends JpaRepository<CustomerPreferenceData, String> {
+public interface PreferenceRepository extends JpaRepository<CustomerPreferenceData, int> {
 
 //    @Query("SELECT SUM(t.amount) FROM CustomerTransactionInfo t WHERE t.productId = :productId")
 //    double sumAmountByProductId(String productId);
