@@ -17,26 +17,24 @@ public class CustomerGrade {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_grade_seq")
     @SequenceGenerator(name = "customer_grade_seq", sequenceName = "customer_grade_seq", allocationSize = 1)
-	private int grade_id;
-	private int customer_id;
-	private String customer_grade;
+	private int gradeId;
+	private int customerId;
+	private String customerGrade;
 	
 	public CustomerGrade() {}
 
 	@Override
 	public String toString() {
-		return "Customer_grade [grade_id=" + grade_id + ", customer_id=" + customer_id + ", customer_grade="
-				+ customer_grade + "]";
+		return "CustomerGrade [gradeId=" + gradeId + ", customerId=" + customerId + ", customerGrade=" + customerGrade
+				+ "]";
 	}
 
-	public CustomerGrade(int grade_id, int customer_id, String customer_grade) {
+	public CustomerGrade(int gradeId, int customerId, String customerGrade) {
 		super();
-		this.grade_id = grade_id;
-		this.customer_id = customer_id;
-		this.customer_grade = customer_grade;
+		this.gradeId = gradeId;
+		this.customerId = customerId;
+		this.customerGrade = customerGrade;
 	}
-
-
 
 	
 }

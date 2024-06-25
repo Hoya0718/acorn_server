@@ -15,21 +15,21 @@ public class AgeGroup {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "age_group_seq")
     @SequenceGenerator(name = "age_group_seq", sequenceName = "age_group_seq", allocationSize = 1)
-	private int agegroup_id;
-	private int customer_id;
+	private int agegroupId;
+	private int customerId;
 	private String ageGroup;
 	
 	public AgeGroup() {}
 
 	@Override
 	public String toString() {
-		return "ageroup [agegroup_id=" + agegroup_id + ", customer_id=" + customer_id + ", agegroup=" + ageGroup + "]";
+		return "AgeGroup [agegroupId=" + agegroupId + ", customerId=" + customerId + ", ageGroup=" + ageGroup + "]";
 	}
 
-	public AgeGroup(int agegroup_id, int customer_id, String ageGroup) {
+	public AgeGroup(int agegroupId, int customerId, String ageGroup) {
 		super();
-		this.agegroup_id = agegroup_id;
-		this.customer_id = customer_id;
+		this.agegroupId = agegroupId;
+		this.customerId = customerId;
 		this.ageGroup = ageGroup;
 	}
 
