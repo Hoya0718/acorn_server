@@ -16,7 +16,7 @@ public class Vendor {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private Long vendorId;
 
     @Column(name = "vendor_code",unique = true, length = 10)
     private String vendorCode;
