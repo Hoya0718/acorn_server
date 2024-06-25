@@ -1,4 +1,4 @@
-package com.acorn.erp.domain.Exam.Service;
+package com.acorn.erp.domain.Reservation.Service;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import com.acorn.erp.domain.Exam.Entity.Exam;
 import com.acorn.erp.domain.Exam.Repository.ExamMapper;
 
 @Service
-public class ExamService {
+public class ResService {
 	@Autowired
 	private ExamMapper examMapper;
 	
