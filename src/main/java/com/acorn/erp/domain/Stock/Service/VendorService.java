@@ -22,9 +22,9 @@ public class VendorService {
         return vendorRepository.findAll();
     }
 
-    public Vendor getVendorById(Long id) {
+    public Vendor getVendorById(Long code) {
     	// Optional은 NullPointerException을 방지한다
-        Optional<Vendor> vendorOptional = vendorRepository.findById(id);
+        Optional<Vendor> vendorOptional = vendorRepository.findById(code);
         return vendorOptional.orElse(null); // Optional에 값이 없으면 null 반환
     }
 
@@ -32,12 +32,11 @@ public class VendorService {
         return vendorRepository.save(vendor);
     }
 
-    public Vendor updateVendor(Long id, Vendor updatedVendor) {
-        Vendor vendor = vendorRepository.findById(id)
+    public Vendor updateVendor(Long code, Vendor updatedVendor) {
+        Vendor vendor = vendorRepository.findById(code)
                 .orElseThrow(() -> new RuntimeException("Vendor not found")); 
 
         // 업데이트할 필드들을 설정
-        vendor.setVendorCode(updatedVendor.getVendorCode());
         vendor.setVendorName(updatedVendor.getVendorName());
         vendor.setVendorContact(updatedVendor.getVendorContact());
         vendor.setVendorAddress(updatedVendor.getVendorAddress());
@@ -47,7 +46,7 @@ public class VendorService {
         return vendorRepository.save(vendor);
     }
 
-    public void deleteVendor(Long id) {
-        vendorRepository.deleteById(id);
+    public void deleteVendor(Long code) {
+        vendorRepository.deleteById(code);
     }
 }
