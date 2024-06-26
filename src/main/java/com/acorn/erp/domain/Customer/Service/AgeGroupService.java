@@ -19,7 +19,6 @@ public class AgeGroupService {
 
     @Autowired
     private AgeGroupRepository ageGroupRepository;
-
     @Autowired
     private CustomerInfoRepository customerInfoRepository;
     //생년월일을 기준으로 연령그룹 구분하기
