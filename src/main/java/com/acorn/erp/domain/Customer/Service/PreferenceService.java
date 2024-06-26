@@ -19,11 +19,11 @@ public class PreferenceService {
 //    private OrderRepository orderRepository;  //FK
 
     @Autowired
-    private PreferenceRepository repository;
+    private PreferenceRepository repository;}
 
-    @Transactional
-    public void calculateAndInsertCustomerPreferenceData() {
-//        List<String> productNames = orderRepository.findAll().stream()
+//    @Transactional
+//    public void calculateAndInsertPreferenceData() {
+//        List<String> productNames = repository.findAll().stream()
 //                .map(orderRepository::getProductId)
 //                .distinct()
 //                .collect(Collectors.toList()); //order_status가 판매완료인것만
@@ -63,7 +63,7 @@ public class PreferenceService {
 //            data.setRating(rating);
 //
 //            repository.save(data);
-        }}
+        
     
     //테이블에 출력하기
     //고객선호도: 최고매출상품, 최다거래상품, 반응좋은상품

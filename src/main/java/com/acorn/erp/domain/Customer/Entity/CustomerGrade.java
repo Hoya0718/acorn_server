@@ -19,7 +19,7 @@ public class CustomerGrade {
     @SequenceGenerator(name = "customer_grade_seq", sequenceName = "customer_grade_seq", allocationSize = 1)
 	private int gradeId;
 	private int customerId;
-	private String customerGrade;
+	private String customerGrade = "일반";
 	
 	public CustomerGrade() {}
 
@@ -29,11 +29,9 @@ public class CustomerGrade {
 				+ "]";
 	}
 
-	public CustomerGrade(int gradeId, int customerId, String customerGrade) {
-		super();
-		this.gradeId = gradeId;
+	public CustomerGrade(int customerId) {
 		this.customerId = customerId;
-		this.customerGrade = customerGrade;
+		this.customerGrade = "일반";
 	}
 
 	

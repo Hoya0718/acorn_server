@@ -19,12 +19,11 @@ public class RegionGroupService {
 
     @Autowired
     private CustomerInfoRepository customerInfoRepository;
-    
     @Autowired
     private RegionGroupRepository regionGroupRepository;
-
     @Transactional
     public void calculateAndInsertRegionGroup() {
+    	
         List<CustomerInfo> customers = customerInfoRepository.findAll();
        
         for (CustomerInfo customer : customers) {
