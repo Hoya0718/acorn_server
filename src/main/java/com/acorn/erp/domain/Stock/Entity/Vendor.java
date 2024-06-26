@@ -13,13 +13,9 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Vendor {
-	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long vendorId;
-
-    @Column(name = "vendor_code",unique = true, length = 10)
-    private String vendorCode;
+    private Long vendorCode;
 
     @Column(name = "vendor_name", length = 9)
     private String vendorName;

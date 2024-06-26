@@ -11,7 +11,7 @@ import com.acorn.erp.domain.Stock.Entity.Vendor;
 @Repository
 public interface VendorRepository extends JpaRepository<Vendor, Long> {
 	// 거래처 코드로 검색
-	Page<Vendor> findByVendorCode(String vendorCode,  Pageable pageable);
+	Page<Vendor> findByVendorCode(Long vendorCode,  Pageable pageable);
 
 	// 거래처명으로 검색
 	Page<Vendor> findByVendorName(String vendorName, Pageable pageable);
