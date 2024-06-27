@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 
-@Data
+
 @Entity
 @Table(
 		name = "Gender_GROUP",
@@ -25,6 +25,31 @@ public class GenderGroup {
 	private int customerId;
 	private String genderGroup;
 	
+	
+	public int getAgegroupId() {
+		return agegroupId;
+	}
+
+	public void setAgegroupId(int agegroupId) {
+		this.agegroupId = agegroupId;
+	}
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+
+	public String getGenderGroup() {
+		return genderGroup;
+	}
+
+	public void setGenderGroup(String genderGroup) {
+		this.genderGroup = genderGroup;
+	}
+
 	public GenderGroup() {}
 
 	@Override

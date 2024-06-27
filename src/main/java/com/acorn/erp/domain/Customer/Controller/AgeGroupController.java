@@ -20,8 +20,8 @@ public class AgeGroupController {
     @Autowired
     private AgeGroupService service;
 
-    @Autowired
-    private AgeGroupRepository repository;
+//    @Autowired
+//    private AgeGroupRepository repository;
     
     @GetMapping("/calculate_age_group")
     public String calculateAndInsertAgeGroup(){

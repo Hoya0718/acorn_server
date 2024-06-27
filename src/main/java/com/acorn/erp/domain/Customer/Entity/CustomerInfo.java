@@ -12,8 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@Getter
 @Entity
 @Table(name = "CUSTOMER_INFO")
 public class CustomerInfo {
@@ -28,6 +26,48 @@ public class CustomerInfo {
 	private String customerAddr;
 	private String customerTel;
 	private Date registerDate;
+	public int getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public String getCustomerGender() {
+		return customerGender;
+	}
+	public void setCustomerGender(String customerGender) {
+		this.customerGender = customerGender;
+	}
+	public Date getCustomerBirthDate() {
+		return customerBirthDate;
+	}
+	public void setCustomerBirthDate(Date customerBirthDate) {
+		this.customerBirthDate = customerBirthDate;
+	}
+	public String getCustomerAddr() {
+		return customerAddr;
+	}
+	public void setCustomerAddr(String customerAddr) {
+		this.customerAddr = customerAddr;
+	}
+	public String getCustomerTel() {
+		return customerTel;
+	}
+	public void setCustomerTel(String customerTel) {
+		this.customerTel = customerTel;
+	}
+	public Date getRegisterDate() {
+		return registerDate;
+	}
+	public void setRegisterDate(Date registerDate) {
+		this.registerDate = registerDate;
+	}
 	@Override
 	public String toString() {
 		return "CustomerInfo [customerId=" + customerId + ", customerName=" + customerName + ", customerGender="

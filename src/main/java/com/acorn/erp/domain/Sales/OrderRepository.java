@@ -2,8 +2,8 @@ package com.acorn.erp.domain.Sales;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,6 +13,7 @@ public interface OrderRepository extends JpaRepository<OrderTable, Integer> {
 	boolean existsByCustomerId(@Param("customerId") int customerId);
 
 	List<OrderTable> findByCustomerId(@Param("customerId") int customerId);
+	
 	@Query("SELECT MAX(o.orderDate) FROM OrderTable o WHERE o.customerId = :customerId")
 	Date findTopByCustomerIdOrderByOrderDateDesc(@Param("customerId") int customerId);
 
@@ -20,11 +21,11 @@ public interface OrderRepository extends JpaRepository<OrderTable, Integer> {
 	int sumTotalPriceByCustomerId(@Param("customerId") int customerId);
 
 	@Query("SELECT o.itemName FROM OrderTable o WHERE o.customerId = :customerId GROUP BY o.itemName ORDER BY SUM(o.itemQty) DESC")
-	String findTopByCustomerIdOrderByTotalPriceDesc(@Param("customerId") int customerId);
+	List<String> findFirstByCustomerIdOrderByTotalPriceDesc(@Param("customerId") int customerId);
 	
 	@Query("SELECT SUM(o.itemQty) FROM OrderTable o WHERE o.customerId = :customerId")
 	int sumItemQtyByCustomerId(@Param("customerId") int customerId);
 
 	@Query("SELECT o.itemName FROM OrderTable o WHERE o.customerId = :customerId GROUP BY o.itemName ORDER BY SUM(o.totalPrice) DESC")
-	String findTopByCustomerIdOrderByItemQtyDesc(@Param("customerId") int customerId);
+	List<String> findTopByCustomerIdOrderByItemQtyDesc(@Param("customerId") int customerId);
 }
