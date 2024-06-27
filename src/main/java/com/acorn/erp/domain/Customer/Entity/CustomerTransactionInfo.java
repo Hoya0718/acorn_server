@@ -1,6 +1,8 @@
 package com.acorn.erp.domain.Customer.Entity;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,9 +28,9 @@ public class CustomerTransactionInfo {
 	private int customerId;
 	private Date lastTransactionDate;
 	private int totalAmountForCustomer;
-	private String topSellingProduct; //FK 변수명확인
+	private String topSellingProduct; //FK 변수명확인: itemName
 	private  int totalCountForCustomer;
-	private String mostPurchasedProduct; //FK 변수명확인
+	private String mostPurchasedProduct; //FK 변수명확인: itemName
 	
 	public CustomerTransactionInfo() {}
 

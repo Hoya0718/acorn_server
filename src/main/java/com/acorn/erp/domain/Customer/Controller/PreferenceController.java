@@ -19,7 +19,6 @@ public class PreferenceController {
     private PreferenceService service;
     
     //각 상품별로 총금액, 총거래횟수, 평점 산출
-    //@GetMapping("/calculate")
     public String calculateOrderData() {
         service.calculateOrderData();
         return "Customer preference data calculated and inserted successfully";
