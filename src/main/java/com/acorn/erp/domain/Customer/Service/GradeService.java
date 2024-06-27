@@ -38,7 +38,7 @@ public class GradeService {
 		}
 	}
 
-	// 신규 고객에게 "일반" 등급 적용
+//	 신규 고객에게 "일반" 등급 적용
 	@Transactional
 	public void applyDefaultGradeToNewCustomer(CustomerInfo newCustomer) {
 		CustomerGrade customerGrade = new CustomerGrade(newCustomer.getCustomerId());

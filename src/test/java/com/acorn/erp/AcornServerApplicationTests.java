@@ -43,16 +43,16 @@ class AcornServerApplicationTests {
 			customer.setRegisterDate(new Date());
 			repository.save(customer);
 		}
-	  @Test
-	    @Transactional
-	  void testRead() {
-	        
-			List<CustomerInfo> users =repository.findAll();
-			System.out.println("데이터 갯수: "+users.size());
-			
-			System.out.println("모든 고객의 이름:");
-	        for (CustomerInfo user : users) {
-	            System.out.println(user.getCustomerName());
-	        }
-	  }
+//	  @Test
+//	    @Transactional
+//	  void testRead() {
+//	        
+//			List<CustomerInfo> users =repository.findAll();
+//			System.out.println("데이터 갯수: "+users.size());
+//			
+//			System.out.println("모든 고객의 이름:");
+//	        for (CustomerInfo user : users) {
+//	            System.out.println(user.getCustomerName());
+//	        }
+//	  }
 } 

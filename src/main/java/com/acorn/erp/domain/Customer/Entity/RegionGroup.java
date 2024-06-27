@@ -1,21 +1,26 @@
 package com.acorn.erp.domain.Customer.Entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "REGION_GROUP")
+@Table(name = "REGION_GROUP",
+uniqueConstraints = {@UniqueConstraint(columnNames = {"customerId", "regiongroupProvince"})}
+)
 public class RegionGroup {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "region_group_seq")
     @SequenceGenerator(name = "region_group_seq", sequenceName = "region_group_seq", allocationSize = 1)
 	private int regiongroupId;
+	@Column(nullable = false)
 	private int customerId;
 	private String regiongroupProvince;
 	private String regiongroupCity;

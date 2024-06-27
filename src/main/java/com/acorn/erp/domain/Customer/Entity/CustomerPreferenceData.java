@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 
 @Data
@@ -18,7 +19,7 @@ public class CustomerPreferenceData {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_preference_data_seq")
     @SequenceGenerator(name = "customer_preference_data_seq", sequenceName = "customer_preference_data_seq", allocationSize = 1)
 	private int preferenceDataId;
-	private String productName; //FK 변수명확인
+	private String itemName; //FK 변수명확인
 	private int totalAmountForProduct;
 	private int totalCountForProduct;
 	private double rating ;
@@ -30,7 +31,7 @@ public class CustomerPreferenceData {
 
 	@Override
 	public String toString() {
-		return "CustomerPreferenceData [preferenceDataId=" + preferenceDataId + ", productName=" + productName
+		return "CustomerPreferenceData [preferenceDataId=" + preferenceDataId + ", productName=" + itemName
 				+ ", totalAmountForProduct=" + totalAmountForProduct + ", totalCountForProduct=" + totalCountForProduct
 				+ ", rating=" + rating + ", genderPreference=" + genderPreference + ", agePreference=" + agePreference
 				+ ", regionPreference=" + regionPreference + "]";
@@ -41,7 +42,7 @@ public class CustomerPreferenceData {
 			String regionPreference) {
 		super();
 		this.preferenceDataId = preferenceDataId;
-		this.productName = productName;
+		this.itemName = productName;
 		this.totalAmountForProduct = totalAmountForProduct;
 		this.totalCountForProduct = totalCountForProduct;
 		this.rating = rating;
