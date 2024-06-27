@@ -1,4 +1,4 @@
-package com.acorn.erp.domain.Customer.Controller;
+package com.acorn.erp.domain.Sales;
 
 
 import java.util.Map;
@@ -15,21 +15,21 @@ import jakarta.annotation.PostConstruct;
 
 @RestController
 @RequestMapping("/api/customer")
-public class AgeGroupController {
+public class OrderController {
 	
     @Autowired
     private AgeGroupService service;
 
-    @Autowired
-    private AgeGroupRepository repository;
+//    @Autowired
+//    private AgeGroupRepository repository;
     
-    @GetMapping("/calculate_age_group")
-    public String calculateAndInsertAgeGroup(){
-        service.calculateAndInsertAgeGroup();
-        return "Age group info calculated and inserted successfully";
-    }
-    @GetMapping("/count_age_group")
-    public Map<String, Long> countAgeGroup(){
-        return service.countCustomersByAgeGroup();
-    }
+//    @GetMapping("/calculate_age_group")
+//    public String calculateAndInsertAgeGroup(){
+//        service.calculateAndInsertAgeGroup();
+//        return "Age group info calculated and inserted successfully";
+//    }
+//    @GetMapping("/count_age_group")
+//    public Map<String, Long> countAgeGroup(){
+//        return service.countCustomersByAgeGroup();
+//    }
 }

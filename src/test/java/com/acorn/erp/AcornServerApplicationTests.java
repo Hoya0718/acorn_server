@@ -30,7 +30,7 @@ class AcornServerApplicationTests {
 	  @Test
 	  void contextLoads() {
 	    }
-	  @BeforeEach @Disabled
+	  @BeforeEach
 		void insertTestData() {
 			LocalDateTime currentDateTime = LocalDateTime.now();
 			CustomerInfo customer = new CustomerInfo();
@@ -42,47 +42,17 @@ class AcornServerApplicationTests {
 			customer.setCustomerTel("010-8281-2856");
 			customer.setRegisterDate(new Date());
 			repository.save(customer);
-//			
-//			customer = new CustomerInfo();
-//			customer.setCustomerId(0);
-//			customer.setCustomer_name("김단아");
-//			customer.setCustomer_gender("여성");
-//			customer.setCustomer_birth_date(new Date());
-//			customer.setCustomer_addr("경기도 양주시 옥정동");
-//			customer.setCustomer_tel("010-1234-5678");
-//			customer.setRegister_date(new Date());
-//			repository.save(customer);
-//			
-//			customer = new CustomerInfo();
-//			customer.setCustomer_id(0);
-//			customer.setCustomer_name("송지환");
-//			customer.setCustomer_gender("남성");
-//			customer.setCustomer_birth_date(new Date());
-//			customer.setCustomer_addr("경기도 포천시 신읍동");
-//			customer.setCustomer_tel("010-1234-5678");
-//			customer.setRegister_date(new Date());
-//			repository.save(customer);
-//			
-//			customer = new CustomerInfo();
-//			customer.setCustomer_id(0);
-//			customer.setCustomer_name("이은정");
-//			customer.setCustomer_gender("여성");
-//			customer.setCustomer_birth_date(new Date());
-//			customer.setCustomer_addr("경기도 포천시 일동면");
-//			customer.setCustomer_tel("010-5555-8888");
-//			customer.setRegister_date(new Date());
-//			repository.save(customer);
 		}
-	  @Test @Disabled
-	    @Transactional
-	  void testRead() {
-	        
-			List<CustomerInfo> users =repository.findAll();
-			System.out.println("데이터 갯수: "+users.size());
-			
-			System.out.println("모든 고객의 이름:");
-	        for (CustomerInfo user : users) {
-	            System.out.println(user.getCustomerName());
-	        }
-	  }
+//	  @Test
+//	    @Transactional
+//	  void testRead() {
+//	        
+//			List<CustomerInfo> users =repository.findAll();
+//			System.out.println("데이터 갯수: "+users.size());
+//			
+//			System.out.println("모든 고객의 이름:");
+//	        for (CustomerInfo user : users) {
+//	            System.out.println(user.getCustomerName());
+//	        }
+//	  }
 } 
