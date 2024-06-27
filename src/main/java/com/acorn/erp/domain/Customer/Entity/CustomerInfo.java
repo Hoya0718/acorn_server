@@ -31,7 +31,7 @@ public class CustomerInfo {
 	@Override
 	public String toString() {
 		return "CustomerInfo [customerId=" + customerId + ", customerName=" + customerName + ", customerGender="
-				+ customerGender + ", customer_birthDate=" + customerBirthDate + ", customerAddr=" + customerAddr
+				+ customerGender + ", customerBirthDate=" + customerBirthDate + ", customerAddr=" + customerAddr
 				+ ", customerTel=" + customerTel + ", registerDate=" + registerDate + "]";
 	}
 	public CustomerInfo(int customerId, String customerName, String customerGender, Date customer_birthDate,
@@ -45,7 +45,4 @@ public class CustomerInfo {
 		this.customerTel = customerTel;
 		this.registerDate = registerDate;
 	}
-	
-	
-	
 }
