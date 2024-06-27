@@ -27,13 +27,13 @@ public class PreferenceService {
 	private static final Logger logger = LoggerFactory.getLogger(PreferenceService.class);
 
 	@Autowired
-	private OrderRepository orderRepository; // FK
+	private OrderRepository orderRepository; 
 	@Autowired
-	private GenderGroupRepository genderGroupRepository; // FK
+	private GenderGroupRepository genderGroupRepository; 
 	@Autowired
-	private AgeGroupRepository ageGroupRepository; // FK
+	private AgeGroupRepository ageGroupRepository; 
 	@Autowired
-	private RegionGroupRepository regionGroupRepository; // FK
+	private RegionGroupRepository regionGroupRepository; //
 	@Autowired
 	private PreferenceRepository repository;
 
@@ -41,21 +41,18 @@ public class PreferenceService {
 	@PostConstruct
 	public void calculateOrderData() {
 
-		logger.info("calculateOrderData() 실행 시작");
+//		logger.info("calculateOrderData() 실행 시작");
 
-		// order_status가 "판매완료"인 주문 목록 필터링
 		List<OrderTable> completedOrders = orderRepository.findAll().stream()
 				.filter(order -> "Delivered".equals(order.getOrderStatus())).collect(Collectors.toList());
-	
-		logger.info("완료된 주문 수: {}", completedOrders.size());
-		List<OrderTable>all = orderRepository.findAll();
-		logger.info("오더 데이타: {}",all.size());
+
+//		logger.info("완료된 주문 수: {}", completedOrders.size());
 
 		// 제품 이름 목록 생성
 		List<String> itemNames = completedOrders.stream().map(OrderTable::getItemName).distinct()
 				.collect(Collectors.toList());
 
-		logger.info("고유한 제품 이름 수: {}", itemNames.size());
+//		logger.info("고유한 제품 이름 수: {}", itemNames.size());
 
 		// 각 제품 이름에 거래 총금액, 총수량, 평점 계산하기
 		for (String itemName : itemNames) {
@@ -66,7 +63,7 @@ public class PreferenceService {
 
 			int totalQuantity = ordersForItem.stream().mapToInt(OrderTable::getItemQty).sum();
 
-			logger.info("Item: {}, Total Amount: {}, Total Quantity: {}", itemName, totalAmount, totalQuantity);
+//			logger.info("Item: {}, Total Amount: {}, Total Quantity: {}", itemName, totalAmount, totalQuantity);
 
 			// 평점 계산 (예시로 평점 필드를 가정)
 //            double rating = ordersForItem.stream()
@@ -88,7 +85,7 @@ public class PreferenceService {
 			String agePreference = ageCountMap.entrySet().stream().max(Map.Entry.comparingByValue())
 					.map(Map.Entry::getKey).orElse("Unknown");
 
-			logger.info("Gender Preference: {}, Age Preference: {}", genderPreference, agePreference);
+//			logger.info("Gender Preference: {}, Age Preference: {}", genderPreference, agePreference);
 
 			// CustomerPreferenceData 객체 생성 및 데이터 설정
 			if (!repository.existsByItemName(itemName)) {
@@ -102,7 +99,7 @@ public class PreferenceService {
 				// data.setRegionPreference(regionPreference); // 이 부분은 필요에 따라 추가
 
 				repository.save(data);
-				logger.info("Saved CustomerPreferenceData: {}", data);
+//				logger.info("Saved CustomerPreferenceData: {}", data);
 			} else {
 				logger.info("ProductName {} already exists. Skipping...", itemName);
 			}
