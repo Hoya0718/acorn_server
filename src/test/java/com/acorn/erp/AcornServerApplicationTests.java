@@ -1,15 +1,13 @@
 package com.acorn.erp;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.acorn.erp.domain.Customer.Entity.CustomerInfo;
@@ -19,12 +17,18 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
-@SpringBootTest(classes = AcornServerApplication.class)
-class AcornServerApplicationTests {
-
+@SpringBootTest
+class AcornServerApplicationTests implements CommandLineRunner {
+//	private CustomerInfo customer; 
 	@Autowired
 	private CustomerInfoRepository repository;
-
+	
+	@Override
+    public void run(String... args) throws Exception {
+        System.out.println("Running AgeGroupTests...");
+        insertTestData();
+    }
+	
     @PersistenceContext
     private EntityManager entityManager;
 	  @Test
@@ -43,16 +47,16 @@ class AcornServerApplicationTests {
 			customer.setRegisterDate(new Date());
 			repository.save(customer);
 		}
-//	  @Test
-//	    @Transactional
-//	  void testRead() {
-//	        
-//			List<CustomerInfo> users =repository.findAll();
-//			System.out.println("데이터 갯수: "+users.size());
-//			
+	  @Test
+	    @Transactional
+	  void testRead() {
+	        
+			List<CustomerInfo> users =repository.findAll();
+			System.out.println("데이터 갯수: "+users.size());
+			
 //			System.out.println("모든 고객의 이름:");
 //	        for (CustomerInfo user : users) {
 //	            System.out.println(user.getCustomerName());
 //	        }
-//	  }
+	  }
 } 

@@ -2,6 +2,7 @@ package com.acorn.erp.domain.Customer.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -29,18 +30,18 @@ public class TransactionService {
     @Transactional
 	@PostConstruct
     public void calculateTransactionData() {
-		logger.info("calculateOrderData() 실행 시작");
+//		logger.info("calculateOrderData() 실행 시작");
 		
 		List<OrderTable> completedOrders = orderRepository.findAll().stream()
 				.filter(order -> "Delivered".equals(order.getOrderStatus())).collect(Collectors.toList());
 
-		logger.info("완료된 주문 수: {}", completedOrders.size());
+//		logger.info("완료된 주문 수: {}", completedOrders.size());
 		
 		List<Integer> customerIds = completedOrders.stream()
 				.map(OrderTable::getCustomerId).distinct()
 				.collect(Collectors.toList());
 		
-		logger.info("고유한 제품 이름 수: {}", customerIds.size());
+//		logger.info("고유한 제품 이름 수: {}", customerIds.size());
 		
         for (int customerId : customerIds) {
             // 최근 거래일 계산
@@ -48,11 +49,13 @@ public class TransactionService {
             // 총 거래 금액 계산
             int totalAmountForCustomer = orderRepository.sumTotalPriceByCustomerId(customerId);
             // 최고 매출 상품명 계산
-            String topSellingProduct = orderRepository.findTopByCustomerIdOrderByTotalPriceDesc(customerId);
+            List<String> topSellingProducts = orderRepository.findFirstByCustomerIdOrderByTotalPriceDesc(customerId);
+            String topSellingProduct = topSellingProducts.isEmpty() ? null : topSellingProducts.get(0);
             // 총 거래 횟수 계산
             int totalCountForCustomer = orderRepository.sumItemQtyByCustomerId(customerId);
             // 최다 거래 상품명 계산
-            String mostPurchasedProduct = orderRepository.findTopByCustomerIdOrderByItemQtyDesc(customerId);
+            List<String> mostPurchasedProducts = orderRepository.findTopByCustomerIdOrderByItemQtyDesc(customerId);
+            String mostPurchasedProduct = mostPurchasedProducts.isEmpty() ? null : mostPurchasedProducts.get(0);
 
             CustomerTransactionInfo info = new CustomerTransactionInfo();
             

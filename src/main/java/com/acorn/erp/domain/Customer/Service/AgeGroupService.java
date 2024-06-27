@@ -25,6 +25,8 @@ public class AgeGroupService {
 	@Transactional
 	public void calculateAndInsertAgeGroup() {
 		List<CustomerInfo> customers = customerInfoRepository.findAll();
+		System.out.println("Found " + customers.size() + " age groups in the database.");
+        
 		for (CustomerInfo customer : customers) {
 			 // 고객이 이미 age_group 테이블에 있는지 확인
             boolean exists = ageGroupRepository.existsByCustomerId(customer.getCustomerId());
@@ -34,9 +36,11 @@ public class AgeGroupService {
 			AgeGroup ageGroupEntity = new AgeGroup();
 			ageGroupEntity.setCustomerId(customer.getCustomerId());
 			ageGroupEntity.setAgeGroup(ageGroup);
-
+			
 			ageGroupRepository.save(ageGroupEntity);
 			}
+            
+		 
 		}
 	}
     //새로운고객 저장용 계산 메서드
