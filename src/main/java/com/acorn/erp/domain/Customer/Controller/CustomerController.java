@@ -128,6 +128,6 @@ public class CustomerController {
 	// 기본등급 일괄 적용
 	@PostConstruct
 	public void init() {
-		gradeService.applyDefaultGradeToExistingCustomers();
+		gradeService.applyDefaultGradeToExistingCustomers();;
 	}
 }
