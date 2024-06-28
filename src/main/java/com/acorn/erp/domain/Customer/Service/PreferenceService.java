@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -109,4 +111,15 @@ public class PreferenceService {
 	public List<CustomerPreferenceData> getCustomerPreferences() {
 		return repository.findAll();
 	}
+	 public List<CustomerPreferenceData> getTop3ByTotalAmount() {
+	        return repository.findAll(PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "totalAmountForProduct"))).getContent();
+	    }
+
+	    public List<CustomerPreferenceData> getTop3ByTotalCount() {
+	        return repository.findAll(PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "totalCountForProduct"))).getContent();
+	    }
+
+	    public List<CustomerPreferenceData> getTop3ByRating() {
+	        return repository.findAll(PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "rating"))).getContent();
+	    }
 }
