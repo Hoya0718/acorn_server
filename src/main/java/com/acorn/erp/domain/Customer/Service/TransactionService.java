@@ -74,4 +74,19 @@ public class TransactionService {
 	public List<CustomerTransactionInfo> getCustomerRank() {
 		return repository.findAll();
 	}
+	public List<CustomerTransactionInfo> getTop10ByTotalAmount() {
+        List<CustomerTransactionInfo> allTransactions = repository.findAll();
+        return allTransactions.stream()
+                .sorted((t1, t2) -> Integer.compare(t2.getTotalAmountForCustomer(), t1.getTotalAmountForCustomer()))
+                .limit(20)
+                .collect(Collectors.toList());
+    }
+
+    public List<CustomerTransactionInfo> getTop10ByTotalCount() {
+        List<CustomerTransactionInfo> allTransactions = repository.findAll();
+        return allTransactions.stream()
+                .sorted((t1, t2) -> Integer.compare(t2.getTotalCountForCustomer(), t1.getTotalCountForCustomer()))
+                .limit(20)
+                .collect(Collectors.toList());
+    }
 }
