@@ -14,6 +14,9 @@ public interface OrderRepository extends JpaRepository<OrderTable, Integer> {
 
 	List<OrderTable> findByCustomerId(@Param("customerId") int customerId);
 	
+	@Query("SELECT o.customerName FROM OrderTable o WHERE o.customerId = :customerId ORDER BY o.orderDate DESC")
+    List<String> findCustomerNameByCustomerId(@Param("customerId") int customerId);
+	
 	@Query("SELECT MAX(o.orderDate) FROM OrderTable o WHERE o.customerId = :customerId")
 	Date findTopByCustomerIdOrderByOrderDateDesc(@Param("customerId") int customerId);
 

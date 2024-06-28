@@ -46,6 +46,9 @@ public class TransactionService {
         for (int customerId : customerIds) {
             // 최근 거래일 계산
             Date lastTransactionDate = orderRepository.findTopByCustomerIdOrderByOrderDateDesc(customerId);
+//             단일 결과 가져오기
+            List<String> customerNames = orderRepository.findCustomerNameByCustomerId(customerId);
+            String customerName = customerNames.isEmpty() ? null : customerNames.get(0);
             // 총 거래 금액 계산
             int totalAmountForCustomer = orderRepository.sumTotalPriceByCustomerId(customerId);
             // 최고 매출 상품명 계산
@@ -61,6 +64,7 @@ public class TransactionService {
             
             info.setTransactionInfoId(customerId);
             info.setCustomerId(customerId);
+            info.setCustomerName(customerName); 
             info.setLastTransactionDate(lastTransactionDate);
             info.setTotalAmountForCustomer(totalAmountForCustomer);
             info.setTopSellingProduct(topSellingProduct);
