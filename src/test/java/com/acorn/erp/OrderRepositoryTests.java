@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.acorn.erp.domain.Customer.Entity.CustomerInfo;
 import com.acorn.erp.domain.Sales.OrderRepository;
 import com.acorn.erp.domain.Sales.OrderTable;
 
@@ -45,7 +44,7 @@ class OrderRepositoryTests {
 			OrderTable customer = new OrderTable();
 			customer.setOrderNum(2001);
 			customer.setItemCode("2001");
-			customer.setItemName("바나나빵");
+			customer.setItemName("단팥빵");
 			customer.setCustomerId(2500);
 			customer.setCustomerName("박승희");
 			customer.setCustomerTel("010-8281-2856");
