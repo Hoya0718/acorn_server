@@ -10,7 +10,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "AGE_GROUP",
 uniqueConstraints = {@UniqueConstraint(columnNames = {"customerId", "ageGroup"})}
@@ -24,6 +23,30 @@ public class AgeGroup {
 	private int customerId;
 	private String ageGroup;
 	
+	public int getAgegroupId() {
+		return agegroupId;
+	}
+
+	public void setAgegroupId(int agegroupId) {
+		this.agegroupId = agegroupId;
+	}
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+
+	public String getAgeGroup() {
+		return ageGroup;
+	}
+
+	public void setAgeGroup(String ageGroup) {
+		this.ageGroup = ageGroup;
+	}
+
 	public AgeGroup() {}
 
 	@Override
