@@ -72,9 +72,9 @@ public class AgeGroupService {
         Map<String, Long> ageGroupCounts = ageGroups.stream()
                 .collect(Collectors.groupingBy(AgeGroup::getAgeGroup, Collectors.counting()));
         // 각 연령 그룹별 고객 수 출력
-        for (Map.Entry<String, Long> entry : ageGroupCounts.entrySet()) {
-            System.out.println("Age Group: " + entry.getKey() + ", Count: " + entry.getValue());
-        }
+//        for (Map.Entry<String, Long> entry : ageGroupCounts.entrySet()) {
+//            System.out.println("Age Group: " + entry.getKey() + ", Count: " + entry.getValue());
+//        }
         return ageGroupCounts;
     }
 }

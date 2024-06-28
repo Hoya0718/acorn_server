@@ -84,9 +84,9 @@ public class RegionGroupService {
         result.put("Town", regionGroupTownCounts);
         
         // 각 연령 그룹별 고객 수 출력
-        for (Map.Entry<String, Long> entry : regionGroupProvinceCounts.entrySet()) {
-            System.out.println("Region Group: " + entry.getKey() + ", Count: " + entry.getValue());
-        }
+//        for (Map.Entry<String, Long> entry : regionGroupProvinceCounts.entrySet()) {
+//            System.out.println("Region Group: " + entry.getKey() + ", Count: " + entry.getValue());
+//        }
         return result;
     }
 }
