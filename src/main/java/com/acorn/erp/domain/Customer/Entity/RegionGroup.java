@@ -10,7 +10,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "REGION_GROUP",
 uniqueConstraints = {@UniqueConstraint(columnNames = {"customerId", "regiongroupProvince"})}
@@ -26,6 +25,46 @@ public class RegionGroup {
 	private String regiongroupCity;
 	private String regiongroupTown;
 	
+	public int getRegiongroupId() {
+		return regiongroupId;
+	}
+
+	public void setRegiongroupId(int regiongroupId) {
+		this.regiongroupId = regiongroupId;
+	}
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+
+	public String getRegiongroupProvince() {
+		return regiongroupProvince;
+	}
+
+	public void setRegiongroupProvince(String regiongroupProvince) {
+		this.regiongroupProvince = regiongroupProvince;
+	}
+
+	public String getRegiongroupCity() {
+		return regiongroupCity;
+	}
+
+	public void setRegiongroupCity(String regiongroupCity) {
+		this.regiongroupCity = regiongroupCity;
+	}
+
+	public String getRegiongroupTown() {
+		return regiongroupTown;
+	}
+
+	public void setRegiongroupTown(String regiongroupTown) {
+		this.regiongroupTown = regiongroupTown;
+	}
+
 	public RegionGroup() {}
 
 	@Override

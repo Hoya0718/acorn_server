@@ -11,7 +11,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "CUSTOMER_PREFERENCE_DATA")
 public class CustomerPreferenceData {
@@ -28,6 +27,70 @@ public class CustomerPreferenceData {
 	private String regionPreference; 
 	
 	public CustomerPreferenceData() {}
+
+	public int getPreferenceDataId() {
+		return preferenceDataId;
+	}
+
+	public void setPreferenceDataId(int preferenceDataId) {
+		this.preferenceDataId = preferenceDataId;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+	public int getTotalAmountForProduct() {
+		return totalAmountForProduct;
+	}
+
+	public void setTotalAmountForProduct(int totalAmountForProduct) {
+		this.totalAmountForProduct = totalAmountForProduct;
+	}
+
+	public int getTotalCountForProduct() {
+		return totalCountForProduct;
+	}
+
+	public void setTotalCountForProduct(int totalCountForProduct) {
+		this.totalCountForProduct = totalCountForProduct;
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+
+	public String getGenderPreference() {
+		return genderPreference;
+	}
+
+	public void setGenderPreference(String genderPreference) {
+		this.genderPreference = genderPreference;
+	}
+
+	public String getAgePreference() {
+		return agePreference;
+	}
+
+	public void setAgePreference(String agePreference) {
+		this.agePreference = agePreference;
+	}
+
+	public String getRegionPreference() {
+		return regionPreference;
+	}
+
+	public void setRegionPreference(String regionPreference) {
+		this.regionPreference = regionPreference;
+	}
 
 	@Override
 	public String toString() {
