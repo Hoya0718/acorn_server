@@ -1,8 +1,11 @@
 package com.acorn.erp;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.acorn.erp.domain.Customer.Controller.CustomerController;
 import com.acorn.erp.domain.Customer.Entity.CustomerInfo;
 import com.acorn.erp.domain.Customer.Repository.CustomerInfoRepository;
 
@@ -22,6 +26,8 @@ class AcornServerApplicationTests implements CommandLineRunner {
 //	private CustomerInfo customer; 
 	@Autowired
 	private CustomerInfoRepository repository;
+	@Autowired
+	private CustomerController customerController;
 	
 	@Override
     public void run(String... args) throws Exception {
@@ -53,10 +59,21 @@ class AcornServerApplicationTests implements CommandLineRunner {
 	        
 			List<CustomerInfo> users =repository.findAll();
 			System.out.println("데이터 갯수: "+users.size());
-			
 //			System.out.println("모든 고객의 이름:");
 //	        for (CustomerInfo user : users) {
 //	            System.out.println(user.getCustomerName());
 //	        }
+			
+			// countCustomerGroupBy() 메서드 호출 및 결과 확인
+			Map<String, Map<String, Map<String, Map<String, Long>>>> result = customerController.countCustomerGroupBy();
+		        System.out.println("result: " + result);
+
+		        Map<String, Map<String, Map<String, Long>>>genderCounts = result.get("gender");
+		        Map<String, Map<String, Map<String, Long>>> ageCounts = result.get("age");
+		        Map<String, Map<String, Map<String, Long>>>regionCounts = result.get("region");
+
+		        System.out.println("Gender Counts: " + genderCounts);
+		        System.out.println("Age Counts: " + ageCounts);
+		        System.out.println("Region Counts: " + regionCounts);
 	  }
 } 
