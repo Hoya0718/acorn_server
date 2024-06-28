@@ -14,9 +14,8 @@ import lombok.Setter;
 @Entity
 public class Purchase {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "purchase_code")
     private Long purchaseCode;
 
     @Column(name = "purchase_unit")
