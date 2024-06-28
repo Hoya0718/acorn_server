@@ -7,12 +7,15 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.acorn.erp.domain.Customer.Entity.AgeGroup;
 import com.acorn.erp.domain.Customer.Entity.CustomerPreferenceData;
 import com.acorn.erp.domain.Customer.Entity.GenderGroup;
+import com.acorn.erp.domain.Customer.Entity.RegionGroup;
 import com.acorn.erp.domain.Customer.Repository.AgeGroupRepository;
 import com.acorn.erp.domain.Customer.Repository.GenderGroupRepository;
 import com.acorn.erp.domain.Customer.Repository.PreferenceRepository;
@@ -73,20 +76,48 @@ public class PreferenceService {
 
 			// 선호도 계산
 			Map<String, Long> genderCountMap = ordersForItem.stream()
-					.flatMap(order -> genderGroupRepository.findByCustomerId(order.getCustomerId()).stream())
-					.collect(Collectors.groupingBy(GenderGroup::getGenderGroup, Collectors.counting()));
+                    .flatMap(order -> genderGroupRepository.findByCustomerId(order.getCustomerId()).stream())
+                    .collect(Collectors.groupingBy(GenderGroup::getGenderGroup, Collectors.counting()));
+					
+	                
 			String genderPreference = genderCountMap.entrySet().stream().max(Map.Entry.comparingByValue())
 					.map(Map.Entry::getKey).orElse("Unknown");
-
+			
 			// 연령별 선호도 계산
-			Map<String, Long> ageCountMap = ordersForItem.stream()
-					.flatMap(order -> ageGroupRepository.findByCustomerId(order.getCustomerId()).stream())
-					.collect(Collectors.groupingBy(AgeGroup::getAgeGroup, Collectors.counting()));
+			 Map<String, Long> ageCountMap = ordersForItem.stream()
+	                    .flatMap(order -> ageGroupRepository.findByCustomerId(order.getCustomerId()).stream())
+	                    .collect(Collectors.groupingBy(AgeGroup::getAgeGroup, Collectors.counting()));
+				
 			String agePreference = ageCountMap.entrySet().stream().max(Map.Entry.comparingByValue())
 					.map(Map.Entry::getKey).orElse("Unknown");
+			
+			// 지역별 선호도 계산
+			 Map<String, Long> provinceCountMap = ordersForItem.stream()
+		                .flatMap(order -> regionGroupRepository.findByCustomerId(order.getCustomerId()).stream())
+		                .collect(Collectors.groupingBy(RegionGroup::getRegiongroupProvince, Collectors.counting()));
+
+		        Map<String, Long> cityCountMap = ordersForItem.stream()
+		                .flatMap(order -> regionGroupRepository.findByCustomerId(order.getCustomerId()).stream())
+		                .collect(Collectors.groupingBy(RegionGroup::getRegiongroupCity, Collectors.counting()));
+
+		        Map<String, Long> townCountMap = ordersForItem.stream()
+		                .flatMap(order -> regionGroupRepository.findByCustomerId(order.getCustomerId()).stream())
+		                .collect(Collectors.groupingBy(RegionGroup::getRegiongroupTown, Collectors.counting()));
+
+		        String provincePreference = provinceCountMap.entrySet().stream().max(Map.Entry.comparingByValue())
+		                .map(Map.Entry::getKey).orElse("Unknown");
+
+		        String cityPreference = cityCountMap.entrySet().stream().max(Map.Entry.comparingByValue())
+		                .map(Map.Entry::getKey).orElse("Unknown");
+
+		        String townPreference = townCountMap.entrySet().stream().max(Map.Entry.comparingByValue())
+		                .map(Map.Entry::getKey).orElse("Unknown");
+
+		        String regionPreference = String.format("%s, %s, %s", provincePreference, cityPreference, townPreference);
 
 //			logger.info("Gender Preference: {}, Age Preference: {}", genderPreference, agePreference);
 
+			
 			// CustomerPreferenceData 객체 생성 및 데이터 설정
 			if (!repository.existsByItemName(itemName)) {
 				// CustomerPreferenceData 객체 생성 및 데이터 설정
@@ -96,7 +127,7 @@ public class PreferenceService {
 				data.setTotalCountForProduct(totalQuantity);
 				data.setGenderPreference(genderPreference);
 				data.setAgePreference(agePreference);
-				// data.setRegionPreference(regionPreference); // 이 부분은 필요에 따라 추가
+				data.setRegionPreference(regionPreference);
 
 				repository.save(data);
 //				logger.info("Saved CustomerPreferenceData: {}", data);
@@ -109,4 +140,15 @@ public class PreferenceService {
 	public List<CustomerPreferenceData> getCustomerPreferences() {
 		return repository.findAll();
 	}
+	 public List<CustomerPreferenceData> getTop3ByTotalAmount() {
+	        return repository.findAll(PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "totalAmountForProduct"))).getContent();
+	    }
+
+	    public List<CustomerPreferenceData> getTop3ByTotalCount() {
+	        return repository.findAll(PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "totalCountForProduct"))).getContent();
+	    }
+
+	    public List<CustomerPreferenceData> getTop3ByRating() {
+	        return repository.findAll(PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "rating"))).getContent();
+	    }
 }
