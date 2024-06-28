@@ -46,6 +46,9 @@ public class TransactionService {
         for (int customerId : customerIds) {
             // 최근 거래일 계산
             Date lastTransactionDate = orderRepository.findTopByCustomerIdOrderByOrderDateDesc(customerId);
+//             단일 결과 가져오기
+            List<String> customerNames = orderRepository.findCustomerNameByCustomerId(customerId);
+            String customerName = customerNames.isEmpty() ? null : customerNames.get(0);
             // 총 거래 금액 계산
             int totalAmountForCustomer = orderRepository.sumTotalPriceByCustomerId(customerId);
             // 최고 매출 상품명 계산
@@ -61,6 +64,7 @@ public class TransactionService {
             
             info.setTransactionInfoId(customerId);
             info.setCustomerId(customerId);
+            info.setCustomerName(customerName); 
             info.setLastTransactionDate(lastTransactionDate);
             info.setTotalAmountForCustomer(totalAmountForCustomer);
             info.setTopSellingProduct(topSellingProduct);
@@ -74,4 +78,19 @@ public class TransactionService {
 	public List<CustomerTransactionInfo> getCustomerRank() {
 		return repository.findAll();
 	}
+	public List<CustomerTransactionInfo> getTop10ByTotalAmount() {
+        List<CustomerTransactionInfo> allTransactions = repository.findAll();
+        return allTransactions.stream()
+                .sorted((t1, t2) -> Integer.compare(t2.getTotalAmountForCustomer(), t1.getTotalAmountForCustomer()))
+                .limit(20)
+                .collect(Collectors.toList());
+    }
+
+    public List<CustomerTransactionInfo> getTop10ByTotalCount() {
+        List<CustomerTransactionInfo> allTransactions = repository.findAll();
+        return allTransactions.stream()
+                .sorted((t1, t2) -> Integer.compare(t2.getTotalCountForCustomer(), t1.getTotalCountForCustomer()))
+                .limit(20)
+                .collect(Collectors.toList());
+    }
 }

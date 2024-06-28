@@ -26,7 +26,7 @@ public class CustomerTransactionInfo {
 	private int transactionInfoId;
 	@Column(nullable = false)
 	private int customerId;
-	private String cutomerName;
+	private String customerName;
 	private Date lastTransactionDate;
 	private int totalAmountForCustomer;
 	private String topSellingProduct; //FK 변수명확인: itemName
@@ -49,12 +49,12 @@ public class CustomerTransactionInfo {
 		this.customerId = customerId;
 	}
 
-	public String getCutomerName() {
-		return cutomerName;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setCutomerName(String cutomerName) {
-		this.cutomerName = cutomerName;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
 	public Date getLastTransactionDate() {
@@ -102,19 +102,19 @@ public class CustomerTransactionInfo {
 	@Override
 	public String toString() {
 		return "CustomerTransactionInfo [transactionInfoId=" + transactionInfoId + ", customerId=" + customerId
-				+ ", cutomerName=" + cutomerName + ", lastTransactionDate=" + lastTransactionDate
+				+ ", cutomerName=" + customerName + ", lastTransactionDate=" + lastTransactionDate
 				+ ", totalAmountForCustomer=" + totalAmountForCustomer + ", topSellingProduct=" + topSellingProduct
 				+ ", totalCountForCustomer=" + totalCountForCustomer + ", mostPurchasedProduct=" + mostPurchasedProduct
 				+ "]";
 	}
 
-	public CustomerTransactionInfo(int transactionInfoId, int customerId, String cutomerName, Date lastTransactionDate,
+	public CustomerTransactionInfo(int transactionInfoId, int customerId, String customerName, Date lastTransactionDate,
 			int totalAmountForCustomer, String topSellingProduct, int totalCountForCustomer,
 			String mostPurchasedProduct) {
 		super();
 		this.transactionInfoId = transactionInfoId;
 		this.customerId = customerId;
-		this.cutomerName = cutomerName;
+		this.customerName = customerName;
 		this.lastTransactionDate = lastTransactionDate;
 		this.totalAmountForCustomer = totalAmountForCustomer;
 		this.topSellingProduct = topSellingProduct;
