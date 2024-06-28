@@ -12,7 +12,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "CUSTOMER_NOTES",
 uniqueConstraints = {@UniqueConstraint(columnNames = {"customerId", "notes"})}
@@ -27,6 +26,38 @@ public class CustomerNotes {
 	private Date notesDate;
 	private String notes;
 	
+	public int getNotesId() {
+		return notesId;
+	}
+
+	public void setNotesId(int notesId) {
+		this.notesId = notesId;
+	}
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+
+	public Date getNotesDate() {
+		return notesDate;
+	}
+
+	public void setNotesDate(Date notesDate) {
+		this.notesDate = notesDate;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
 	public CustomerNotes() {}
 
 	@Override
