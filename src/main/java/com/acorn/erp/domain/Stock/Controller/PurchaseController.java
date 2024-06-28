@@ -13,9 +13,9 @@ import java.util.List;
 @RequestMapping("/api/purchase")
 public class PurchaseController {
 
+	 @Autowired
     private final PurchaseService purchaseService;
 
-    @Autowired
     public PurchaseController(PurchaseService purchaseService) {
         this.purchaseService = purchaseService;
     }

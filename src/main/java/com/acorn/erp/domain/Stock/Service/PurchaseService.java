@@ -10,10 +10,9 @@ import java.util.Optional;
 
 @Service
 public class PurchaseService {
-
+	@Autowired
     private final PurchaseRepository purchaseRepository;
 
-    @Autowired
     public PurchaseService(PurchaseRepository purchaseRepository) {
         this.purchaseRepository = purchaseRepository;
     }
