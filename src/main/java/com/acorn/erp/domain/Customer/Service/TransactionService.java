@@ -1,20 +1,17 @@
 package com.acorn.erp.domain.Customer.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.acorn.erp.domain.Customer.Entity.CustomerTransactionInfo;
 import com.acorn.erp.domain.Customer.Repository.TransactionRepository;
-import com.acorn.erp.domain.Sales.Repository.OrderRepository;
 import com.acorn.erp.domain.Sales.Entity.OrderTable;
+import com.acorn.erp.domain.Sales.Repository.OrderRepository;
 
 import jakarta.annotation.PostConstruct;
 
@@ -26,9 +23,14 @@ public class TransactionService {
     @Autowired
     private TransactionRepository repository;
     
+//    @PostConstruct
+//    @Transactional
+//    public void init() {
+//        calculateTransactionData();
+//    }
+    
     @Transactional
-	@PostConstruct
-    public void calculateTransactionData() {
+    public void calculateTransactionData(int customerId) {
 		List<OrderTable> completedOrders = orderRepository.findAll().stream()
 				.filter(order -> "Delivered".equals(order.getOrderStatus())).collect(Collectors.toList());
 
@@ -36,9 +38,7 @@ public class TransactionService {
 				.map(OrderTable::getCustomerId).distinct()
 				.collect(Collectors.toList());
 		
-        for (int customerId : customerIds) {
-            // 최근 거래일 계산
-            Date lastTransactionDate = orderRepository.findTopByCustomerIdOrderByOrderDateDesc(customerId);
+        	LocalDateTime lastTransactionDate = orderRepository.findTopByCustomerIdOrderByOrderDateDesc(customerId);
             // 이름 가져오기
             List<String> customerNames = orderRepository.findCustomerNameByCustomerId(customerId);
             String customerName = customerNames.isEmpty() ? null : customerNames.get(0);
@@ -66,7 +66,7 @@ public class TransactionService {
             info.setMostPurchasedProduct(mostPurchasedProduct);
 
             repository.save(info);
-			}
+			
         }
     }
 	public List<CustomerTransactionInfo> getCustomerRank() {

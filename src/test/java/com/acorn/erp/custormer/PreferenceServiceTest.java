@@ -1,4 +1,4 @@
-package com.acorn.erp;
+package com.acorn.erp.custormer;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.List;
@@ -7,19 +7,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.acorn.erp.domain.Customer.Entity.CustomerTransactionInfo;
-import com.acorn.erp.domain.Customer.Service.TransactionService;
+import com.acorn.erp.domain.Customer.Entity.CustomerPreferenceData;
+import com.acorn.erp.domain.Customer.Service.PreferenceService;
 
 @SpringBootTest
-public class TransactionServiceTest {
+public class PreferenceServiceTest {
 
     @Autowired
-    private TransactionService service;
+    private PreferenceService preferenceService;
 
     @Test
     public void testCalculateOrderData() {
-        service.calculateTransactionData();
-        List<CustomerTransactionInfo> preferences = service.getCustomerRank();
+        preferenceService.calculateOrderData();
+        List<CustomerPreferenceData> preferences = preferenceService.getCustomerPreferences();
         assertFalse(preferences.isEmpty(), "CustomerPreferenceData should not be empty");
         preferences.forEach(data -> {
             System.out.println(data);

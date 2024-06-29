@@ -1,8 +1,7 @@
 package com.acorn.erp.domain.Sales.Repository;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,7 +21,7 @@ public interface OrderRepository extends JpaRepository<OrderTable, Long> {
     List<String> findCustomerNameByCustomerId(@Param("customerId") int customerId);
 	
 	@Query("SELECT MAX(o.orderDate) FROM OrderTable o WHERE o.customerId = :customerId")
-	Date findTopByCustomerIdOrderByOrderDateDesc(@Param("customerId") int customerId);
+	LocalDateTime findTopByCustomerIdOrderByOrderDateDesc(@Param("customerId") int customerId);
 
 	 @Query("SELECT SUM(o.orderTotalPrice) FROM OrderTable o WHERE o.customerId = :customerId")
 	int sumOrderTotalPriceByCustomerId(@Param("customerId") int customerId);
