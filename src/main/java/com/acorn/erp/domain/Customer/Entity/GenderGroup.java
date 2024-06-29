@@ -10,18 +10,21 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 
+
 @Entity
-@Table(name = "AGE_GROUP",
-uniqueConstraints = {@UniqueConstraint(columnNames = {"customerId", "ageGroup"})}
-)
-public class AgeGroup {
+@Table(
+		name = "Gender_GROUP",
+		uniqueConstraints = {@UniqueConstraint(columnNames = {"customerId", "genderGroup"})}
+		)
+public class GenderGroup {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "age_group_seq")
-    @SequenceGenerator(name = "age_group_seq", sequenceName = "age_group_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gender_group_seq")
+    @SequenceGenerator(name = "gender_group_seq", sequenceName = "gender_group_seq", allocationSize = 1)
 	private int agegroupId;
 	@Column(nullable = false)
 	private int customerId;
-	private String ageGroup;
+	private String genderGroup;
+	
 	
 	public int getAgegroupId() {
 		return agegroupId;
@@ -39,27 +42,29 @@ public class AgeGroup {
 		this.customerId = customerId;
 	}
 
-	public String getAgeGroup() {
-		return ageGroup;
+	public String getGenderGroup() {
+		return genderGroup;
 	}
 
-	public void setAgeGroup(String ageGroup) {
-		this.ageGroup = ageGroup;
+	public void setGenderGroup(String genderGroup) {
+		this.genderGroup = genderGroup;
 	}
 
-	public AgeGroup() {}
+	public GenderGroup() {}
 
 	@Override
 	public String toString() {
-		return "AgeGroup [agegroupId=" + agegroupId + ", customerId=" + customerId + ", ageGroup=" + ageGroup + "]";
+		return "GenderGroup [agegroupId=" + agegroupId + ", customerId=" + customerId + ", genderGroup=" + genderGroup
+				+ "]";
 	}
 
-	public AgeGroup(int agegroupId, int customerId, String ageGroup) {
+	public GenderGroup(int agegroupId, int customerId, String genderGroup) {
 		super();
 		this.agegroupId = agegroupId;
 		this.customerId = customerId;
-		this.ageGroup = ageGroup;
+		this.genderGroup = genderGroup;
 	}
+
 
 
 
