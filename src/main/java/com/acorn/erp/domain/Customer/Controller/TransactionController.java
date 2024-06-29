@@ -1,25 +1,29 @@
 package com.acorn.erp.domain.Customer.Controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.acorn.erp.domain.Customer.Entity.CustomerTransactionInfo;
 import com.acorn.erp.domain.Customer.Service.TransactionService;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/customer_status")
+@RequestMapping("/api/customer")
 public class TransactionController {
 	
 	@Autowired
-	private TransactionService transactionService;
+	private TransactionService service;
 	
-	@GetMapping("/calculate")
-	public String calculateAndInsertTransactionInfo(){
-		System.out.println("Calculating and inserting transaction info");
-		transactionService.calculateAndInsertCustomerTransactionInfo();
+	public String calculateTransactionData(){
+		service.calculateTransactionData();
 		return "Customer transaction info calculated and inserted successfully";
 	}
+	@GetMapping("/getListRankTable")
+    public List<CustomerTransactionInfo> getListRankTable() {
+    	return service.getCustomerRank();
+    }
 }
