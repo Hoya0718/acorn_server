@@ -13,14 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.acorn.erp.domain.Customer.Entity.CustomerTransactionInfo;
 import com.acorn.erp.domain.Customer.Repository.TransactionRepository;
-import com.acorn.erp.domain.Sales.OrderRepository;
-import com.acorn.erp.domain.Sales.OrderTable;
+import com.acorn.erp.domain.Sales.Repository.OrderRepository;
+import com.acorn.erp.domain.Sales.Entity.OrderTable;
 
 import jakarta.annotation.PostConstruct;
 
 @Service
 public class TransactionService {
-	private static final Logger logger = LoggerFactory.getLogger(PreferenceService.class);
 
 	@Autowired
 	private OrderRepository orderRepository; 
@@ -30,27 +29,21 @@ public class TransactionService {
     @Transactional
 	@PostConstruct
     public void calculateTransactionData() {
-//		logger.info("calculateOrderData() 실행 시작");
-		
 		List<OrderTable> completedOrders = orderRepository.findAll().stream()
 				.filter(order -> "Delivered".equals(order.getOrderStatus())).collect(Collectors.toList());
 
-//		logger.info("완료된 주문 수: {}", completedOrders.size());
-		
 		List<Integer> customerIds = completedOrders.stream()
 				.map(OrderTable::getCustomerId).distinct()
 				.collect(Collectors.toList());
 		
-//		logger.info("고유한 제품 이름 수: {}", customerIds.size());
-		
         for (int customerId : customerIds) {
             // 최근 거래일 계산
             Date lastTransactionDate = orderRepository.findTopByCustomerIdOrderByOrderDateDesc(customerId);
-//             단일 결과 가져오기
+            // 이름 가져오기
             List<String> customerNames = orderRepository.findCustomerNameByCustomerId(customerId);
             String customerName = customerNames.isEmpty() ? null : customerNames.get(0);
             // 총 거래 금액 계산
-            int totalAmountForCustomer = orderRepository.sumTotalPriceByCustomerId(customerId);
+            int totalAmountForCustomer = orderRepository.sumOrderTotalPriceByCustomerId(customerId);
             // 최고 매출 상품명 계산
             List<String> topSellingProducts = orderRepository.findFirstByCustomerIdOrderByTotalPriceDesc(customerId);
             String topSellingProduct = topSellingProducts.isEmpty() ? null : topSellingProducts.get(0);
@@ -60,6 +53,7 @@ public class TransactionService {
             List<String> mostPurchasedProducts = orderRepository.findTopByCustomerIdOrderByItemQtyDesc(customerId);
             String mostPurchasedProduct = mostPurchasedProducts.isEmpty() ? null : mostPurchasedProducts.get(0);
 
+			if (!repository.existsByCustomerName(customerName)) {
             CustomerTransactionInfo info = new CustomerTransactionInfo();
             
             info.setTransactionInfoId(customerId);
@@ -72,7 +66,7 @@ public class TransactionService {
             info.setMostPurchasedProduct(mostPurchasedProduct);
 
             repository.save(info);
-//        }
+			}
         }
     }
 	public List<CustomerTransactionInfo> getCustomerRank() {
