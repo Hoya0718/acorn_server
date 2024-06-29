@@ -1,12 +1,11 @@
 package com.acorn.erp.domain.Customer.Repository;
 
-import com.acorn.erp.domain.Customer.Entity.CustomerTransactionInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.util.Date;
+import com.acorn.erp.domain.Customer.Entity.CustomerTransactionInfo;
 
 public interface TransactionRepository extends JpaRepository<CustomerTransactionInfo, Integer> {
 
-
+    boolean existsByCustomerName(@Param("customerName") String customerName);
 }
