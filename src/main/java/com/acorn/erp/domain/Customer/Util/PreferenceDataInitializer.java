@@ -17,6 +17,7 @@ public class PreferenceDataInitializer implements ApplicationListener<ContextRef
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
+    	 int defaultCustomerId = 1;
         preferenceService.calculateOrderData();
     }
 }
