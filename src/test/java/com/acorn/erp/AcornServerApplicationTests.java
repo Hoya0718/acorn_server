@@ -32,7 +32,7 @@ class AcornServerApplicationTests implements CommandLineRunner {
 	@Override
     public void run(String... args) throws Exception {
         System.out.println("Running AgeGroupTests...");
-        insertTestData();
+        testRead();
     }
 	
     @PersistenceContext
@@ -40,19 +40,19 @@ class AcornServerApplicationTests implements CommandLineRunner {
 	  @Test
 	  void contextLoads() {
 	    }
-	  @BeforeEach
-		void insertTestData() {
-			LocalDateTime currentDateTime = LocalDateTime.now();
-			CustomerInfo customer = new CustomerInfo();
-			customer.setCustomerId(0);
-			customer.setCustomerName("박승희");
-			customer.setCustomerGender("여성");
-			customer.setCustomerBirthDate(new Date());
-			customer.setCustomerAddr("경기도 포천시 군내면");
-			customer.setCustomerTel("010-8281-2856");
-			customer.setRegisterDate(new Date());
-			repository.save(customer);
-		}
+//	  @BeforeEach
+//		void insertTestData() {
+//			LocalDateTime currentDateTime = LocalDateTime.now();
+//			CustomerInfo customer = new CustomerInfo();
+//			customer.setCustomerId(0);
+//			customer.setCustomerName("박승희");
+//			customer.setCustomerGender("여성");
+//			customer.setCustomerBirthDate(new Date());
+//			customer.setCustomerAddr("경기도 포천시 군내면");
+//			customer.setCustomerTel("010-8281-2856");
+//			customer.setRegisterDate(new Date());
+//			repository.save(customer);
+//		}
 	  @Test
 	    @Transactional
 	  void testRead() {
@@ -62,18 +62,18 @@ class AcornServerApplicationTests implements CommandLineRunner {
 //			System.out.println("모든 고객의 이름:");
 //	        for (CustomerInfo user : users) {
 //	            System.out.println(user.getCustomerName());
-//	        }
+	        }
 			
 			// countCustomerGroupBy() 메서드 호출 및 결과 확인
-			Map<String, Map<String, Map<String, Map<String, Long>>>> result = customerController.countCustomerGroupBy();
-		        System.out.println("result: " + result);
-
-		        Map<String, Map<String, Map<String, Long>>>genderCounts = result.get("gender");
-		        Map<String, Map<String, Map<String, Long>>> ageCounts = result.get("age");
-		        Map<String, Map<String, Map<String, Long>>>regionCounts = result.get("region");
-
-		        System.out.println("Gender Counts: " + genderCounts);
-		        System.out.println("Age Counts: " + ageCounts);
-		        System.out.println("Region Counts: " + regionCounts);
-	  }
+//			Map<String, Map<String, Map<String, Map<String, Long>>>> result = customerController.countCustomerGroupBy();
+//		        System.out.println("result: " + result);
+//
+//		        Map<String, Map<String, Map<String, Long>>>genderCounts = result.get("gender");
+//		        Map<String, Map<String, Map<String, Long>>> ageCounts = result.get("age");
+//		        Map<String, Map<String, Map<String, Long>>>regionCounts = result.get("region");
+//
+//		        System.out.println("Gender Counts: " + genderCounts);
+//		        System.out.println("Age Counts: " + ageCounts);
+//		        System.out.println("Region Counts: " + regionCounts);
+//	  }
 } 

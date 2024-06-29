@@ -1,6 +1,5 @@
 package com.acorn.erp.domain.Customer.Controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +13,27 @@ import com.acorn.erp.domain.Customer.Service.TransactionService;
 @RestController
 @RequestMapping("/api/customer")
 public class TransactionController {
-	
+
 	@Autowired
 	private TransactionService service;
-	
-	public String calculateTransactionData(){
+
+	public String calculateTransactionData() {
 		service.calculateTransactionData();
 		return "Customer transaction info calculated and inserted successfully";
 	}
+
 	@GetMapping("/getListRankTable")
-    public List<CustomerTransactionInfo> getListRankTable() {
-    	return service.getCustomerRank();
-    }
+	public List<CustomerTransactionInfo> getListRankTable() {
+		return service.getCustomerRank();
+	}
+
+	@GetMapping("/getTop10ByTotalAmount")
+	public List<CustomerTransactionInfo> getTop10ByTotalAmount() {
+		return service.getTop10ByTotalAmount();
+	}
+
+	@GetMapping("/getTop10ByTotalCount")
+	public List<CustomerTransactionInfo> getTop10ByTotalCount() {
+		return service.getTop10ByTotalCount();
+	}
 }
