@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
-@MapperScan("com.acorn.erp.domain.Exam.Repository")
+@MapperScan("com.acorn.erp.domain.*")
 public class AcornServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(AcornServerApplication.class, args);
