@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FinancialService {
-	@Autowired
+	@Autowired(required=false)
 	private FinancialMapper examMapper;
 	
 	public List<Financial> getAllExam(){
