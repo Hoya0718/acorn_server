@@ -1,24 +1,88 @@
 package com.acorn.erp.domain.Customer.Entity;
 
-import java.sql.Date;
-import lombok.Data;
+import java.util.Date;
 
-@Data
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Table(name = "CUSTOMER_INFO")
 public class CustomerInfo {
-	private String customer_id;
-	private String customer_name;
-	private String customer_gender;
-	private Date customer_birth_date;
-	private String customer_addr;
-	private String customer_tel;
-	private Date register_date;
-	
 	public CustomerInfo() {}
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_info_seq")
+    @SequenceGenerator(name = "customer_info_seq", sequenceName = "customer_info_seq", allocationSize = 1)
+	private int customerId;
+	private String customerName;
+	private String customerGender;
+	private Date customerBirthDate;
+	private String customerAddr;
+	private String customerTel;
+	private Date registerDate;
+	public int getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public String getCustomerGender() {
+		return customerGender;
+	}
+	public void setCustomerGender(String customerGender) {
+		this.customerGender = customerGender;
+	}
+	public Date getCustomerBirthDate() {
+		return customerBirthDate;
+	}
+	public void setCustomerBirthDate(Date customerBirthDate) {
+		this.customerBirthDate = customerBirthDate;
+	}
+	public String getCustomerAddr() {
+		return customerAddr;
+	}
+	public void setCustomerAddr(String customerAddr) {
+		this.customerAddr = customerAddr;
+	}
+	public String getCustomerTel() {
+		return customerTel;
+	}
+	public void setCustomerTel(String customerTel) {
+		this.customerTel = customerTel;
+	}
+	public Date getRegisterDate() {
+		return registerDate;
+	}
+	public void setRegisterDate(Date registerDate) {
+		this.registerDate = registerDate;
+	}
 	@Override
 	public String toString() {
-		return "Customer_info [customer_id=" + customer_id + ", customer_name=" + customer_name + ", customer_gender="
-				+ customer_gender + ", customer_birth_date=" + customer_birth_date + ", customer_addr=" + customer_addr
-				+ ", customer_tel=" + customer_tel + ", register_date=" + register_date + "]";
+		return "CustomerInfo [customerId=" + customerId + ", customerName=" + customerName + ", customerGender="
+				+ customerGender + ", customerBirthDate=" + customerBirthDate + ", customerAddr=" + customerAddr
+				+ ", customerTel=" + customerTel + ", registerDate=" + registerDate + "]";
 	}
-	
+	public CustomerInfo(int customerId, String customerName, String customerGender, Date customer_birthDate,
+			String customerAddr, String customerTel, Date registerDate) {
+		super();
+		this.customerId = customerId;
+		this.customerName = customerName;
+		this.customerGender = customerGender;
+		this.customerBirthDate = customerBirthDate;
+		this.customerAddr = customerAddr;
+		this.customerTel = customerTel;
+		this.registerDate = registerDate;
+	}
 }
