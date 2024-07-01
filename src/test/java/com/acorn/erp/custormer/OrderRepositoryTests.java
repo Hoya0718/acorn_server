@@ -1,4 +1,4 @@
-package com.acorn.erp;
+package com.acorn.erp.custormer;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.acorn.erp.domain.Customer.Entity.CustomerInfo;
-import com.acorn.erp.domain.Sales.OrderRepository;
-import com.acorn.erp.domain.Sales.OrderTable;
+import com.acorn.erp.domain.Sales.Repository.OrderRepository;
+import com.acorn.erp.AcornServerApplication;
+import com.acorn.erp.domain.Sales.Entity.OrderTable;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -39,24 +39,24 @@ class OrderRepositoryTests {
 //	        }
 	  }
 	  
-	  @BeforeEach
-		void insertTestData() {
-			LocalDateTime currentDateTime = LocalDateTime.now();
-			OrderTable customer = new OrderTable();
-			customer.setOrderNum(2001);
-			customer.setItemCode("2001");
-			customer.setItemName("바나나빵");
-			customer.setCustomerId(2500);
-			customer.setCustomerName("박승희");
-			customer.setCustomerTel("010-8281-2856");
-			customer.setCustomerAddr("경기도 포천시 군내면");
-			customer.setPrice(50000);
-			customer.setItemQty(1);
-			customer.setDeliveryFee(1000);
-			customer.setTotalPrice(51000);
-			customer.setOrderDate(new Date());
-			customer.setItemReq("");
-			customer.setOrderStatus("Delivered");
-			repository.save(customer);
-		}
+//	  @BeforeEach
+//		void insertTestData() {
+//			LocalDateTime currentDateTime = LocalDateTime.now();
+//			OrderTable customer = new OrderTable();
+//			customer.setOrderNum(2001);
+//			customer.setItemCode("2001");
+//			customer.setItemName("단팥빵");
+//			customer.setCustomerId(2500);
+//			customer.setCustomerName("박승희");
+//			customer.setCustomerTel("010-8281-2856");
+//			customer.setCustomerAddr("경기도 포천시 군내면");
+//			customer.setPrice(50000);
+//			customer.setItemQty(1);
+//			customer.setDeliveryFee(1000);
+//			customer.setTotalPrice(51000);
+//			customer.setOrderDate(new Date());
+//			customer.setItemReq("");
+//			customer.setOrderStatus("Delivered");
+//			repository.save(customer);
+//		}
 } 
