@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.acorn.erp.domain.Customer.Entity.CustomerPreferenceData;
 import com.acorn.erp.domain.Customer.Entity.RegionGroup;
@@ -39,9 +40,8 @@ public class PreferenceService {
 	private RegionGroupRepository regionGroupRepository;
 	@Autowired
 	private PreferenceRepository repository;
-
+	
 	@Transactional
-	@PostConstruct
 	public void calculateOrderData() {
 
 		List<OrderTable> completedOrders = orderRepository.findAll().stream()
@@ -57,7 +57,6 @@ public class PreferenceService {
 					.filter(order -> itemName.equals(order.getItemName())).collect(Collectors.toList());
 
 			 BigDecimal  totalAmount = completedOrders.stream()
-//	                    .filter(order -> order.getCustomerId() == customerId)
 	                    .map(order -> order.getOrderPrice().multiply(BigDecimal.valueOf(order.getItemQty())))
 	                    .reduce(BigDecimal.ZERO, BigDecimal::add);
 
@@ -129,7 +128,12 @@ public class PreferenceService {
 			}
 		}
 	}
-
+//	public List<Integer> getCustomerIds() {
+//        return orderRepository.findAll().stream()
+//                .map(OrderTable::getCustomerId)
+//                .distinct()
+//                .collect(Collectors.toList());
+//    }
 	public List<CustomerPreferenceData> getCustomerPreferences() {
 		return repository.findAll();
 	}

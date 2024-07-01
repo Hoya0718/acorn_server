@@ -1,17 +1,17 @@
-package com.acorn.erp;
+package com.acorn.erp.custormer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.acorn.erp.domain.Customer.Service.GenderGroupService;
+import com.acorn.erp.domain.Customer.Service.TransactionService;
 
 @SpringBootTest
-public class PreferenceTest implements CommandLineRunner {
+public class TransactionTest implements CommandLineRunner {
 
 	@Autowired
-	private GenderGroupService service;
+	private TransactionService service;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -22,7 +22,7 @@ public class PreferenceTest implements CommandLineRunner {
 
 	@Test
 	public void test() {
-		System.out.println("Calculating and inserting age groups...");
-		service.countCustomersByGenderGroup();
+//		System.out.println("Calculating and inserting age groups...");
+//		service.calculateTransactionData();
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acorn.erp.domain.Customer.Entity.CustomerTransactionInfo;
@@ -17,8 +18,8 @@ public class TransactionController {
 	@Autowired
 	private TransactionService service;
 
-	public String calculateTransactionData() {
-		service.calculateTransactionData();
+	public String calculateTransactionData(int customerId) {
+		service.calculateTransactionData(customerId);
 		return "Customer transaction info calculated and inserted successfully";
 	}
 
