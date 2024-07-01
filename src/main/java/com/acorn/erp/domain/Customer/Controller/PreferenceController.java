@@ -31,12 +31,10 @@ public class PreferenceController {
     public List<CustomerPreferenceData> getTop3ByTotalAmount() {
         return service.getTop3ByTotalAmount();
     }
-
     @GetMapping("/getTop3ByTotalCount")
     public List<CustomerPreferenceData> getTop3ByTotalCount() {
         return service.getTop3ByTotalCount();
     }
-
     @GetMapping("/getTop3ByRating")
     public List<CustomerPreferenceData> getTop3ByRating() {
         return service.getTop3ByRating();

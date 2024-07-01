@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import com.acorn.erp.domain.Login.Entity.*;
 
 @Mapper
-@Repository
 public interface UserInfoMapper {
 	@Select("select * from userinfo")
 	List<userInfo> getAllUserInfo();
