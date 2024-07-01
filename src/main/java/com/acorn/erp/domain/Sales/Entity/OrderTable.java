@@ -10,16 +10,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.SequenceGenerator;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 public class OrderTable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_table_SEQ")
@@ -47,7 +43,7 @@ public class OrderTable {
     private BigDecimal orderPrice;
 
     @Column(name = "item_qty")
-    private Integer itemQty;
+    private int itemQty;
 
     @Column(name = "delivery_fee")
     private BigDecimal deliveryFee;
@@ -65,10 +61,11 @@ public class OrderTable {
     private String orderStatus;
 
     
-	public OrderTable(Long orderNum, String itemName, String customerName, String customerTel, String customerAddr,
-			BigDecimal orderPrice, Integer itemQty, BigDecimal deliveryFee, BigDecimal orderTotalPrice,
+	public OrderTable(int customerId, Long orderNum, String itemName, String customerName, String customerTel, String customerAddr,
+			BigDecimal orderPrice, int itemQty, BigDecimal deliveryFee, BigDecimal orderTotalPrice,
 			LocalDateTime orderDate, String orderReq, String orderStatus) {
 		super();
+		this.customerId = customerId;
 		this.orderNum = orderNum;
 		this.itemName = itemName;
 		this.customerName = customerName;
@@ -84,4 +81,5 @@ public class OrderTable {
 	}
     
     
+
 }
