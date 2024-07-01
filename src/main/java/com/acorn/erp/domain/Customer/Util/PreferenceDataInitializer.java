@@ -1,3 +1,4 @@
+/*
 package com.acorn.erp.domain.Customer.Util;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,3 +21,4 @@ public class PreferenceDataInitializer implements ApplicationListener<ContextRef
         preferenceService.calculateOrderData();
     }
 }
+*/
