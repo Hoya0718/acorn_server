@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Item {
+public class ItemTable {
     @Id //primary key
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "item_code", nullable = false)
@@ -33,8 +33,8 @@ public class Item {
     private int itemQty;
     
     // 생성자
-    public Item() {}
-	public Item(Long itemCode, String itemType, String itemName, String itemStatus, int itemPrice,
+    public ItemTable() {}
+	public ItemTable(Long itemCode, String itemType, String itemName, String itemStatus, int itemPrice,
 			int itemQty) {
 		super();
 		this.itemCode = itemCode;
