@@ -2,6 +2,7 @@ package com.acorn.erp.domain.Customer.Entity;
 
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -12,7 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import lombok.Data;
 
 
 @Entity
@@ -27,7 +27,7 @@ public class CustomerTransactionInfo {
 	@Column(nullable = false)
 	private int customerId;
 	private String customerName;
-	private Date lastTransactionDate;
+	private LocalDateTime lastTransactionDate;
 	private int totalAmountForCustomer;
 	private String topSellingProduct; //FK 변수명확인: itemName
 	private  int totalCountForCustomer;
@@ -57,11 +57,11 @@ public class CustomerTransactionInfo {
 		this.customerName = customerName;
 	}
 
-	public Date getLastTransactionDate() {
+	public LocalDateTime getLastTransactionDate() {
 		return lastTransactionDate;
 	}
 
-	public void setLastTransactionDate(Date lastTransactionDate) {
+	public void setLastTransactionDate(LocalDateTime lastTransactionDate) {
 		this.lastTransactionDate = lastTransactionDate;
 	}
 
@@ -108,7 +108,7 @@ public class CustomerTransactionInfo {
 				+ "]";
 	}
 
-	public CustomerTransactionInfo(int transactionInfoId, int customerId, String customerName, Date lastTransactionDate,
+	public CustomerTransactionInfo(int transactionInfoId, int customerId, String customerName, LocalDateTime lastTransactionDate,
 			int totalAmountForCustomer, String topSellingProduct, int totalCountForCustomer,
 			String mostPurchasedProduct) {
 		super();

@@ -8,4 +8,5 @@ import com.acorn.erp.domain.Customer.Entity.CustomerTransactionInfo;
 public interface TransactionRepository extends JpaRepository<CustomerTransactionInfo, Integer> {
 
     boolean existsByCustomerName(@Param("customerName") String customerName);
+    boolean existsByCustomerId(@Param("customerId") int customerId);
 }

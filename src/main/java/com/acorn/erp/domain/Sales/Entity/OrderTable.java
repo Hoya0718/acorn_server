@@ -82,4 +82,8 @@ public class OrderTable {
 		this.orderReq = orderReq;
 		this.orderStatus = orderStatus;
 	}
+
+	// 기본 생성자 추가
+    public OrderTable() {
+    }
 }

@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acorn.erp.domain.Customer.Entity.CustomerPreferenceData;
@@ -31,12 +31,10 @@ public class PreferenceController {
     public List<CustomerPreferenceData> getTop3ByTotalAmount() {
         return service.getTop3ByTotalAmount();
     }
-
     @GetMapping("/getTop3ByTotalCount")
     public List<CustomerPreferenceData> getTop3ByTotalCount() {
         return service.getTop3ByTotalCount();
     }
-
     @GetMapping("/getTop3ByRating")
     public List<CustomerPreferenceData> getTop3ByRating() {
         return service.getTop3ByRating();
