@@ -44,3 +44,7 @@ test {
     useJUnitPlatform()
 }
 
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-parameters" // -parameters 옵션을 추가
+}
+
