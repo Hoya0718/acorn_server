@@ -27,22 +27,22 @@ public class Item {
     private String itemStatus;
 
     @Column(name = "item_price")
-    private Integer itemPrice;
+    private int itemPrice;
 
     @Column(name = "item_qty")
-    private Integer itemQuantity;
+    private int itemQty;
     
     // 생성자
     public Item() {}
-	public Item(Long itemCode, String itemType, String itemName, String itemStatus, Integer itemPrice,
-			Integer itemQuantity) {
+	public Item(Long itemCode, String itemType, String itemName, String itemStatus, int itemPrice,
+			int itemQty) {
 		super();
 		this.itemCode = itemCode;
 		this.itemType = itemType;
 		this.itemName = itemName;
 		this.itemStatus = itemStatus;
 		this.itemPrice = itemPrice;
-		this.itemQuantity = itemQuantity;
+		this.itemQty = itemQty;
 	}
 	
 	public Long getItemCode() {
@@ -69,17 +69,17 @@ public class Item {
 	public void setItemStatus(String itemStatus) {
 		this.itemStatus = itemStatus;
 	}
-	public Integer getItemPrice() {
+	public int getItemPrice() {
 		return itemPrice;
 	}
-	public void setItemPrice(Integer itemPrice) {
+	public void setItemPrice(int itemPrice) {
 		this.itemPrice = itemPrice;
 	}
-	public Integer getItemQuantity() {
-		return itemQuantity;
+	public int getItemQty() {
+		return itemQty;
 	}
-	public void setItemQuantity(Integer itemQuantity) {
-		this.itemQuantity = itemQuantity;
+	public void setItemQty(int itemQty) {
+		this.itemQty = itemQty;
 	}
 	
 }

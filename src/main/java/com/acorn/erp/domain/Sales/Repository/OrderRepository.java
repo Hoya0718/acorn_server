@@ -34,4 +34,6 @@ public interface OrderRepository extends JpaRepository<OrderTable, Long> {
 
 	@Query("SELECT o.itemName FROM OrderTable o WHERE o.customerId = :customerId GROUP BY o.itemName ORDER BY SUM(o.orderTotalPrice) DESC")
 	List<String> findTopByCustomerIdOrderByItemQtyDesc(@Param("customerId") int customerId);
+
 }
+
