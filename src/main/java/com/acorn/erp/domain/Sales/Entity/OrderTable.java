@@ -14,8 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+
 @Entity
 @NoArgsConstructor
 public class OrderTable {
@@ -42,7 +41,7 @@ public class OrderTable {
     private String customerAddr;
 
     @Column(name = "order_price")
-    private BigDecimal orderPrice;
+    private BigDecimal orderPrice = BigDecimal.ZERO;
 
     @Column(name = "item_qty")
     private int itemQty;
@@ -61,8 +60,141 @@ public class OrderTable {
 
     @Column(name = "order_status", length = 10)
     private String orderStatus;
-
     
+    // 기본 생성자
+    public OrderTable() {
+    }
+    
+	public Long getOrderNum() {
+		return orderNum;
+	}
+
+
+	public void setOrderNum(Long orderNum) {
+		this.orderNum = orderNum;
+	}
+
+
+	public String getItemName() {
+		return itemName;
+	}
+
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+
+
+	public String getCustomerTel() {
+		return customerTel;
+	}
+
+
+	public void setCustomerTel(String customerTel) {
+		this.customerTel = customerTel;
+	}
+
+
+	public String getCustomerAddr() {
+		return customerAddr;
+	}
+
+
+	public void setCustomerAddr(String customerAddr) {
+		this.customerAddr = customerAddr;
+	}
+
+
+	public BigDecimal getOrderPrice() {
+		return orderPrice;
+	}
+
+
+	public void setOrderPrice(BigDecimal orderPrice) {
+		this.orderPrice = orderPrice;
+	}
+
+
+	public int getItemQty() {
+		return itemQty;
+	}
+
+
+	public void setItemQty(int itemQty) {
+		this.itemQty = itemQty;
+	}
+
+
+	public BigDecimal getDeliveryFee() {
+		return deliveryFee;
+	}
+
+
+	public void setDeliveryFee(BigDecimal deliveryFee) {
+		this.deliveryFee = deliveryFee;
+	}
+
+
+	public BigDecimal getOrderTotalPrice() {
+		return orderTotalPrice;
+	}
+
+
+	public void setOrderTotalPrice(BigDecimal orderTotalPrice) {
+		this.orderTotalPrice = orderTotalPrice;
+	}
+
+
+	public LocalDateTime getOrderDate() {
+		return orderDate;
+	}
+
+
+	public void setOrderDate(LocalDateTime orderDate) {
+		this.orderDate = orderDate;
+	}
+
+
+	public String getOrderReq() {
+		return orderReq;
+	}
+
+
+	public void setOrderReq(String orderReq) {
+		this.orderReq = orderReq;
+	}
+
+
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+
 	public OrderTable(int customerId, Long orderNum, String itemName, String customerName, String customerTel, String customerAddr,
 			BigDecimal orderPrice, int itemQty, BigDecimal deliveryFee, BigDecimal orderTotalPrice,
 			LocalDateTime orderDate, String orderReq, String orderStatus) {

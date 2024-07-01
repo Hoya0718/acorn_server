@@ -23,7 +23,7 @@ public interface OrderRepository extends JpaRepository<OrderTable, Long> {
 	@Query("SELECT MAX(o.orderDate) FROM OrderTable o WHERE o.customerId = :customerId")
 	LocalDateTime findTopByCustomerIdOrderByOrderDateDesc(@Param("customerId") int customerId);
 
-	 @Query("SELECT SUM(o.orderTotalPrice) FROM OrderTable o WHERE o.customerId = :customerId")
+	 @Query("SELECT COALESCE(SUM(o.orderTotalPrice), 0) FROM OrderTable o WHERE o.customerId = :customerId")
 	int sumOrderTotalPriceByCustomerId(@Param("customerId") int customerId);
 
 	@Query("SELECT o.itemName FROM OrderTable o WHERE o.customerId = :customerId GROUP BY o.itemName ORDER BY SUM(o.itemQty) DESC")
