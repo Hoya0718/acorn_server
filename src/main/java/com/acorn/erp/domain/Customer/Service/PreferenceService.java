@@ -41,11 +41,6 @@ public class PreferenceService {
 	@Autowired
 	private PreferenceRepository repository;
 	
-	@PostConstruct
-    @Transactional
-    public void init() {
-        calculateOrderData();
-    }
 	@Transactional
 	public void calculateOrderData() {
 
@@ -133,7 +128,12 @@ public class PreferenceService {
 			}
 		}
 	}
-
+//	public List<Integer> getCustomerIds() {
+//        return orderRepository.findAll().stream()
+//                .map(OrderTable::getCustomerId)
+//                .distinct()
+//                .collect(Collectors.toList());
+//    }
 	public List<CustomerPreferenceData> getCustomerPreferences() {
 		return repository.findAll();
 	}

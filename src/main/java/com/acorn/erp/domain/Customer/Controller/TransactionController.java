@@ -19,7 +19,7 @@ public class TransactionController {
 	private TransactionService service;
 
 	public String calculateTransactionData(int customerId) {
-		service.calculateTransactionData();
+		service.calculateTransactionData(customerId);
 		return "Customer transaction info calculated and inserted successfully";
 	}
 

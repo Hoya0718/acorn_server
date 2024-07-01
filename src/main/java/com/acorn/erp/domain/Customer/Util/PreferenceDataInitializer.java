@@ -1,5 +1,7 @@
 package com.acorn.erp.domain.Customer.Util;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -17,7 +19,7 @@ public class PreferenceDataInitializer implements ApplicationListener<ContextRef
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
-    	 int defaultCustomerId = 1;
-        preferenceService.calculateOrderData();
+    preferenceService.calculateOrderData();
+         
     }
 }
