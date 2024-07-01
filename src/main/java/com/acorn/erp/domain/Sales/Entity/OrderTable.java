@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,8 @@ import lombok.Setter;
 @Setter
 @Entity
 public class OrderTable {
+	private ItemTable itemTable;
+	
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_table_SEQ")
     @Column(name = "order_num", nullable = false)
@@ -26,7 +29,7 @@ public class OrderTable {
     @Column(name = "item_name", length = 30, nullable = false)
     private String itemName;
 
-    //@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "customer_name")
     private String customerName;
     
@@ -79,7 +82,4 @@ public class OrderTable {
 		this.orderReq = orderReq;
 		this.orderStatus = orderStatus;
 	}
-    
-    
-
 }
