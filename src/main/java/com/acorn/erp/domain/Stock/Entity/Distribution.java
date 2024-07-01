@@ -3,8 +3,8 @@ package com.acorn.erp.domain.Stock.Entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,14 +13,14 @@ import lombok.Setter;
 @Entity
 public class Distribution {
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue
     private Long id;
 
-    @Column(name = "item_code", unique = true, length = 10)
-    private String itemCode;
-
-    @Column(name = "item_name", length = 20)
-    private String itemName;
+//    @Column(name = "item_code", unique = true, length = 10)
+//    private String itemCode;
+//
+//    @Column(name = "item_name", length = 20)
+//    private String itemName;
 
     @Column(name = "receipt_date")
     private String receiptDate;
@@ -39,4 +39,7 @@ public class Distribution {
     
     @Column(name = "expected_recepit_date", length = 30)
     private String expectedReceiptDate;
+    
+    
+    
 }
