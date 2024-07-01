@@ -53,7 +53,7 @@ public class TransactionService {
             List<String> mostPurchasedProducts = orderRepository.findTopByCustomerIdOrderByItemQtyDesc(customerId);
             String mostPurchasedProduct = mostPurchasedProducts.isEmpty() ? null : mostPurchasedProducts.get(0);
 
-			if (!repository.existsByCustomerName(customerName)) {
+			if (!repository.existsByCustomerId(customerId)) {
             CustomerTransactionInfo info = new CustomerTransactionInfo();
             
             info.setTransactionInfoId(customerId);
