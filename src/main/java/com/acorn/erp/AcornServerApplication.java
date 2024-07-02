@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 
-@MapperScan("com.acorn.erp.domain.*")
+@MapperScan("com.acorn.erp.domain.Login.*")
 
 @MapperScan("com.acorn.erp.domain.Exam.Repository")
 @ComponentScan(basePackages = {"com.acorn.erp.domain.Stock"})
