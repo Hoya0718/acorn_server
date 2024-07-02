@@ -2,6 +2,7 @@ package com.acorn.erp.domain.Customer.Entity;
 
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class CustomerInfo {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_info_seq")
     @SequenceGenerator(name = "customer_info_seq", sequenceName = "customer_info_seq", allocationSize = 1)
 	private int customerId;
+    @Column(name = "customer_name", length = 30, nullable = false)
 	private String customerName;
 	private String customerGender;
 	private Date customerBirthDate;

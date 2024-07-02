@@ -40,7 +40,11 @@ public class PreferenceService {
 	private RegionGroupRepository regionGroupRepository;
 	@Autowired
 	private PreferenceRepository repository;
-	
+	@Transactional
+    @PostConstruct
+    public void init() {
+        calculateOrderData();
+    }
 	@Transactional
 	public void calculateOrderData() {
 
@@ -53,36 +57,41 @@ public class PreferenceService {
 
 		// 각 제품 이름에 거래 총금액, 총수량 계산하기
 		for (String itemName : itemNames) {
-			List<OrderTable> ordersForItem = orderRepository.findAll().stream()
-					.filter(order -> itemName.equals(order.getItemName())).collect(Collectors.toList());
+			 List<OrderTable> ordersForItem = completedOrders.stream()
+	                    .filter(order -> itemName.equals(order.getItemName())).collect(Collectors.toList());
 
-			 BigDecimal  totalAmount = completedOrders.stream()
-	                    .map(order -> order.getOrderPrice().multiply(BigDecimal.valueOf(order.getItemQty())))
+	            BigDecimal totalAmount = ordersForItem.stream()
+	                    .map(order -> {
+	                        BigDecimal price = order.getOrderPrice() != null ? order.getOrderPrice() : BigDecimal.ZERO;
+	                        BigDecimal qty = BigDecimal.valueOf(order.getItemQty());
+	                        return price.multiply(qty);
+	                    })
 	                    .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-			int totalQuantity = ordersForItem.stream().mapToInt(OrderTable::getItemQty).sum();
-			
+	            int totalQuantity = ordersForItem.stream().mapToInt(OrderTable::getItemQty).sum();
+
 			// 성별 계산
 			Map<String, Integer> genderTotalAmountMap = ordersForItem.stream()
-                    .flatMap(order -> customerInfoRepository.findByCustomerId(order.getCustomerId()).stream()
-                            .map(genderGroup -> new AbstractMap.SimpleEntry<>(genderGroup.getCustomerGender(),
-                                    order.getOrderPrice().multiply(BigDecimal.valueOf(order.getItemQty())).intValue())))
-                    .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
+					.flatMap(order -> customerInfoRepository.findByCustomerId(order.getCustomerId()).stream()
+							.map(genderGroup -> new AbstractMap.SimpleEntry<>(genderGroup.getCustomerGender(),
+									 (order.getOrderPrice() != null ? order.getOrderPrice() : BigDecimal.ZERO)
+									 .multiply(BigDecimal.valueOf(order.getItemQty())).intValue())))
+					.collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
 
-			 String genderPreference = genderTotalAmountMap.entrySet().stream()
-		                .max(Map.Entry.comparingByValue()).map(Map.Entry::getKey).orElse("Unknown");
+			String genderPreference = genderTotalAmountMap.entrySet().stream().max(Map.Entry.comparingByValue())
+					.map(Map.Entry::getKey).orElse("Unknown");
 
-	            // 결과 출력
-	            System.out.println("Item Name: " + itemName + ", Gender Preference: " + genderPreference);
-			
+			// 결과 출력
+			System.out.println("Item Name: " + itemName + ", Gender Preference: " + genderPreference);
+
 			// 연령별 선호도 계산
-	            Map<String, Integer> ageCountMap = ordersForItem.stream()
-	            	    .flatMap(order -> ageGroupRepository.findByCustomerId(order.getCustomerId()).stream()
-	            	        .map(ageGroup -> new AbstractMap.SimpleEntry<>(ageGroup.getAgeGroup(),
-	            	            order.getOrderPrice().multiply(BigDecimal.valueOf(order.getItemQty())).intValue())))
-	            	    .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
+			Map<String, Integer> ageCountMap = ordersForItem.stream()
+					.flatMap(order -> ageGroupRepository.findByCustomerId(order.getCustomerId()).stream()
+							.map(ageGroup -> new AbstractMap.SimpleEntry<>(ageGroup.getAgeGroup(),
+									(order.getOrderPrice() != null ? order.getOrderPrice() : BigDecimal.ZERO)
+									.multiply(BigDecimal.valueOf(order.getItemQty())).intValue())))
+					.collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
 
-			
 			String agePreference = ageCountMap.entrySet().stream().max(Map.Entry.comparingByValue())
 					.map(Map.Entry::getKey).orElse("Unknown");
 
@@ -113,7 +122,7 @@ public class PreferenceService {
 			if (!repository.existsByItemName(itemName)) {
 				CustomerPreferenceData data = new CustomerPreferenceData();
 				data.setItemName(itemName);
-				data.setTotalAmountForProduct(totalAmount.intValue()); 
+				data.setTotalAmountForProduct(totalAmount.intValue());
 				data.setTotalCountForProduct(totalQuantity);
 				data.setGenderPreference(genderPreference);
 				data.setAgePreference(agePreference);
@@ -122,12 +131,13 @@ public class PreferenceService {
 				data.setRegionPreference_town(regionPreference_town);
 
 				repository.save(data);
-				
+
 			} else {
 				System.out.println("ProductName {} already exists. Skipping..." + itemName);
 			}
 		}
 	}
+
 //	public List<Integer> getCustomerIds() {
 //        return orderRepository.findAll().stream()
 //                .map(OrderTable::getCustomerId)

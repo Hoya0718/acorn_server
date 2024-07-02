@@ -87,4 +87,11 @@ public class TransactionService {
                 .limit(20)
                 .collect(Collectors.toList());
     }
+    public List<Integer> getCustomerIds() {
+        return orderRepository.findAll().stream()
+                .map(OrderTable::getCustomerId)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
 }
