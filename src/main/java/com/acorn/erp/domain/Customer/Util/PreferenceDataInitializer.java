@@ -1,3 +1,4 @@
+/*
 package com.acorn.erp.domain.Customer.Util;
 
 import java.util.List;
@@ -23,3 +24,4 @@ public class PreferenceDataInitializer implements ApplicationListener<ContextRef
          
     }
 }
+*/
