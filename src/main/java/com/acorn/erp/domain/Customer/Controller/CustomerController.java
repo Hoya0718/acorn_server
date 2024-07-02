@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +28,6 @@ import com.acorn.erp.domain.Customer.Repository.RegionGroupRepository;
 import com.acorn.erp.domain.Customer.Service.CustomerDataService;
 import com.acorn.erp.domain.Customer.Service.GradeService;
 
-import jakarta.annotation.PostConstruct;
-
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
@@ -41,6 +42,19 @@ public class CustomerController {
 	private GradeService gradeService;
 	@Autowired
 	private RegionGroupRepository regionRepository;
+	
+	@GetMapping("/getAllList")
+	public List<CustomerInfo> getAllList() {
+		List<CustomerInfo> users = repository.findAll();
+		System.out.println(users);
+		return users;
+	}
+	@PostMapping("/getAllList")
+	public Page<CustomerInfo> getAllPageInfo(Model model, Pageable pageable) {
+		Page<CustomerInfo> users = repository.findAll(pageable);
+		System.out.println(users);
+		return users;
+	}
 
 	@GetMapping("/getCountAll")
 	public int countAll() {

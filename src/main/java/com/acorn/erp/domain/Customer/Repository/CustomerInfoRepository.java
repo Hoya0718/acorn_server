@@ -13,8 +13,11 @@ import com.acorn.erp.domain.Customer.Entity.CustomerInfo;
 
 @Repository
 public interface CustomerInfoRepository extends JpaRepository<CustomerInfo, Integer>{
+	
 	@Query("SELECT COUNT(c) FROM CustomerInfo c WHERE c.registerDate <= :endDate")
     long countCustomersLastyear(@Param("endDate") Date endDate);
     
 	List<CustomerInfo> findByCustomerId(int customerId);
+	
+	
 }
