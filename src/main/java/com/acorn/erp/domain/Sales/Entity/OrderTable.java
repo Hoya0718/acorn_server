@@ -16,7 +16,6 @@ import lombok.Setter;
 
 
 @Entity
-@NoArgsConstructor
 public class OrderTable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_table_SEQ")
@@ -61,14 +60,10 @@ public class OrderTable {
     @Column(name = "order_status", length = 10)
     private String orderStatus;
     
-    // 기본 생성자
-    public OrderTable() {
-    }
     
 	public Long getOrderNum() {
 		return orderNum;
 	}
-
 
 	public void setOrderNum(Long orderNum) {
 		this.orderNum = orderNum;
