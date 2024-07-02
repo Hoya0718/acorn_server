@@ -49,9 +49,13 @@ public class VendorService {
     public void deleteVendor(Long code) {
         vendorRepository.deleteById(code);
     }
+
     
      //특정 검색어로 vendor 검색 메서드
     public List<Vendor> searchVendors(String keyword) {
         return vendorRepository.findByVendorNameContainingIgnoreCase(keyword);
     }
+
+
 }
+
