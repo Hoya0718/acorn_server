@@ -1,51 +1,64 @@
-package com.acorn.erp.domain.Customer.Service;
-
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.acorn.erp.domain.Customer.Entity.CustomerTransactionInfo;
-import com.acorn.erp.domain.Customer.Repository.TransactionRepository;
-
-@Service
-public class TransactionService {
-
- //판매정보필요
+//package com.acorn.erp.domain.Customer.Service;
+//
+//import java.time.LocalDateTime;
+//import java.util.List;
+//import java.util.stream.Collectors;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Service;
+//import org.springframework.transaction.annotation.Transactional;
+//
+//import com.acorn.erp.domain.Customer.Entity.CustomerTransactionInfo;
+//import com.acorn.erp.domain.Customer.Repository.TransactionRepository;
+//import com.acorn.erp.domain.Sales.Entity.OrderTable;
+//import com.acorn.erp.domain.Sales.Repository.OrderRepository;
+//
+//import jakarta.annotation.PostConstruct;
+//
+//@Service
+//public class TransactionService {
+//
+//	@Autowired
+//	private OrderRepository orderRepository; 
 //    @Autowired
-//    private OrderRepository orderRepository;
-
-    @Autowired
-    private TransactionRepository repository;
-    
-//고객거래정보 데이터 입력
-    @Transactional
-    public void calculateAndInsertCustomerTransactionInfo() {
-//        List<String> customerIds = orderRepository.findAll().stream()
-//                .map(orderRepository::getCustomer_id)
-//                .distinct()
-//                .collect(Collectors.toList()); //order_status
+//    private TransactionRepository repository;
+//    
+////    @PostConstruct
+////    @Transactional
+////    public void init() {
+////        calculateTransactionData();
+////    }
+//    
+//    @Transactional
+//    public void calculateTransactionData(int customerId) {
+//		List<OrderTable> completedOrders = orderRepository.findAll().stream()
+//				.filter(order -> "Delivered".equals(order.getOrderStatus())).collect(Collectors.toList());
 //
-//        for (String customerId : customerIds) {
-//            // 최근 거래일 계산
-//            Date lastTransactionDate = orderRepository.findMaxOrder_dateByCustomerId(customerId);
-//
+//		List<Integer> customerIds = completedOrders.stream()
+//				.map(OrderTable::getCustomerId).distinct()
+//				.collect(Collectors.toList());
+//		
+//        	LocalDateTime lastTransactionDate = orderRepository.findTopByCustomerIdOrderByOrderDateDesc(customerId);
+//            // 이름 가져오기
+//            List<String> customerNames = orderRepository.findCustomerNameByCustomerId(customerId);
+//            String customerName = customerNames.isEmpty() ? null : customerNames.get(0);
 //            // 총 거래 금액 계산
-//            int totalAmountForCustomer = orderRepository.sumItem_total_priceByCustomerId(customerId);
+//            int totalAmountForCustomer = orderRepository.sumOrderTotalPriceByCustomerId(customerId);
 //            // 최고 매출 상품명 계산
-//            String topSellingProduct = orderRepository.findItem_nameByCustomerId(customerId);
-//
+//            List<String> topSellingProducts = orderRepository.findFirstByCustomerIdOrderByTotalPriceDesc(customerId);
+//            String topSellingProduct = topSellingProducts.isEmpty() ? null : topSellingProducts.get(0);
 //            // 총 거래 횟수 계산
-//            int totalCountForCustomer = orderRepository.sumItem_numByCustomerId(customerId);
+//            int totalCountForCustomer = orderRepository.sumItemQtyByCustomerId(customerId);
 //            // 최다 거래 상품명 계산
-//            String mostPurchasedProduct = orderRepository.findItem_nameByCustomerId(customerId);
+//            List<String> mostPurchasedProducts = orderRepository.findTopByCustomerIdOrderByItemQtyDesc(customerId);
+//            String mostPurchasedProduct = mostPurchasedProducts.isEmpty() ? null : mostPurchasedProducts.get(0);
 //
+//			if (!repository.existsByCustomerId(customerId)) {
 //            CustomerTransactionInfo info = new CustomerTransactionInfo();
-//            info.setTransactionInfoId("CTI_" + customerId);
-//            info.setCustomerId(customerId);	//FK
+//            
+//            info.setTransactionInfoId(customerId);
+//            info.setCustomerId(customerId);
+//            info.setCustomerName(customerName); 
 //            info.setLastTransactionDate(lastTransactionDate);
 //            info.setTotalAmountForCustomer(totalAmountForCustomer);
 //            info.setTopSellingProduct(topSellingProduct);
@@ -53,9 +66,25 @@ public class TransactionService {
 //            info.setMostPurchasedProduct(mostPurchasedProduct);
 //
 //            repository.save(info);
+//			
 //        }
-    }
-    
-    //테이블에 출력하기
-    //고객랭킹
-}
+//    }
+//	public List<CustomerTransactionInfo> getCustomerRank() {
+//		return repository.findAll();
+//	}
+//	public List<CustomerTransactionInfo> getTop10ByTotalAmount() {
+//        List<CustomerTransactionInfo> allTransactions = repository.findAll();
+//        return allTransactions.stream()
+//                .sorted((t1, t2) -> Integer.compare(t2.getTotalAmountForCustomer(), t1.getTotalAmountForCustomer()))
+//                .limit(20)
+//                .collect(Collectors.toList());
+//    }
+//
+//    public List<CustomerTransactionInfo> getTop10ByTotalCount() {
+//        List<CustomerTransactionInfo> allTransactions = repository.findAll();
+//        return allTransactions.stream()
+//                .sorted((t1, t2) -> Integer.compare(t2.getTotalCountForCustomer(), t1.getTotalCountForCustomer()))
+//                .limit(20)
+//                .collect(Collectors.toList());
+//    }
+//}
