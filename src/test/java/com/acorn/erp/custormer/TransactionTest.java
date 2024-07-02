@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.acorn.erp.domain.Customer.Entity.CustomerPreferenceData;
 import com.acorn.erp.domain.Customer.Entity.CustomerTransactionInfo;
+import com.acorn.erp.domain.Customer.Repository.TransactionRepository;
 import com.acorn.erp.domain.Customer.Service.TransactionService;
 
 @SpringBootTest
@@ -17,6 +19,9 @@ public class TransactionTest implements CommandLineRunner {
 
 	@Autowired
 	private TransactionService service;
+
+    @Autowired
+    private TransactionRepository repository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -37,4 +42,9 @@ public class TransactionTest implements CommandLineRunner {
             });
         }
 }
+	@Test
+	public void postTest() {
+		List<CustomerTransactionInfo> transactionInfo = repository.findAll();
+		System.out.println("데이터: "+ transactionInfo);
+	}
 }
