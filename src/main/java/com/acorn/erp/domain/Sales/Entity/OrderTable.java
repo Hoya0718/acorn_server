@@ -80,6 +80,7 @@ public class OrderTable {
 		this.orderStatus = orderStatus;
 	}
     
-    
+	public OrderTable() {
+	}
 
 }
