@@ -60,7 +60,6 @@ public class OrderTable {
     @Column(name = "order_status", length = 10)
     private String orderStatus;
 
-    
 	public OrderTable(int customerId, Long orderNum, String itemName, String customerName, String customerTel, String customerAddr,
 			BigDecimal orderPrice, int itemQty, BigDecimal deliveryFee, BigDecimal orderTotalPrice,
 			LocalDateTime orderDate, String orderReq, String orderStatus) {
