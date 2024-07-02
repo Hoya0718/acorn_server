@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.acorn.erp.domain.Sales.Entity.ItemTable;
+import com.acorn.erp.domain.Sales.Entity.Item;
 
 @Repository
-public interface ItemRepository extends JpaRepository<ItemTable, Long> {
+public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("SELECT i FROM Item i WHERE i.itemCode = :itemCode")
-    ItemTable findByItemCode(@Param("itemCode") Long itemCode);
+    Item findByItemCode(@Param("itemCode") Long itemCode);
 }

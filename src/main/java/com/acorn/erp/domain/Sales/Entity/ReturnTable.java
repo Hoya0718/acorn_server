@@ -17,6 +17,7 @@ import jakarta.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
+/*
 @Getter
 @Setter
 @Entity
@@ -58,3 +59,4 @@ public class ReturnTable {
     @Column(name = "return_status", length = 10)
     private String returnStatus;
 }
+*/
