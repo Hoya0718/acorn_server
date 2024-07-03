@@ -17,7 +17,7 @@ public class FindIdController {
     private FindIdService findIdService;
 
     @GetMapping("/findEmail/{registrationNum}")
-    public String getFindId(String password, @PathVariable("registrationNum") String registrationNum) {
+    public String getFindId(@PathVariable("registrationNum") String registrationNum) {
         System.out.println("아이디 찾기 실행");
         return findIdService.getFindId(registrationNum);
     }
