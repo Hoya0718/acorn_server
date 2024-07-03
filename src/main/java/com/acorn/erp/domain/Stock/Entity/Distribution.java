@@ -2,12 +2,9 @@ package com.acorn.erp.domain.Stock.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,15 +12,15 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Distribution {
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    
-    @Column(name = "distribution_code", unique = true) 
+
+    @Column(name = "distribution_code", unique = true, length = 10)
     private String distributionCode;
 
-    @Column(name = "distribution_unit")
-    private String distributionUnit;
+    @Column(name = "distribution_name", length = 20)
+    private String distributionName;
 
     @Column(name = "receipt_date")
     private String receiptDate;
@@ -40,10 +37,9 @@ public class Distribution {
     @Column(name = "release_qty")
     private Integer releaseQty;
 
-    @Column(name = "current_qty")
+    @Column(name = "current_qty", length = 300)
     private Integer currentQty;
-
-    @Column(name = "expected_receipt_date")
+    
+    @Column(name = "expected_recepit_date", length = 30)
     private String expectedReceiptDate;
-
 }
