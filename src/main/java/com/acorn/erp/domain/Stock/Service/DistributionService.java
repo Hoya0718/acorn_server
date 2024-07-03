@@ -1,59 +1,32 @@
 package com.acorn.erp.domain.Stock.Service;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.acorn.erp.domain.Stock.Entity.Distribution;
+import com.acorn.erp.domain.Stock.Repository.DistributionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.acorn.erp.domain.Stock.Entity.Distribution;
-import com.acorn.erp.domain.Stock.Repository.DistributionRepository;
+import java.util.List;
 
 @Service
 public class DistributionService {
 
-    private final DistributionRepository distributionRepository;
-
     @Autowired
-    public DistributionService(DistributionRepository distributionRepository) {
-        this.distributionRepository = distributionRepository;
-    }
+    private DistributionRepository distributionRepository;
 
     public List<Distribution> getAllDistributions() {
         return distributionRepository.findAll();
     }
 
-    public Distribution getDistributionById(Long id) {
-        Optional<Distribution> distributionOptional = distributionRepository.findById(id);
-        return distributionOptional.orElse(null);
-    }
-
-    public Distribution createDistribution(Distribution distribution) {
+    public Distribution saveDistribution(Distribution distribution) {
         return distributionRepository.save(distribution);
-    }
-
-    public Distribution updateDistribution(Long id, Distribution updatedDistribution) {
-        Optional<Distribution> distributionOptional = distributionRepository.findById(id);
-        if (distributionOptional.isPresent()) {
-            Distribution existingDistribution = distributionOptional.get();
-            // Update fields of existingDistribution with updatedDistribution
-            existingDistribution.setDistributionCode(updatedDistribution.getDistributionCode());
-            existingDistribution.setDistributionUnit(updatedDistribution.getDistributionUnit());
-            existingDistribution.setReceiptDate(updatedDistribution.getReceiptDate());
-            existingDistribution.setOrderQty(updatedDistribution.getOrderQty());
-            existingDistribution.setInitialQty(updatedDistribution.getInitialQty());
-            existingDistribution.setReceivedQty(updatedDistribution.getReceivedQty());
-            existingDistribution.setReleaseQty(updatedDistribution.getReleaseQty());
-            existingDistribution.setCurrentQty(updatedDistribution.getCurrentQty());
-            existingDistribution.setExpectedReceiptDate(updatedDistribution.getExpectedReceiptDate());
-
-            return distributionRepository.save(existingDistribution);
-        } else {
-            return null; // Handle case where distribution with given id is not found
-        }
     }
 
     public void deleteDistribution(Long id) {
         distributionRepository.deleteById(id);
+    }
+
+    public Distribution updateDistribution(Long id, Distribution distribution) {
+        distribution.setId(id);
+        return distributionRepository.save(distribution);
     }
 }

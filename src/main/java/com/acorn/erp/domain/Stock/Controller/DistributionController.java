@@ -10,44 +10,51 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.acorn.erp.domain.Stock.Entity.Distribution;
-import com.acorn.erp.domain.Stock.Service.DistributionService;
+import com.acorn.erp.domain.Stock.Entity.Distribution; // Distribution 엔티티를 임포트
+import com.acorn.erp.domain.Stock.Repository.DistributionRepository;
+
 
 @RestController
+//@CrossOrigin(origins = "http://localhost:3000") // http://localhost:3000에서 오는 요청을 허용
 @RequestMapping("/api/distribution")
 public class DistributionController {
+    
+    @Autowired // 생성자 주입
+    private DistributionRepository distributionRepository; // 변수명 일치화
 
-    private final DistributionService distributionService;
-
-    @Autowired
-    public DistributionController(DistributionService distributionService) {
-        this.distributionService = distributionService;
+    @GetMapping
+    public List<Distribution> getAllDistribution() {
+        return distributionRepository.findAll(); // 호출하여 모든 Distribution 항목을 반환
     }
 
-    @GetMapping("/list")
-    public List<Distribution> getAllDistributions() {
-        return distributionService.getAllDistributions();
-    }
-
-    @GetMapping("/{id}")
-    public Distribution getDistributionById(@PathVariable("id") Long id) {
-        return distributionService.getDistributionById(id);
-    }
-
-    @PostMapping("/add")
-    public Distribution createDistribution(@RequestBody Distribution distribution) {
-        return distributionService.createDistribution(distribution);
-    }
-
-    @PutMapping("/{id}")
-    public Distribution updateDistribution(@PathVariable("id") Long id, @RequestBody Distribution updatedDistribution) {
-        return distributionService.updateDistribution(id, updatedDistribution);
+    @PostMapping
+    public Distribution createDistribution(@RequestBody Distribution distribution) { // 메소드 리턴 타입 및 이름 변경
+    	try {
+            System.out.println("추가 성공");
+            return distributionRepository.save(distribution); // 저장 후 반환
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to create distribution: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteDistribution(@PathVariable("id") Long id) {
-        distributionService.deleteDistribution(id);
+    public void deleteDistribution(@PathVariable("id") Long id) { //경로에서 id값 추출
+        distributionRepository.deleteById(id); //호출하여 해당 ID를 가진 항목을 삭제
     }
+
+    @PutMapping("/{id}")
+    public Distribution updateDistribution(@PathVariable("id") Long id, @RequestBody Distribution distribution) {
+        distribution.setId(id); // 설정
+        return distributionRepository.save(distribution); //저장 후 반환
+    }
+    
+    @GetMapping("/search")
+    public List<Distribution> searchDistributions(@RequestParam("searchTerm") String searchTerm) {
+        return distributionRepository.findByDistributionCodeContainingIgnoreCaseOrDistributionNameContainingIgnoreCase(searchTerm, searchTerm);
+    }
+    
 }

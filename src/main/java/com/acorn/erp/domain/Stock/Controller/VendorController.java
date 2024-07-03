@@ -55,6 +55,13 @@ public class VendorController {
         return vendorService.createVendor(vendor);
     }
     
+    // id로 vendor 수정 폼 이동
+    @GetMapping("/edit/{code}")
+    public String showEditForm(@PathVariable Long code, Model model) {
+        Vendor vendor = vendorService.getVendorById(code);
+        model.addAttribute("vendor", vendor);
+        return "vendor/edit"; // 이동할 수정 폼 페이지의 경로와 이름
+    }
 
     // code로 수정
     @PutMapping("/{code}")
@@ -68,15 +75,5 @@ public class VendorController {
     public @ResponseBody String deleteVendor(@PathVariable("code") Long code) {
         vendorService.deleteVendor(code);
         return "Vendor deleted successfully";
-    }
-
-    
-    
-     //특정 조건에 따라 vendor 검색
-    @GetMapping("/search")
-    public @ResponseBody List<Vendor> searchVendors(@RequestParam(name = "keyword") String keyword) {
-        // 검색어를 이용하여 vendor 검색
-        List<Vendor> vendors = vendorService.searchVendors(keyword);
-        return vendors;
     }
 }

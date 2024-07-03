@@ -13,56 +13,50 @@ import java.util.List;
 @RequestMapping("/api/purchase")
 public class PurchaseController {
 
+	 @Autowired
     private final PurchaseService purchaseService;
 
-    @Autowired
     public PurchaseController(PurchaseService purchaseService) {
         this.purchaseService = purchaseService;
     }
 
-    // 모든 구매 목록 조회
     @GetMapping("/list")
     public @ResponseBody List<Purchase> getAllPurchases() {
         return purchaseService.getAllPurchases();
     }
 
-    // 특정 ID에 해당하는 구매 정보 조회
-    @GetMapping("/{id}")
-    public @ResponseBody Purchase getPurchaseById(@PathVariable("id") Long id) {
-        return purchaseService.getPurchaseById(id);
+    @GetMapping("/{code}")
+    public String getPurchaseById(@PathVariable("code") Long code, Model model) {
+        Purchase purchase = purchaseService.getPurchaseById(code);
+        model.addAttribute("purchase", purchase);
+        return "purchase/list"; 
     }
 
-    // 구매 추가 폼 보여주기
     @GetMapping("/add")
-    public String showAddForm(Model model) {
-        model.addAttribute("purchase", new Purchase());
-        return "purchase/add"; // purchase/add.html로 이동
+    public String showAddForm() {
+        return "purchase/add";
     }
 
-    // 새로운 구매 생성
     @PostMapping("/add")
     public @ResponseBody Purchase createPurchase(@RequestBody Purchase purchase) {
         return purchaseService.createPurchase(purchase);
     }
 
-    // 구매 수정 폼 보여주기
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        Purchase purchase = purchaseService.getPurchaseById(id);
+    @GetMapping("/edit/{code}")
+    public String showEditForm(@PathVariable Long code, Model model) {
+        Purchase purchase = purchaseService.getPurchaseById(code);
         model.addAttribute("purchase", purchase);
-        return "purchase/edit"; // purchase/edit.html로 이동
+        return "purchase/edit"; 
     }
 
-    // 구매 업데이트
-    @PutMapping("/{id}")
-    public @ResponseBody void updatePurchase(@PathVariable("id") Long id, @ModelAttribute("purchase") Purchase updatedPurchase) {
-        purchaseService.updatePurchase(id, updatedPurchase);
+    @PutMapping("/{code}")
+    public @ResponseBody Purchase updatePurchase(@PathVariable("code") Long code, @RequestBody Purchase updatedPurchase) {
+        return purchaseService.updatePurchase(code, updatedPurchase);
     }
 
-    // 구매 삭제
-    @DeleteMapping("/{id}")
-    public @ResponseBody String deletePurchase(@PathVariable("id") Long id) {
-        purchaseService.deletePurchase(id);
+    @DeleteMapping("/{code}")
+    public @ResponseBody String deletePurchase(@PathVariable("code") Long code) {
+        purchaseService.deletePurchase(code);
         return "Purchase deleted successfully";
     }
 }
