@@ -82,7 +82,7 @@ public class RegionGroup {
 		this.regiongroupProvince = regiongroupProvince;
 		this.regiongroupCity = regiongroupCity;
 		this.regiongroupTown = regiongroupTown;
-	}
+ 	}
 
 
 
