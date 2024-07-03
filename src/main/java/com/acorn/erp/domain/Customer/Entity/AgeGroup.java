@@ -21,6 +21,7 @@ public class AgeGroup {
 	private int agegroupId;
 	@Column(nullable = false)
 	private int customerId;
+	
 	private String ageGroup;
 	
 	public int getAgegroupId() {
