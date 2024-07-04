@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,7 +65,6 @@ public class CustomerController {
 	 public ResponseEntity<CustomerInfo> updateCustomerInfo(@PathVariable("customerId") int customerId, @RequestBody CustomerInfo newInfo) {
         return repository.findById(customerId)
                 .map(customer -> {
-                    // Update customer information
                     customer.setCustomerName(newInfo.getCustomerName());
                     customer.setCustomerGender(newInfo.getCustomerGender());
                     customer.setCustomerBirthDate(newInfo.getCustomerBirthDate());
@@ -74,11 +74,17 @@ public class CustomerController {
                     
                     repository.save(customer);
                     
-                    return ResponseEntity.ok(customer);
+                    return  ResponseEntity.ok(customer);
                 })
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
-
+	@DeleteMapping("/delete/{customerId}")
+	 public String deleteCustomerInfo(@RequestParam(value="customerId", required = false) int customerId) {
+       repository.deleteById(customerId);
+       return "delete succefully!"; 
+    		   //"redirect:/jpa/memberList";
+   }
+	
 	@GetMapping("/getCountAll")
 	public int countAll() {
 		List<CustomerInfo> users = repository.findAll();

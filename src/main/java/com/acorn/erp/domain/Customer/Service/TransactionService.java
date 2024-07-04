@@ -41,6 +41,7 @@ public class TransactionService {
         	LocalDateTime lastTransactionDate = orderRepository.findTopByCustomerIdOrderByOrderDateDesc(customerId);
             // 이름 가져오기
             List<String> customerNames = orderRepository.findCustomerNameByCustomerId(customerId);
+            
             String customerName = customerNames.isEmpty() ? null : customerNames.get(0);
             // 총 거래 금액 계산
             int totalAmountForCustomer = orderRepository.sumOrderTotalPriceByCustomerId(customerId);

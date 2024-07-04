@@ -31,9 +31,10 @@ public class GradeController {
     }
     @PutMapping("/grade/{customerId}")
 	 public ResponseEntity<CustomerGrade> updateCustomerGrade(@PathVariable("customerId") int customerId, @RequestBody CustomerGrade newInfo) {
-       return repository.findById(customerId)
+       return repository.findByCustomerId(customerId)
+    		   .stream()
+               .findFirst()
                .map(customer -> {
-                   // Update customer information
                    customer.setCustomerGrade (newInfo.getCustomerGrade());
                    
                    repository.save(customer);
