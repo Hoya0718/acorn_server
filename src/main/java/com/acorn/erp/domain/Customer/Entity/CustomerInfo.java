@@ -17,6 +17,7 @@ import lombok.Setter;
 @Table(name = "CUSTOMER_INFO")
 public class CustomerInfo {
 	public CustomerInfo() {}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_info_seq")
     @SequenceGenerator(name = "customer_info_seq", sequenceName = "customer_info_seq", allocationSize = 1)
