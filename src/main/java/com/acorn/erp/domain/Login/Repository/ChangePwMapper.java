@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 @Mapper
-@Repository
 public interface ChangePwMapper {
     @Update("UPDATE userinfo SET password = #{password} WHERE registrationNum = #{registrationNum}")
     int putChangePw(@Param("password") String password, @Param("registrationNum") String registrationNum);
