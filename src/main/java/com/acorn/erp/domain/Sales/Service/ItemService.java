@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.acorn.erp.domain.Sales.Entity.Item;
+import com.acorn.erp.domain.Sales.Entity.ItemTable;
 import com.acorn.erp.domain.Sales.Repository.ItemRepository;
 
 @Service
@@ -18,21 +18,21 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public List<Item> getAllItems() {
+    public List<ItemTable> getAllItems() {
         return itemRepository.findAll();
     }
 
-    public Item getItemByCode(Long itemCode) {
+    public ItemTable getItemByCode(Long itemCode) {
         return itemRepository.findById(itemCode)
                 .orElseThrow(() -> new RuntimeException("Item not found with code: " + itemCode));
     }
 
-    public Item createItem(Item item) {
+    public ItemTable createItem(ItemTable item) {
         return itemRepository.save(item);
     }
 
-    public Item updateItem(Long itemCode, Item newItem) {
-        Item existingItem = getItemByCode(itemCode);
+    public ItemTable updateItem(Long itemCode, ItemTable newItem) {
+    	ItemTable existingItem = getItemByCode(itemCode);
         existingItem.setItemType(newItem.getItemType());
         existingItem.setItemName(newItem.getItemName());
         existingItem.setItemStatus(newItem.getItemStatus());
@@ -43,7 +43,7 @@ public class ItemService {
 
     @Transactional
     public void deleteItem(Long itemCode) {
-        Item item = getItemByCode(itemCode);
+    	ItemTable item = getItemByCode(itemCode);
         itemRepository.delete(item);
     }
 }
