@@ -22,6 +22,7 @@ public class Distribution {
     @Column(name = "distribution_name", length = 20)
     private String distributionName;
 
+    
     @Column(name = "receipt_date")
     private String receiptDate;
     
