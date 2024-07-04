@@ -32,7 +32,6 @@ public class AgeGroupController {
     public Map<String, Long> countAgeGroup(){
         return service.countCustomersByAgeGroup();
     }
-
     @GetMapping("/get_age_group")
     public List<AgeGroup> getAgeGroup(){
         return repository.findAll();
