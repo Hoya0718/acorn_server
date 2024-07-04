@@ -3,7 +3,6 @@ package com.acorn.erp.domain.Stock.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,8 +32,13 @@ public class DistributionController {
 
     @PostMapping
     public Distribution createDistribution(@RequestBody Distribution distribution) { // 메소드 리턴 타입 및 이름 변경
-    	System.out.println("추가 성공"); 
-        return distributionRepository.save(distribution); //새로운 항목을 데이터베이스에 저장하고, 저장된 객체를 반환
+    	try {
+            System.out.println("추가 성공");
+            return distributionRepository.save(distribution); // 저장 후 반환
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to create distribution: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -50,7 +54,7 @@ public class DistributionController {
     
     @GetMapping("/search")
     public List<Distribution> searchDistributions(@RequestParam("searchTerm") String searchTerm) {
-        return distributionRepository.findByItemCodeContainingIgnoreCaseOrItemNameContainingIgnoreCase(searchTerm, searchTerm);
+        return distributionRepository.findByDistributionCodeContainingIgnoreCaseOrDistributionNameContainingIgnoreCase(searchTerm, searchTerm);
     }
     
 }
