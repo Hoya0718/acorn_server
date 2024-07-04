@@ -62,7 +62,7 @@ public class CustomerController {
 		return users;
 	}
 	@PutMapping("/info/{customerId}")
-	 public ResponseEntity<CustomerInfo> updateCustomerInfo(@PathVariable("customerId") int customerId, @RequestBody CustomerInfo newInfo) {
+	 public ResponseEntity<CustomerInfo> updateCustomerInfo(@PathVariable("customerId")  Integer customerId, @RequestBody CustomerInfo newInfo) {
         return repository.findById(customerId)
                 .map(customer -> {
                     customer.setCustomerName(newInfo.getCustomerName());
@@ -79,10 +79,12 @@ public class CustomerController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 	@DeleteMapping("/delete/{customerId}")
-	 public String deleteCustomerInfo(@RequestParam(value="customerId", required = false) int customerId) {
+	 public ResponseEntity<?> deleteCustomerInfo(@PathVariable("customerId") Integer customerId) {
+		if (customerId == null) {
+            return ResponseEntity.badRequest().body("Customer ID cannot be null");
+        }
        repository.deleteById(customerId);
-       return "delete succefully!"; 
-    		   //"redirect:/jpa/memberList";
+       return ResponseEntity.ok("Customer deleted successfully");
    }
 	
 	@GetMapping("/getCountAll")
