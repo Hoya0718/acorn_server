@@ -1,3 +1,4 @@
+
 package com.acorn.erp.domain.Stock.Repository;
 
 import java.sql.Date;
@@ -12,6 +13,6 @@ import com.acorn.erp.domain.Stock.Entity.Distribution;
 
 @Repository
 public interface DistributionRepository extends JpaRepository<Distribution, Long> {
-	List<Distribution> findByItemCodeContainingIgnoreCaseOrItemNameContainingIgnoreCase(String itemCode, String itemName);	
+	List<Distribution> findByDistributionCodeContainingIgnoreCaseOrDistributionNameContainingIgnoreCase(String DistributionCode, String DistributioName);	
 	
 }

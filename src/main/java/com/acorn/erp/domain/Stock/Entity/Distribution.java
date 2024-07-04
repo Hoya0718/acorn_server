@@ -1,3 +1,4 @@
+
 package com.acorn.erp.domain.Stock.Entity;
 
 import jakarta.persistence.Column;
@@ -16,14 +17,17 @@ public class Distribution {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "item_code", unique = true, length = 10)
-    private String itemCode;
+    @Column(name = "distribution_code", unique = true, length = 10)
+    private String distributionCode;
 
-    @Column(name = "item_name", length = 20)
-    private String itemName;
+    @Column(name = "distribution_name", length = 20)
+    private String distributionName;
 
     @Column(name = "receipt_date")
     private String receiptDate;
+    
+    @Column(name = "order_qty")
+    private Integer orderQty;
 
     @Column(name = "initial_qty")
     private Integer initialQty;

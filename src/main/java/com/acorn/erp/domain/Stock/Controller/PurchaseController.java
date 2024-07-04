@@ -1,62 +1,49 @@
 package com.acorn.erp.domain.Stock.Controller;
 
-import com.acorn.erp.domain.Stock.Entity.Purchase;
-import com.acorn.erp.domain.Stock.Service.PurchaseService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
-@Controller
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.acorn.erp.domain.Stock.Entity.Purchase;
+import com.acorn.erp.domain.Stock.Repository.PurchaseRepository;
+
+
+
+@RestController
+//@CrossOrigin(origins = "http://localhost:3000") 
 @RequestMapping("/api/purchase")
 public class PurchaseController {
 
-	 @Autowired
-    private final PurchaseService purchaseService;
+    @Autowired
+    private PurchaseRepository purchaseRepository;
 
-    public PurchaseController(PurchaseService purchaseService) {
-        this.purchaseService = purchaseService;
+    @GetMapping
+    public List<Purchase> getAllPurchase() {
+        return purchaseRepository.findAll();
     }
 
-    @GetMapping("/list")
-    public @ResponseBody List<Purchase> getAllPurchases() {
-        return purchaseService.getAllPurchases();
+    @PostMapping
+    public Purchase createPurchase(@RequestBody Purchase purchase) {
+    	System.out.println("추가 성공"); 
+        return purchaseRepository.save(purchase);
     }
 
-    @GetMapping("/{code}")
-    public String getPurchaseById(@PathVariable("code") Long code, Model model) {
-        Purchase purchase = purchaseService.getPurchaseById(code);
-        model.addAttribute("purchase", purchase);
-        return "purchase/list"; 
+    @DeleteMapping("/{id}")
+    public void deletePurchase(@PathVariable Long id) {
+    	purchaseRepository.deleteById(id);
     }
 
-    @GetMapping("/add")
-    public String showAddForm() {
-        return "purchase/add";
-    }
-
-    @PostMapping("/add")
-    public @ResponseBody Purchase createPurchase(@RequestBody Purchase purchase) {
-        return purchaseService.createPurchase(purchase);
-    }
-
-    @GetMapping("/edit/{code}")
-    public String showEditForm(@PathVariable Long code, Model model) {
-        Purchase purchase = purchaseService.getPurchaseById(code);
-        model.addAttribute("purchase", purchase);
-        return "purchase/edit"; 
-    }
-
-    @PutMapping("/{code}")
-    public @ResponseBody Purchase updatePurchase(@PathVariable("code") Long code, @RequestBody Purchase updatedPurchase) {
-        return purchaseService.updatePurchase(code, updatedPurchase);
-    }
-
-    @DeleteMapping("/{code}")
-    public @ResponseBody String deletePurchase(@PathVariable("code") Long code) {
-        purchaseService.deletePurchase(code);
-        return "Purchase deleted successfully";
+    @PutMapping("/{id}")
+    public Purchase updatePurchase(@PathVariable Long id, @RequestBody Purchase purchase) {
+        purchase.setId(id);
+        return purchaseRepository.save(purchase);
     }
 }

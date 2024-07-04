@@ -1,11 +1,13 @@
 package com.acorn.erp.domain.Stock.Entity;
 
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,10 +15,12 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Purchase {
-
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long purchaseCode;
+    private Long id;
+
+    @Column(name = "item_code", unique = true, length = 10)
+    private String itemCode;
 
     @Column(name = "purchase_unit")
     private String purchaseUnit;
@@ -24,16 +28,17 @@ public class Purchase {
     @Column(name = "purchase_name", length = 21)
     private String purchaseName;
 
-    @Column(name = "order_date")
+    @Column(name = "order_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private String orderDate;
 
     @Column(name = "order_qty")
-    private Long orderQty;
+    private Integer orderQty;
 
     @Column(name = "price")
     private Long price;
 
     @Column(name = "remark", length = 300)
     private String remark;
+
 
 }
