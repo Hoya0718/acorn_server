@@ -15,13 +15,13 @@ public class ResController {
     @Autowired
     private ResService resService;
 
-    @GetMapping
+    @GetMapping("/reservations")
     public List<Reservation> getAllReservations() {
         return resService.getAllReservations();
     }
 
-    @GetMapping("/{id}")
-    public Reservation getReservation(@PathVariable Long id) {
+    @GetMapping("/reservations/{id}")
+    public Reservation getReservation(@PathVariable("id") Long id) {
         return resService.getReservation(id);
     }
 
@@ -32,23 +32,17 @@ public class ResController {
         return ResponseEntity.ok().body("Reservation created successfully");
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateReservation(@PathVariable Long id, @RequestBody Reservation reservation) {
+    @PutMapping("/reservations/{id}")
+    public ResponseEntity<?> updateReservation(@PathVariable("id") Long id, @RequestBody Reservation reservation) {
         reservation.setId(id);
         resService.updateReservation(reservation);
         return ResponseEntity.ok().body("Reservation updated successfully.");
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteReservation(@PathVariable Long id) {
+    @DeleteMapping("/reservations/{id}")
+    public ResponseEntity<?> deleteReservation(@PathVariable("id") Long id) {
         resService.deleteReservation(id);
         return ResponseEntity.ok().body("Reservation deleted successfully.");
     }
     
-    // 새로고침해도 데이터베이스 그대로 저장
-    //@GetMapping("/reservations/all")
-    //public ResponseEntity<List<Reservation>> getAllReservationsData(){
-    //    List<Reservation> reservations = resService.getAllReservations();
-    //    return ResponseEntity.ok().body(reservations);
-    //}
 }
