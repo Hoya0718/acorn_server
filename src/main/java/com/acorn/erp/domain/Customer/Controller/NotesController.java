@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.acorn.erp.domain.Customer.Entity.CustomerGrade;
 import com.acorn.erp.domain.Customer.Entity.CustomerNotes;
 import com.acorn.erp.domain.Customer.Repository.NotesRepository;
 
@@ -31,7 +32,10 @@ public class NotesController {
     }
     @PostMapping("/saveNotes")
     public CustomerNotes saveNotes(@RequestBody CustomerNotes newNote){
-    	 newNote.setNotesDate(Date.valueOf(LocalDate.now()));
+    	CustomerNotes customerNotes= new CustomerNotes();
+    	customerNotes.setCustomerId(newNote.getCustomerId());
+    	customerNotes.setNotes(newNote.getNotes());
+    	customerNotes.setNotesDate(Date.valueOf(LocalDate.now()));
          return repository.save(newNote);
     }
 }
