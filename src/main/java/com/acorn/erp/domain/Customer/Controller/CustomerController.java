@@ -61,6 +61,14 @@ public class CustomerController {
 		System.out.println(users);
 		return users;
 	}
+	@PostMapping("/add")
+	 public ResponseEntity<CustomerInfo> addCustomerInfo(@RequestBody CustomerInfo customer) {
+    		    
+       CustomerInfo savedCustomerInfo = repository.save(customer); 
+       
+       return  ResponseEntity.ok(savedCustomerInfo);
+            
+   }
 	@PutMapping("/info/{customerId}")
 	 public ResponseEntity<CustomerInfo> updateCustomerInfo(@PathVariable("customerId")  Integer customerId, @RequestBody CustomerInfo newInfo) {
         return repository.findById(customerId)

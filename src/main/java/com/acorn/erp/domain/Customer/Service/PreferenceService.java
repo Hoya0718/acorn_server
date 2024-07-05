@@ -43,8 +43,13 @@ public class PreferenceService {
 	@Transactional
     @PostConstruct
     public void init() {
+		try {
         calculateOrderData();
-    }
+    } catch (Exception e) {
+		// 예외를 로깅합니다.
+		e.printStackTrace();
+	}
+}
 	@Transactional
 	public void calculateOrderData() {
 
@@ -73,7 +78,8 @@ public class PreferenceService {
 			// 성별 계산
 			Map<String, Integer> genderTotalAmountMap = ordersForItem.stream()
 					.flatMap(order -> customerInfoRepository.findByCustomerId(order.getCustomerId()).stream()
-							.map(genderGroup -> new AbstractMap.SimpleEntry<>(genderGroup.getCustomerGender(),
+							.map(genderGroup -> new AbstractMap.SimpleEntry<>(
+									genderGroup.getCustomerGender() != null ? genderGroup.getCustomerGender() : "Unknown",
 									 (order.getOrderPrice() != null ? order.getOrderPrice() : BigDecimal.ZERO)
 									 .multiply(BigDecimal.valueOf(order.getItemQty())).intValue())))
 					.collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
@@ -87,7 +93,8 @@ public class PreferenceService {
 			// 연령별 선호도 계산
 			Map<String, Integer> ageCountMap = ordersForItem.stream()
 					.flatMap(order -> ageGroupRepository.findByCustomerId(order.getCustomerId()).stream()
-							.map(ageGroup -> new AbstractMap.SimpleEntry<>(ageGroup.getAgeGroup(),
+							.map(ageGroup -> new AbstractMap.SimpleEntry<>(
+									ageGroup.getAgeGroup() != null ? ageGroup.getAgeGroup() : "Unknown",
 									(order.getOrderPrice() != null ? order.getOrderPrice() : BigDecimal.ZERO)
 									.multiply(BigDecimal.valueOf(order.getItemQty())).intValue())))
 					.collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
@@ -97,16 +104,19 @@ public class PreferenceService {
 
 			// 지역별 선호도 계산
 			Map<String, Long> provinceCountMap = ordersForItem.stream()
-					.flatMap(order -> regionGroupRepository.findByCustomerId(order.getCustomerId()).stream())
+					.flatMap(order -> regionGroupRepository.findByCustomerId(order.getCustomerId()).stream()
+					.filter(regionGroup -> regionGroup.getRegiongroupProvince() != null))
 					.collect(Collectors.groupingBy(RegionGroup::getRegiongroupProvince, Collectors.counting()));
 
 			Map<String, Long> cityCountMap = ordersForItem.stream()
-					.flatMap(order -> regionGroupRepository.findByCustomerId(order.getCustomerId()).stream())
+					.flatMap(order -> regionGroupRepository.findByCustomerId(order.getCustomerId()).stream()
+					.filter(regionGroup -> regionGroup.getRegiongroupCity() != null))
 					.collect(Collectors.groupingBy(RegionGroup::getRegiongroupCity, Collectors.counting()));
 
 			Map<String, Long> townCountMap = ordersForItem.stream()
 					.flatMap(order -> regionGroupRepository.findByCustomerId(order.getCustomerId()).stream()
-							.map(RegionGroup::getRegiongroupTown))
+							.map(RegionGroup::getRegiongroupTown)
+							.filter(town -> town != null))
 					.collect(Collectors.groupingBy(town -> town, Collectors.counting()));
 
 			String regionPreference_province = provinceCountMap.entrySet().stream().max(Map.Entry.comparingByValue())
