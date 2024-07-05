@@ -86,4 +86,10 @@ public class UserInfoController {
     public userInfo getCurrentUser(HttpSession session) {
         return (userInfo) session.getAttribute("userInfo");
     }
+	
+	//토스트팝업 내 매장명 정보
+	@GetMapping("/getShopname")
+	public String getShopname(@RequestParam("shopname") String shopname) {
+		return userInfoService.getShopname(shopname);
+	}
 }
