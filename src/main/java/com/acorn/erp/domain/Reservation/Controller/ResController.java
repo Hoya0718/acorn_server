@@ -17,7 +17,7 @@ public class ResController {
 
     @GetMapping("/reservations")
     public List<Reservation> getAllReservations() {
-        return resService.getAllReservations();
+        return resService.getAllReservations(); 
     }
 
     @GetMapping("/reservations/{id}")
