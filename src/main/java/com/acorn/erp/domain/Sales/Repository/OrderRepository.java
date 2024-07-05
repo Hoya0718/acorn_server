@@ -2,6 +2,7 @@ package com.acorn.erp.domain.Sales.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -34,6 +35,8 @@ public interface OrderRepository extends JpaRepository<OrderTable, Long> {
 
 	@Query("SELECT o.itemName FROM OrderTable o WHERE o.customerId = :customerId GROUP BY o.itemName ORDER BY SUM(o.orderTotalPrice) DESC")
 	List<String> findTopByCustomerIdOrderByItemQtyDesc(@Param("customerId") int customerId);
+
+	Optional<OrderTable> findByOrderNum(Long orderNum);
 
 }
 

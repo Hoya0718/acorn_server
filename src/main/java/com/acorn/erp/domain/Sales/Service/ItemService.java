@@ -1,6 +1,7 @@
 package com.acorn.erp.domain.Sales.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,18 +33,23 @@ public class ItemService {
     }
 
     public ItemTable updateItem(Long itemCode, ItemTable newItem) {
-    	ItemTable existingItem = getItemByCode(itemCode);
-        existingItem.setItemType(newItem.getItemType());
-        existingItem.setItemName(newItem.getItemName());
-        existingItem.setItemStatus(newItem.getItemStatus());
-        existingItem.setItemPrice(newItem.getItemPrice());
-        existingItem.setItemQty(newItem.getItemQty());
-        return itemRepository.save(existingItem);
+        ItemTable itemtbl = getItemByCode(itemCode);
+        itemtbl.setItemType(newItem.getItemType());
+        itemtbl.setItemName(newItem.getItemName());
+        itemtbl.setItemStatus(newItem.getItemStatus());
+        itemtbl.setItemPrice(newItem.getItemPrice());
+        itemtbl.setItemQty(newItem.getItemQty());
+        return itemRepository.save(itemtbl);
     }
 
     @Transactional
     public void deleteItem(Long itemCode) {
-    	ItemTable item = getItemByCode(itemCode);
+        ItemTable item = getItemByCode(itemCode);
         itemRepository.delete(item);
     }
+    
+    public Optional<ItemTable> findItemByCode(Long itemCode) {
+        return itemRepository.findById(itemCode);
+    }
+
 }

@@ -28,52 +28,67 @@ public class InventoryTable {
 //    @JoinColumn(name = "item_code", referencedColumnName = "item_code", insertable = false, updatable = false)
 //    private ItemTable itemTable;
 
-    @Column(name = "stock_in")
-    private int stockIn = 0;
+//    @Column(name = "stock_in")
+//    private Integer  stockIn = 0;
+    
+    @Column(name = "item_qty")
+    private Integer itemQty;
 
     @Column(name = "stock_out")
-    private int stockOut = 0;
+    private Integer  stockOut;
 
     @Column(name = "stock_qty")
-    private int stockQty = 0;
+    private Integer  stockQty;
     
     // 기본 생성자
     public InventoryTable() {}
+
 	public Long getNo() {
 		return no;
 	}
+
 	public void setNo(Long no) {
 		this.no = no;
 	}
+
 	public Long getItemCode() {
 		return itemCode;
 	}
+
 	public void setItemCode(Long itemCode) {
 		this.itemCode = itemCode;
 	}
+
 	public String getItemName() {
 		return itemName;
 	}
+
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
-	public int getStockIn() {
-		return stockIn;
+
+	public Integer getItemQty() {
+		return itemQty;
 	}
-	public void setStockIn(int stockIn) {
-		this.stockIn = stockIn;
+
+	public void setItemQty(Integer itemQty) {
+		this.itemQty = itemQty;
 	}
-	public int getStockOut() {
+
+	public Integer getStockOut() {
 		return stockOut;
 	}
-	public void setStockOut(int stockOut) {
+
+	public void setStockOut(Integer stockOut) {
 		this.stockOut = stockOut;
 	}
-	public int getStockQty() {
+
+	public Integer getStockQty() {
 		return stockQty;
 	}
-	public void setStockQty(int stockQty) {
+
+	public void setStockQty(Integer stockQty) {
 		this.stockQty = stockQty;
 	}
-    
+
 }
