@@ -39,5 +39,9 @@ public interface UserInfoMapper {
 	//로그인 구현
 	@Select("SELECT * FROM USERINFO WHERE email = #{email} AND password = #{password}")
     userInfo getUserByEmailAndPassword(@Param("email") String email, @Param("password") String password);
+
+	
+	@Select("SELECT shopname from userInfo WHERE email =#{email}")
+	 String getShopname(String shopname);
 	
 }

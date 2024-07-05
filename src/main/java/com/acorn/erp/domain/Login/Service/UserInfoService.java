@@ -42,5 +42,7 @@ public class UserInfoService {
     }
     
   
-    
+    public String getShopname(String shopname) {
+    	return userInfoMapper.getShopname(shopname);
+    }
 }
