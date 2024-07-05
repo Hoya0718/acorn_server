@@ -5,6 +5,6 @@
 
 <mapper namespace="com.acorn.erp.domain.Login.Repository.FindPwMapper">
     <select id="getFindPw" parameterType="map" resultType="string">
-        SELECT password FROM userinfo WHERE registrationNum = #{registrationNum} AND email = #{email}
+        SELECT registrationNum FROM userinfo WHERE registrationNum = #{registrationNum} AND email = #{email}
     </select>
 </mapper>
