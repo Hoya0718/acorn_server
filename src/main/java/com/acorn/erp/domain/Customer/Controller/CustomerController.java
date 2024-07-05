@@ -40,12 +40,16 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerInfoRepository repository;
+	
 	@Autowired
 	private AgeGroupRepository ageRepository;
+	
 	@Autowired
 	private CustomerDataService service;
+	
 	@Autowired
 	private GradeService gradeService;
+	
 	@Autowired
 	private RegionGroupRepository regionRepository;
 	
