@@ -14,7 +14,7 @@ public class UserInfoService {
     @Autowired
     private UserInfoMapper userInfoMapper;
 	
-    public List<userInfo> getAllUserInfo(){
+    public List<userInfo> getAllUserInfo() {
         return userInfoMapper.getAllUserInfo();
     }
 
@@ -30,6 +30,17 @@ public class UserInfoService {
         userInfoMapper.updateUserInfo(userinfo);
         System.out.println("업데이트 성공");
     }
+    
+    //로그인 관련 매퍼
+    
+    public UserInfoService(UserInfoMapper userInfoMapper) {
+        this.userInfoMapper = userInfoMapper;
+    }
+
+    public userInfo login(String email, String password) {
+        return userInfoMapper.getUserByEmailAndPassword(email, password);
+    }
+    
   
     
 }

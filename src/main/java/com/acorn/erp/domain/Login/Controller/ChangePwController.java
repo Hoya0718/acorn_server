@@ -22,4 +22,3 @@ public class ChangePwController {
         return changePwService.putChangePw(password, registrationNum);
     }
 }
-    
