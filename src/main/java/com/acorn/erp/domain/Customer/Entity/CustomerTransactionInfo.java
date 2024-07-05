@@ -32,7 +32,26 @@ public class CustomerTransactionInfo {
 	private String topSellingProduct; //FK 변수명확인: itemName
 	private  int totalCountForCustomer;
 	private String mostPurchasedProduct; //FK 변수명확인: itemName
+    private Integer prevRank_amount;
+    private Integer prevRank_count;
 	
+
+	public Integer getPrevRank_amount() {
+		return prevRank_amount;
+	}
+
+	public void setPrevRank_amount(Integer prevRank_amount) {
+		this.prevRank_amount = prevRank_amount;
+	}
+
+	public Integer getPrevRank_count() {
+		return prevRank_count;
+	}
+
+	public void setPrevRank_count(Integer prevRank_count) {
+		this.prevRank_count = prevRank_count;
+	}
+
 	public int getTransactionInfoId() {
 		return transactionInfoId;
 	}
