@@ -27,7 +27,7 @@ public class BoardPostController {
 
     // 특정 ID의 게시물 조회
     @GetMapping("/posts/{id}")
-    public BoardPost getBoardPostById(@PathVariable Long id) {
+    public BoardPost getBoardPostById(@PathVariable("id") Long id) {
         return boardPostService.getBoardPostById(id);
     }
 
