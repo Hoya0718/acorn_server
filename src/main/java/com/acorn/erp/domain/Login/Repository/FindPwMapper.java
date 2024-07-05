@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Mapper
 public interface FindPwMapper {
-    @Select("SELECT password FROM userinfo WHERE registrationNum = #{registrationNum} AND email = #{email}")
+    @Select("SELECT registrationNum FROM userinfo WHERE registrationNum = #{registrationNum} AND email = #{email}")
     String getFindPw(@Param("registrationNum") String registrationNum, @Param("email") String email);
 }
