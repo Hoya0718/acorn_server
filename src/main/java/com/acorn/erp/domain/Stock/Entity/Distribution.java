@@ -1,4 +1,3 @@
-
 package com.acorn.erp.domain.Stock.Entity;
 
 import jakarta.persistence.Column;

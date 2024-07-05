@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.acorn.erp.domain.Stock.Entity.Distribution; // Distribution 엔티티를 임포트
 import com.acorn.erp.domain.Stock.Repository.DistributionRepository;
 
-
+ //
 @RestController
 //@CrossOrigin(origins = "http://localhost:3000") // http://localhost:3000에서 오는 요청을 허용
 @RequestMapping("/api/distribution")
