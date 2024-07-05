@@ -12,8 +12,8 @@ import com.acorn.erp.domain.Exam.Repository.ExamMapper;
 public class StatusService {
 //	@Autowired
 //	private StatusMapper statusMapper;
-	
-//	public List<Exam> getAllExam(){
+//	
+//	public List<Exam> getAllExam(){		
 //		return statusMapper.getAllExam();		
 //	}
 	

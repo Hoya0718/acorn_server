@@ -3,6 +3,8 @@ package com.acorn.erp.domain.Stock.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,10 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.acorn.erp.domain.Stock.Entity.Vendor;
+import com.acorn.erp.domain.Stock.Repository.VendorRepository;
 import com.acorn.erp.domain.Stock.Service.VendorService;
 
 @Controller
@@ -23,6 +25,9 @@ import com.acorn.erp.domain.Stock.Service.VendorService;
 public class VendorController {
     
     private final VendorService vendorService;
+    
+    @Autowired
+    private VendorRepository repository;
 
     @Autowired
     public VendorController(VendorService vendorService) {
@@ -33,6 +38,14 @@ public class VendorController {
     @GetMapping("/list")
     public @ResponseBody List<Vendor> getAllVendors() {
         return vendorService.getAllVendors();
+    }
+    
+    //페이지네이션
+    @GetMapping("/listPage")
+    public @ResponseBody Page<Vendor> getAllVendorsPage(Model model, Pageable pageable) {
+    	Page<Vendor>pages =  repository.findAll(pageable);
+    	System.out.println(pages);
+    	return pages;
     }
 
     // id로 vendor 조회
