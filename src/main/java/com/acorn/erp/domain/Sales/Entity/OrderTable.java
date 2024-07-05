@@ -8,7 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -27,21 +26,20 @@ public class OrderTable {
     @Column(name = "item_name", length = 30, nullable = false)
     private String itemName;
 
-    //@ManyToOne
-    @JoinColumn(name = "customer_name")
+    @Column(name = "customer_name")
     private String customerName;
     
-    @Column(name = "customer_id", nullable = false, length = 20)
-    private int customerId;
+    @Column(name = "customer_id",  length = 20)
+    private Integer customerId;
     
-    @Column(name = "customer_tel", length = 11)
+    @Column(name = "customer_tel", length = 13)
     private String customerTel;
 
     @Column(name = "customer_addr", length = 90)
     private String customerAddr;
 
     @Column(name = "order_price")
-    private BigDecimal orderPrice = BigDecimal.ZERO;
+    private BigDecimal orderPrice;
 
     @Column(name = "item_qty")
     private int itemQty;
@@ -80,10 +78,10 @@ public class OrderTable {
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
-	public int getCustomerId() {
+	public Integer getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(Integer customerId) {
 		this.customerId = customerId;
 	}
 	public String getCustomerTel() {
@@ -143,7 +141,7 @@ public class OrderTable {
 
 	// 기본 생성자 추가
     public OrderTable() {}
-	public OrderTable(int customerId, Long orderNum, String itemName, String customerName, String customerTel, String customerAddr,
+	public OrderTable(Integer customerId, Long orderNum, String itemName, String customerName, String customerTel, String customerAddr,
 			BigDecimal orderPrice, int itemQty, BigDecimal deliveryFee, BigDecimal orderTotalPrice,
 			LocalDateTime orderDate, String orderReq, String orderStatus) {
 		super();
