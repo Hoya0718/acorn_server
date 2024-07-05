@@ -84,7 +84,6 @@
 //	
 //}
 
-
 package com.acorn.erp.domain.Sales.Entity;
 
 import jakarta.persistence.Column;
@@ -123,52 +122,52 @@ public class Item {
     
     // 생성자
     public Item() {}
-public Item(Long itemCode, String itemType, String itemName, String itemStatus, int itemPrice,
-int itemQty) {
-super();
-this.itemCode = itemCode;
-this.itemType = itemType;
-this.itemName = itemName;
-this.itemStatus = itemStatus;
-this.itemPrice = itemPrice;
-this.itemQty = itemQty;
-}
-
-public Long getItemCode() {
-return itemCode;
-}
-public void setItemCode(Long itemCode) {
-this.itemCode = itemCode;
-}
-public String getItemType() {
-return itemType;
-}
-public void setItemType(String itemType) {
-this.itemType = itemType;
-}
-public String getItemName() {
-return itemName;
-}
-public void setItemName(String itemName) {
-this.itemName = itemName;
-}
-public String getItemStatus() {
-return itemStatus;
-}
-public void setItemStatus(String itemStatus) {
-this.itemStatus = itemStatus;
-}
-public int getItemPrice() {
-return itemPrice;
-}
-public void setItemPrice(int itemPrice) {
-this.itemPrice = itemPrice;
-}
-public int getItemQty() {
-return itemQty;
-}
-public void setItemQty(int itemQty) {
-this.itemQty = itemQty;
-}
-
+	public Item(Long itemCode, String itemType, String itemName, String itemStatus, int itemPrice,
+			int itemQty) {
+		super();
+		this.itemCode = itemCode;
+		this.itemType = itemType;
+		this.itemName = itemName;
+		this.itemStatus = itemStatus;
+		this.itemPrice = itemPrice;
+		this.itemQty = itemQty;
+	}
+	
+	public Long getItemCode() {
+		return itemCode;
+	}
+	public void setItemCode(Long itemCode) {
+		this.itemCode = itemCode;
+	}
+	public String getItemType() {
+		return itemType;
+	}
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
+	}
+	public String getItemName() {
+		return itemName;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+	public String getItemStatus() {
+		return itemStatus;
+	}
+	public void setItemStatus(String itemStatus) {
+		this.itemStatus = itemStatus;
+	}
+	public int getItemPrice() {
+		return itemPrice;
+	}
+	public void setItemPrice(int itemPrice) {
+		this.itemPrice = itemPrice;
+	}
+	public int getItemQty() {
+		return itemQty;
+	}
+	public void setItemQty(int itemQty) {
+		this.itemQty = itemQty;
+	}
+	
 }
