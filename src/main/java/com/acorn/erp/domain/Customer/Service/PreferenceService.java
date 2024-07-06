@@ -54,16 +54,20 @@ public class PreferenceService {
 	public void calculateOrderData() {
 
 		List<OrderTable> completedOrders = orderRepository.findAll().stream()
-				.filter(order -> "Delivered".equals(order.getOrderStatus())).collect(Collectors.toList());
+				.filter(order -> "Delivered".equals(order.getOrderStatus()))
+				.collect(Collectors.toList());
 
 		// 제품 이름 목록 생성
-		List<String> itemNames = completedOrders.stream().map(OrderTable::getItemName).distinct()
+		List<String> itemNames = completedOrders.stream()
+				.map(OrderTable::getItemName)
+				.distinct()
 				.collect(Collectors.toList());
 
 		// 각 제품 이름에 거래 총금액, 총수량 계산하기
 		for (String itemName : itemNames) {
 			 List<OrderTable> ordersForItem = completedOrders.stream()
-	                    .filter(order -> itemName.equals(order.getItemName())).collect(Collectors.toList());
+	                    .filter(order -> itemName.equals(order.getItemName()))
+	                    .collect(Collectors.toList());
 
 	            BigDecimal totalAmount = ordersForItem.stream()
 	                    .map(order -> {
@@ -84,8 +88,10 @@ public class PreferenceService {
 									 .multiply(BigDecimal.valueOf(order.getItemQty())).intValue())))
 					.collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
 
-			String genderPreference = genderTotalAmountMap.entrySet().stream().max(Map.Entry.comparingByValue())
-					.map(Map.Entry::getKey).orElse("Unknown");
+			String genderPreference = genderTotalAmountMap.entrySet().stream()
+					.max(Map.Entry.comparingByValue())
+					.map(Map.Entry::getKey)
+					.orElse("Unknown");
 
 			// 결과 출력
 			System.out.println("Item Name: " + itemName + ", Gender Preference: " + genderPreference);
@@ -99,34 +105,51 @@ public class PreferenceService {
 									.multiply(BigDecimal.valueOf(order.getItemQty())).intValue())))
 					.collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
 
-			String agePreference = ageCountMap.entrySet().stream().max(Map.Entry.comparingByValue())
-					.map(Map.Entry::getKey).orElse("Unknown");
+			String agePreference = ageCountMap.entrySet().stream()
+					.max(Map.Entry.comparingByValue())
+					.map(Map.Entry::getKey)
+					.orElse("Unknown");
 
 			// 지역별 선호도 계산
 			Map<String, Long> provinceCountMap = ordersForItem.stream()
-					.flatMap(order -> regionGroupRepository.findByCustomerId(order.getCustomerId()).stream()
+					.flatMap(order -> regionGroupRepository
+							.findByCustomerId(order.getCustomerId()).stream()
 					.filter(regionGroup -> regionGroup.getRegiongroupProvince() != null))
-					.collect(Collectors.groupingBy(RegionGroup::getRegiongroupProvince, Collectors.counting()));
+					.collect(Collectors
+							.groupingBy(RegionGroup::getRegiongroupProvince, 
+							Collectors.counting()));
 
 			Map<String, Long> cityCountMap = ordersForItem.stream()
-					.flatMap(order -> regionGroupRepository.findByCustomerId(order.getCustomerId()).stream()
+					.flatMap(order -> regionGroupRepository
+							.findByCustomerId(order.getCustomerId()).stream()
 					.filter(regionGroup -> regionGroup.getRegiongroupCity() != null))
-					.collect(Collectors.groupingBy(RegionGroup::getRegiongroupCity, Collectors.counting()));
+					.collect(Collectors
+							.groupingBy(RegionGroup::getRegiongroupCity, 
+									Collectors.counting()));
 
 			Map<String, Long> townCountMap = ordersForItem.stream()
-					.flatMap(order -> regionGroupRepository.findByCustomerId(order.getCustomerId()).stream()
+					.flatMap(order -> regionGroupRepository
+							.findByCustomerId(order.getCustomerId()).stream()
 							.map(RegionGroup::getRegiongroupTown)
 							.filter(town -> town != null))
-					.collect(Collectors.groupingBy(town -> town, Collectors.counting()));
+					.collect(Collectors
+							.groupingBy(town -> town, 
+									Collectors.counting()));
 
-			String regionPreference_province = provinceCountMap.entrySet().stream().max(Map.Entry.comparingByValue())
-					.map(Map.Entry::getKey).orElse("Unknown");
+			String regionPreference_province = provinceCountMap.entrySet().stream()
+					.max(Map.Entry.comparingByValue())
+					.map(Map.Entry::getKey)
+					.orElse("Unknown");
 
-			String regionPreference_city = cityCountMap.entrySet().stream().max(Map.Entry.comparingByValue())
-					.map(Map.Entry::getKey).orElse("Unknown");
+			String regionPreference_city = cityCountMap.entrySet().stream()
+					.max(Map.Entry.comparingByValue())
+					.map(Map.Entry::getKey)
+					.orElse("Unknown");
 
-			String regionPreference_town = townCountMap.entrySet().stream().max(Map.Entry.comparingByValue())
-					.map(Map.Entry::getKey).orElse("Unknown");
+			String regionPreference_town = townCountMap.entrySet().stream()
+					.max(Map.Entry.comparingByValue())
+					.map(Map.Entry::getKey)
+					.orElse("Unknown");
 
 			// CustomerPreferenceData 객체 생성 및 데이터 설정
 			if (!repository.existsByItemName(itemName)) {
