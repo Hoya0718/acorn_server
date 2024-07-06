@@ -21,4 +21,7 @@ public interface CustomerInfoRepository extends JpaRepository<CustomerInfo, Inte
 	
 	@Query("SELECT u FROM CustomerInfo u WHERE u.customerName LIKE %:keyword% OR u.customerAddr LIKE %:keyword%")
 	List<CustomerInfo> searchCustomerInfoByKeyword(@Param("keyword") String keyword);
+	
+	  @Query("SELECT u FROM CustomerInfo u WHERE u.registerDate BETWEEN :startDate AND :endDate")
+	    List< CustomerInfo> findByRegisterDateBetween(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }

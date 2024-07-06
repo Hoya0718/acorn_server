@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -77,6 +78,13 @@ public class CustomerController {
 	public List<CustomerInfo> searchCustomerInfoByKeyword(@RequestParam("keyword")String keyword) {
         return repository.searchCustomerInfoByKeyword(keyword);
     }
+	@GetMapping("/searchPeriod")
+	public List<CustomerInfo> searchCustomerInfoByPeriod(
+		@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+		@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+        return repository.findByRegisterDateBetween(startDate, endDate);
+    }
+	
 	
 	@PutMapping("/info/{customerId}")
 	 public ResponseEntity<CustomerInfo> updateCustomerInfo(@PathVariable("customerId")  Integer customerId, @RequestBody CustomerInfo newInfo) {
