@@ -5,15 +5,16 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.acorn.erp.domain.Customer.Entity.CustomerGrade;
 import com.acorn.erp.domain.Customer.Entity.CustomerNotes;
 import com.acorn.erp.domain.Customer.Repository.NotesRepository;
 
@@ -31,11 +32,16 @@ public class NotesController {
         return notes;
     }
     @PostMapping("/saveNotes")
-    public CustomerNotes saveNotes(@RequestBody CustomerNotes newNote){
+    public ResponseEntity<?> saveNotes(@RequestBody CustomerNotes newNote){
+//    	if (newNote.getCustomerId() == 0 || newNote.getNotes() == null || newNote.getNotes().isEmpty()) {
+//            return ResponseEntity.badRequest().body("Customer ID or Notes cannot be null or empty");
+//        }
+//    	
     	CustomerNotes customerNotes= new CustomerNotes();
     	customerNotes.setCustomerId(newNote.getCustomerId());
     	customerNotes.setNotes(newNote.getNotes());
     	customerNotes.setNotesDate(Date.valueOf(LocalDate.now()));
-         return repository.save(newNote);
+    	 CustomerNotes savedNote = repository.save(customerNotes);
+         return ResponseEntity.ok(savedNote);
     }
 }
