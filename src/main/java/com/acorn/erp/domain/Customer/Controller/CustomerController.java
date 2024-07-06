@@ -73,6 +73,11 @@ public class CustomerController {
        return  ResponseEntity.ok(savedCustomerInfo);
             
    }
+	@GetMapping("/searchKeyword")
+	public List<CustomerInfo> searchCustomerInfoByKeyword(@RequestParam("keyword")String keyword) {
+        return repository.searchCustomerInfoByKeyword(keyword);
+    }
+	
 	@PutMapping("/info/{customerId}")
 	 public ResponseEntity<CustomerInfo> updateCustomerInfo(@PathVariable("customerId")  Integer customerId, @RequestBody CustomerInfo newInfo) {
         return repository.findById(customerId)

@@ -19,5 +19,6 @@ public interface CustomerInfoRepository extends JpaRepository<CustomerInfo, Inte
     
 	List<CustomerInfo> findByCustomerId(int customerId);
 	
-	
+	@Query("SELECT u FROM CustomerInfo u WHERE u.customerName LIKE %:keyword% OR u.customerAddr LIKE %:keyword%")
+	List<CustomerInfo> searchCustomerInfoByKeyword(@Param("keyword") String keyword);
 }
