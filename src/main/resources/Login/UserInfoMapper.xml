@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.acorn.erp.domain.Login.Repository.UserInfoMapper">
+
+    <select id="getAllUserInfo" resultType="com.acorn.erp.domain.Login.Entity.userInfo">
+        SELECT * FROM userInfo
+    </select>
+	
+    <insert id="insertUserInfo" parameterType="com.acorn.erp.domain.Login.Entity.userInfo">
+        INSERT INTO userInfo (email, password, shopName, registrationNum) VALUES (#{email}, #{password}, #{shopName}, #{registrationNum})
+    </insert>
+
+    <delete id="deleteUserInfo" parameterType="String">
+        DELETE FROM userInfo WHERE email = #{email}
+    </delete>
+
+    <update id="updateUserInfo" parameterType="com.acorn.erp.domain.Login.Entity.userInfo">
+        UPDATE userInfo SET name = #{name}, password = #{password}, ... WHERE email = #{email}
+    </update>
+    
+    <select id="getUserByEmailAndPassword" resultType="com.acorn.erp.domain.Login.Entity.userInfo" parameterType="com.acorn.erp.domain.Login.Entity.userInfo">
+    	select * from userInfo where email = #{email} and password= #{password}
+    </select>
+
+	<select id="getShopname" parameterType="String" resultType="String">
+    	select shopname from userInfo where shopname = #{shopname}
+    </select>
+    
+</mapper>

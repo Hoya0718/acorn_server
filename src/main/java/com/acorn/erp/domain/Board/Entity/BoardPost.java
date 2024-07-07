@@ -18,5 +18,10 @@ public class BoardPost {
 	private String author;
 	private String postDate;
 	private int views;
-	private int comments;
+	private int comments; // 댓글
+	private String commentContent; // 댓글 내용
+	private String content; // 게시글 내용 
+	private String lastModifiedDate; // 수정일
+	private String status; // 상태 
+
 }

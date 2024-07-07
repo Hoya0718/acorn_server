@@ -12,15 +12,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
-/*
 @Getter
 @Setter
 @Entity
+@Table(name = "SALES_RETURN")
 public class ReturnTable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -32,16 +33,16 @@ public class ReturnTable {
     @Column(name = "return_type", length = 10)
     private String returnType;
 
-    @ManyToOne
-    @JoinColumn(name = "item_name")
-    private ItemTable itemTable;
-
-    @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name = "customer_name", referencedColumnName = "name"),
-        @JoinColumn(name = "customer_tel", referencedColumnName = "tel")
-    })
-    private CustomerInfo customerInfo;
+//    @ManyToOne
+//    @JoinColumn(name = "item_name")
+//    private ItemTable itemTable;
+//
+//    @ManyToOne
+//    @JoinColumns({
+//        @JoinColumn(name = "customer_name", referencedColumnName = "name"),
+//        @JoinColumn(name = "customer_tel", referencedColumnName = "tel")
+//    })
+//    private CustomerInfo customerInfo;
 
     @Column(name = "return_qty")
     private Integer returnQty;
@@ -59,4 +60,3 @@ public class ReturnTable {
     @Column(name = "return_status", length = 10)
     private String returnStatus;
 }
-*/

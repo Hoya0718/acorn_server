@@ -41,6 +41,7 @@ public class TransactionService {
         	LocalDateTime lastTransactionDate = orderRepository.findTopByCustomerIdOrderByOrderDateDesc(customerId);
             // 이름 가져오기
             List<String> customerNames = orderRepository.findCustomerNameByCustomerId(customerId);
+            
             String customerName = customerNames.isEmpty() ? null : customerNames.get(0);
             // 총 거래 금액 계산
             int totalAmountForCustomer = orderRepository.sumOrderTotalPriceByCustomerId(customerId);
@@ -64,14 +65,47 @@ public class TransactionService {
             info.setTopSellingProduct(topSellingProduct);
             info.setTotalCountForCustomer(totalCountForCustomer);
             info.setMostPurchasedProduct(mostPurchasedProduct);
+            info.setPrevRank_amount(null);
+            info.setPrevRank_count(null);
 
             repository.save(info);
 			
         }
     }
+    @Transactional
+    public void updatePrevRank_amount() {
+        List<CustomerTransactionInfo> allTransactions = repository.findAll();
+
+        // 현재의 랭킹을 계산
+        List<CustomerTransactionInfo> sortedByAmount = allTransactions.stream()
+                .sorted((t1, t2) -> Integer.compare(t2.getTotalAmountForCustomer(), t1.getTotalAmountForCustomer()))
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < sortedByAmount.size(); i++) {
+            CustomerTransactionInfo info = sortedByAmount.get(i);
+            info.setPrevRank_amount(i + 1);
+            repository.save(info);
+        }
+    }
+    @Transactional
+    public void updatePrevRank_count() {
+        List<CustomerTransactionInfo> allTransactions = repository.findAll();
+
+        // 현재의 랭킹을 계산
+        List<CustomerTransactionInfo> sortedByCount = allTransactions.stream()
+                .sorted((t1, t2) -> Integer.compare(t2.getTotalCountForCustomer(), t1.getTotalCountForCustomer()))
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < sortedByCount.size(); i++) {
+            CustomerTransactionInfo info = sortedByCount.get(i);
+            info.setPrevRank_count(i + 1);
+            repository.save(info);
+        }
+    }
 	public List<CustomerTransactionInfo> getCustomerRank() {
 		return repository.findAll();
 	}
+	
 	public List<CustomerTransactionInfo> getTop10ByTotalAmount() {
         List<CustomerTransactionInfo> allTransactions = repository.findAll();
         return allTransactions.stream()
