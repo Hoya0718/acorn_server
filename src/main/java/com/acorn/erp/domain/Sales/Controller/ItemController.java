@@ -1,3 +1,4 @@
+
 package com.acorn.erp.domain.Sales.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class ItemController {
 
     @PostMapping
     public Item createItem(@RequestBody Item item) {
-       return itemService.createItem(item);
-   }
+        return itemService.createItem(item);
+    }
 
     @PutMapping("/{itemCode}")
     public Item updateItem(@PathVariable("itemCode") Long itemCode, @RequestBody Item item) {
@@ -44,8 +45,9 @@ public class ItemController {
         try {
             itemService.deleteItem(itemCode);
             return ResponseEntity.noContent().build(); // 성공적으로 삭제되었음을 나타내는 응답 반환
-       } catch (RuntimeException e) {
-           return ResponseEntity.notFound().build(); // itemCode에 해당하는 항목이 없을 경우 404 Not Found 반환
-       }
-   }
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build(); // itemCode에 해당하는 항목이 없을 경우 404 Not Found 반환
+        }
+    }
 }
+

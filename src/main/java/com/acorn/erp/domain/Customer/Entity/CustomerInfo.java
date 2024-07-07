@@ -20,14 +20,15 @@ public class CustomerInfo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_info_seq")
     @SequenceGenerator(name = "customer_info_seq", sequenceName = "customer_info_seq", allocationSize = 1)
-	private int customerId;
-    @Column(name = "customer_name", length = 30, nullable = false)
+	private Integer customerId;
+    @Column(name = "customer_name", length = 30)
 	private String customerName;
 	private String customerGender;
 	private Date customerBirthDate;
 	private String customerAddr;
 	private String customerTel;
 	private Date registerDate;
+	
 	public int getCustomerId() {
 		return customerId;
 	}

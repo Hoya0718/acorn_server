@@ -36,5 +36,22 @@ public class BoardPostController {
     public BoardPost createBoardPost(@RequestBody BoardPost boardPost) {
         return boardPostService.saveBoardPost(boardPost);
     }
+    
+    // 댓글 추가
+    @PostMapping("/posts/{postId}/comments")
+    public BoardPost addCommentToPost(@PathVariable("postId") Long postId, @RequestBody String commentContent) {
+        return boardPostService.addCommentToPost(postId, commentContent);
+    }
+    
+    // 특정 페이지의 게시물 조회 (페이지네이션)
+    @GetMapping("/posts")
+    public List<BoardPost> getPageOfBoardPosts(@RequestParam("page") int page, @RequestParam("size") int size) {
+        return boardPostService.getPageOfBoardPosts(page, size);
+    }
+    
+    @GetMapping("/search")
+    public List<BoardPost> searchBoardPosts(@RequestParam("keyword") String keyword) {
+        return boardPostService.searchBoardPosts(keyword);
+    }
 
 }
