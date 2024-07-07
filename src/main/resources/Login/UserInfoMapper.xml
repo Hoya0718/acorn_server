@@ -23,7 +23,7 @@
     </select>
 
 	<select id="getShopname" parameterType="String" resultType="String">
-    	select shopname from userInfo where shopname = #{shopname}
+    	select shopname from userInfo where email = #{email}
     </select>
     
 </mapper>

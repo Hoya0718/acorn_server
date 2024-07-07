@@ -42,7 +42,7 @@ public class UserInfoService {
     }
     
   
-    public String getShopname(String shopname) {
-    	return userInfoMapper.getShopname(shopname);
+    public String getShopname(String email) {
+    	return userInfoMapper.getShopname(email);
     }
 }

@@ -42,6 +42,6 @@ public interface UserInfoMapper {
 
 	
 	@Select("SELECT shopname from userInfo WHERE email =#{email}")
-	 String getShopname(String shopname);
+	 String getShopname(String email);
 	
 }
