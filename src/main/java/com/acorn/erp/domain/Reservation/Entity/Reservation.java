@@ -47,6 +47,7 @@ public class Reservation {
         return reservationDate;
     }
 
+
     public Reservation(Long id, String name, String reservationDate, String requests, String payment, String phone,
 			String gender, int rsCount) {
 		super();
@@ -114,5 +115,4 @@ public class Reservation {
 
     public Reservation() {}
 
-   
 }
