@@ -47,7 +47,21 @@ public class Reservation {
         return reservationDate;
     }
 
-    public void setReservationDate(String reservationDate) {
+
+    public Reservation(Long id, String name, String reservationDate, String requests, String payment, String phone,
+			String gender, int rsCount) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.reservationDate = reservationDate;
+		this.requests = requests;
+		this.payment = payment;
+		this.phone = phone;
+		this.gender = gender;
+		this.rsCount = rsCount;
+	}
+
+	public void setReservationDate(String reservationDate) {
         this.reservationDate = reservationDate;
     }
 
@@ -101,13 +115,4 @@ public class Reservation {
 
     public Reservation() {}
 
-    public Reservation(String name, String reservationDate, String requests, String payment, String phone, String gender, int rsCount) {
-        this.name = name;
-        this.reservationDate = reservationDate;
-        this.requests = requests;
-        this.payment = payment;
-        this.phone = phone;
-        this.gender = gender;
-        this.rsCount = rsCount;
-    }
 }

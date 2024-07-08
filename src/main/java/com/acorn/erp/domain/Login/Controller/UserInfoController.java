@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.acorn.erp.domain.Login.Entity.userInfo;
 import com.acorn.erp.domain.Login.Service.UserInfoService;
@@ -28,6 +29,7 @@ import jakarta.servlet.http.HttpSession;
 @CrossOrigin(origins = "http://localhost:3000") //3000번 포트의 접근은 허락한다.
 @RestController
 @RequestMapping("/api")
+@SessionAttributes("user")
 public class UserInfoController {
 	@Autowired
 	private UserInfoService userInfoService;
@@ -67,6 +69,7 @@ public class UserInfoController {
         if (userinfo != null) {
             System.out.println("성공");
             session.setAttribute("user", userinfo);
+            System.out.println("세션 값 :" + userinfo);
             return ResponseEntity.ok(userinfo);
         } else {
             System.out.println("실패");
@@ -74,11 +77,25 @@ public class UserInfoController {
         }
     }
 	
+    // id 가져오기
+    
+    @GetMapping("/userinfo")
+    public ResponseEntity<userInfo> getUserInfo(HttpSession session) {
+        userInfo userinfo = (userInfo) session.getAttribute("user");
+        if (userinfo != null) {
+            return ResponseEntity.ok(userinfo);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+
+
 	//로그아웃 구현
-	@PostMapping("/logout")
-    public String logout(HttpSession session) {
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpSession session) {
         session.invalidate();
-        return "로그아웃 성공";
+        return ResponseEntity.ok("로그아웃 성공");
     }
 	
 	//현재 사용자 정보
@@ -89,7 +106,7 @@ public class UserInfoController {
 	
 	//토스트팝업 내 매장명 정보
 	@GetMapping("/getShopname")
-	public String getShopname(@RequestParam("shopname") String shopname) {
-		return userInfoService.getShopname(shopname);
+	public String getShopname(@RequestParam("email") String email) {
+		return userInfoService.getShopname(email);
 	}
 }
