@@ -10,14 +10,23 @@ import com.acorn.erp.domain.Sales.Repository.OrderRepository;
 
 @Service
 public class OrderService {
-	private final OrderRepository orderRepository;
-	
+
+    private final OrderRepository orderRepository;
+
     @Autowired
     public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
-    
-    public List<OrderTable> getAllItems() {
+
+    public List<OrderTable> getAllOrders() {
         return orderRepository.findAll();
+    }
+
+    public OrderTable getOrderByOrderNum(Long orderNum) {
+        return orderRepository.findById(orderNum).orElse(null);
+    }
+
+    public OrderTable addOrder(OrderTable order) {
+        return orderRepository.save(order);
     }
 }

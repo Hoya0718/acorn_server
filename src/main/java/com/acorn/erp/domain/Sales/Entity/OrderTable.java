@@ -42,7 +42,7 @@ public class OrderTable {
     private BigDecimal orderPrice;
 
     @Column(name = "item_qty")
-    private int itemQty;
+    private Integer itemQty;
 
     @Column(name = "delivery_fee")
     private BigDecimal deliveryFee;
@@ -102,10 +102,10 @@ public class OrderTable {
 	public void setOrderPrice(BigDecimal orderPrice) {
 		this.orderPrice = orderPrice;
 	}
-	public int getItemQty() {
+	public Integer getItemQty() {
 		return itemQty;
 	}
-	public void setItemQty(int itemQty) {
+	public void setItemQty(Integer itemQty) {
 		this.itemQty = itemQty;
 	}
 	public BigDecimal getDeliveryFee() {
@@ -142,7 +142,7 @@ public class OrderTable {
 	// 기본 생성자 추가
     public OrderTable() {}
 	public OrderTable(Integer customerId, Long orderNum, String itemName, String customerName, String customerTel, String customerAddr,
-			BigDecimal orderPrice, int itemQty, BigDecimal deliveryFee, BigDecimal orderTotalPrice,
+			BigDecimal orderPrice, Integer itemQty, BigDecimal deliveryFee, BigDecimal orderTotalPrice,
 			LocalDateTime orderDate, String orderReq, String orderStatus) {
 		super();
 		this.customerId = customerId;
@@ -159,4 +159,11 @@ public class OrderTable {
 		this.orderReq = orderReq;
 		this.orderStatus = orderStatus;
 	}
+	
+    // orderTotalPrice를 계산하는 메서드 추가
+    public void calculateTotalPrice() {
+        if (orderPrice != null && itemQty > 0) {
+            this.orderTotalPrice = orderPrice.multiply(BigDecimal.valueOf(itemQty));
+        }
+    }
 }
