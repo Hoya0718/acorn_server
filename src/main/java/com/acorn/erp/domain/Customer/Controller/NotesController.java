@@ -5,11 +5,12 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,5 +44,19 @@ public class NotesController {
     	customerNotes.setNotesDate(Date.valueOf(LocalDate.now()));
     	 CustomerNotes savedNote = repository.save(customerNotes);
          return ResponseEntity.ok(savedNote);
+    }
+    @DeleteMapping("/notes/{notesId}")
+    public ResponseEntity<?> deleteNotes(@PathVariable("notesId")  Integer notesId){
+    	System.out.println("Received notesId: " + notesId);
+    	if (notesId == null) {
+            return ResponseEntity.badRequest().body("Notes ID cannot be null");
+        }
+
+        if (!repository.existsById(notesId)) {
+            return ResponseEntity.badRequest().body("Notes ID does not exist");
+        }
+
+        repository.deleteById(notesId);
+        return ResponseEntity.ok("Notes deleted successfully");
     }
 }
