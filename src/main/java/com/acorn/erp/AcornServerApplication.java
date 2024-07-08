@@ -6,8 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@MapperScan("com.acorn.erp.domain.Exam.Repository")
+
+@MapperScan("com.acorn.erp.domain.Login.*")
+
 @ComponentScan(basePackages = {"com.acorn.erp.domain.Stock"})
+
 public class AcornServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(AcornServerApplication.class, args);

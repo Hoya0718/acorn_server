@@ -1,4 +1,5 @@
-package com.acorn.erp;
+
+package com.acorn.erp.custormer;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.acorn.erp.domain.Sales.Repository.OrderRepository;
+import com.acorn.erp.AcornServerApplication;
 import com.acorn.erp.domain.Sales.Entity.OrderTable;
 
 import jakarta.persistence.EntityManager;
