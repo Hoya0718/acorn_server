@@ -92,10 +92,10 @@ public class UserInfoController {
 
 
 	//로그아웃 구현
-	@PostMapping("/logout")
-    public String logout(HttpSession session) {
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpSession session) {
         session.invalidate();
-        return "로그아웃 성공";
+        return ResponseEntity.ok("로그아웃 성공");
     }
 	
 	//현재 사용자 정보
