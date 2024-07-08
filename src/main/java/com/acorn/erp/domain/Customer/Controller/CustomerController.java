@@ -2,6 +2,7 @@ package com.acorn.erp.domain.Customer.Controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -82,6 +83,15 @@ public class CustomerController {
 	public List<CustomerInfo> searchCustomerInfoByPeriod(
 		@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
 		@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+		
+		Calendar calendar = Calendar.getInstance();
+	    calendar.setTime(endDate);
+	    calendar.set(Calendar.HOUR_OF_DAY, 23);
+	    calendar.set(Calendar.MINUTE, 59);
+	    calendar.set(Calendar.SECOND, 59);
+	    calendar.set(Calendar.MILLISECOND, 999);
+	    endDate = calendar.getTime();
+	    
         return repository.findByRegisterDateBetween(startDate, endDate);
     }
 	

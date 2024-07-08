@@ -1,16 +1,21 @@
 package com.acorn.erp.domain.Customer.Controller;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acorn.erp.domain.Customer.Entity.CustomerPreferenceData;
+import com.acorn.erp.domain.Customer.Entity.CustomerTransactionInfo;
 import com.acorn.erp.domain.Customer.Repository.PreferenceRepository;
 import com.acorn.erp.domain.Customer.Service.PreferenceService;
 
@@ -49,4 +54,23 @@ public class PreferenceController {
     public List<CustomerPreferenceData> getTop3ByRating() {
         return service.getTop3ByRating();
     }
+    @GetMapping("/searchKeywordPreferenceData")
+	public List<CustomerPreferenceData> searchCustomerPreferenceDataByKeyword(@RequestParam("keyword")String keyword) {
+        return repository.searchCustomerPreferenceDataByKeyword(keyword);
+    }
+//	@GetMapping("/searchPeriodPreferenceData")
+//	public List<CustomerPreferenceData> searchCustomerPreferenceDataByPeriod(
+//		@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+//		@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+//		
+//		Calendar calendar = Calendar.getInstance();
+//	    calendar.setTime(endDate);
+//	    calendar.set(Calendar.HOUR_OF_DAY, 23);
+//	    calendar.set(Calendar.MINUTE, 59);
+//	    calendar.set(Calendar.SECOND, 59);
+//	    calendar.set(Calendar.MILLISECOND, 999);
+//	    endDate = calendar.getTime();
+//	    
+//        return repository.findByLastPreferenceDataBetween(startDate, endDate);
+//    }
 }
