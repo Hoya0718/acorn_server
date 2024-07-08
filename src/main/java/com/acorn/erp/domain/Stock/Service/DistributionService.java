@@ -1,11 +1,13 @@
 package com.acorn.erp.domain.Stock.Service;
 
 import com.acorn.erp.domain.Stock.Entity.Distribution;
+import com.acorn.erp.domain.Stock.Entity.Purchase;
 import com.acorn.erp.domain.Stock.Repository.DistributionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DistributionService {
@@ -29,4 +31,7 @@ public class DistributionService {
         distribution.setId(id);
         return distributionRepository.save(distribution);
     }
+    
+    
+    
 }

@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.acorn.erp.domain.Stock.Entity.Distribution;
 import com.acorn.erp.domain.Stock.Entity.Materials;
+import com.acorn.erp.domain.Stock.Entity.Purchase;
 import com.acorn.erp.domain.Stock.Repository.MaterialsRepository;
+import com.acorn.erp.domain.Stock.Service.MaterialsService;
 
 
 @RestController
@@ -25,20 +29,17 @@ public class MaterialsController {
     @Autowired // 생성자 주입
     private MaterialsRepository materialsRepository; // 변수명 일치화
 
+
+    
     @GetMapping
     public List<Materials> getAllMaterials() {
         return materialsRepository.findAll(); // 호출하여 모든 Distribution 항목을 반환
     }
-
+    
     @PostMapping
-    public Materials createMaterials(@RequestBody Materials materials) { // 메소드 리턴 타입 및 이름 변경
-    	try {
-            System.out.println("추가 성공");
-            return materialsRepository.save(materials); // 저장 후 반환
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to create materials: " + e.getMessage());
-        }
+    public Materials createMaterials(@RequestBody Materials materials, Distribution distribution) { // 메소드 리턴 타입 및 이름 변경
+    	System.out.println("추가 성공"); 
+        return materialsRepository.save(materials); //새로운 항목을 데이터베이스에 저장하고, 저장된 객체를 반환
     }
 
     @DeleteMapping("/{id}")

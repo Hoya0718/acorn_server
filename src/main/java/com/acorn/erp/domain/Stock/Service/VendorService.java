@@ -49,8 +49,4 @@ public class VendorService {
     public void deleteVendor(Long code) {
         vendorRepository.deleteById(code);
     }
-    
-    public List<Vendor> searchVendors(String keyword) {
-            return vendorRepository.findByVendorNameContainingIgnoreCase(keyword);
-        }
 }

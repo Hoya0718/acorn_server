@@ -76,11 +76,4 @@ public class VendorController {
         vendorService.deleteVendor(code);
         return "Vendor deleted successfully";
     }
-    
-    @GetMapping("/search")
-    public @ResponseBody List<Vendor> searchVendors(@RequestParam(name = "keyword") String keyword) {
-        // 검색어를 이용하여 vendor 검색
-        List<Vendor> vendors = vendorService.searchVendors(keyword);
-        return vendors;
-    }
 }

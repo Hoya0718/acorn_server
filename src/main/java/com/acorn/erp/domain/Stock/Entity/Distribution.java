@@ -40,6 +40,8 @@ public class Distribution {
     @Column(name = "current_qty", length = 300)
     private Integer currentQty;
     
-    @Column(name = "expected_recepit_date", length = 30)
-    private String expectedReceiptDate;
+    @Column(name = "price")
+    private Long price;
+    
+    
 }

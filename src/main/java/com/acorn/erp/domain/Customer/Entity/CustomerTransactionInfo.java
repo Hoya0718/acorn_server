@@ -2,6 +2,7 @@ package com.acorn.erp.domain.Customer.Entity;
 
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -12,7 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import lombok.Data;
 
 
 @Entity
@@ -26,8 +26,8 @@ public class CustomerTransactionInfo {
 	private int transactionInfoId;
 	@Column(nullable = false)
 	private int customerId;
-	private String cutomerName;
-	private Date lastTransactionDate;
+	private String customerName;
+	private LocalDateTime lastTransactionDate;
 	private int totalAmountForCustomer;
 	private String topSellingProduct; //FK 변수명확인: itemName
 	private  int totalCountForCustomer;
@@ -49,19 +49,19 @@ public class CustomerTransactionInfo {
 		this.customerId = customerId;
 	}
 
-	public String getCutomerName() {
-		return cutomerName;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setCutomerName(String cutomerName) {
-		this.cutomerName = cutomerName;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
-	public Date getLastTransactionDate() {
+	public LocalDateTime getLastTransactionDate() {
 		return lastTransactionDate;
 	}
 
-	public void setLastTransactionDate(Date lastTransactionDate) {
+	public void setLastTransactionDate(LocalDateTime lastTransactionDate) {
 		this.lastTransactionDate = lastTransactionDate;
 	}
 
@@ -102,19 +102,19 @@ public class CustomerTransactionInfo {
 	@Override
 	public String toString() {
 		return "CustomerTransactionInfo [transactionInfoId=" + transactionInfoId + ", customerId=" + customerId
-				+ ", cutomerName=" + cutomerName + ", lastTransactionDate=" + lastTransactionDate
+				+ ", cutomerName=" + customerName + ", lastTransactionDate=" + lastTransactionDate
 				+ ", totalAmountForCustomer=" + totalAmountForCustomer + ", topSellingProduct=" + topSellingProduct
 				+ ", totalCountForCustomer=" + totalCountForCustomer + ", mostPurchasedProduct=" + mostPurchasedProduct
 				+ "]";
 	}
 
-	public CustomerTransactionInfo(int transactionInfoId, int customerId, String cutomerName, Date lastTransactionDate,
+	public CustomerTransactionInfo(int transactionInfoId, int customerId, String customerName, LocalDateTime lastTransactionDate,
 			int totalAmountForCustomer, String topSellingProduct, int totalCountForCustomer,
 			String mostPurchasedProduct) {
 		super();
 		this.transactionInfoId = transactionInfoId;
 		this.customerId = customerId;
-		this.cutomerName = cutomerName;
+		this.customerName = customerName;
 		this.lastTransactionDate = lastTransactionDate;
 		this.totalAmountForCustomer = totalAmountForCustomer;
 		this.topSellingProduct = topSellingProduct;

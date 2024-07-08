@@ -21,14 +21,17 @@ public class Materials {
 
     @Column(name = "materials_name", length = 20)
     private String materialsName;
+    
+    @Column(name = "receipt_date")
+    private String receiptDate;
 
     @Column(name = "price")
-    private Integer price;
+    private Long price;
     
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "vendor_Code")
-    private String vendorCode;
+//    @Column(name = "vendor_Code")
+//    private String vendorCode;
 
 }
