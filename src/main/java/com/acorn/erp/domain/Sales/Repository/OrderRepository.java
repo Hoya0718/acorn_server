@@ -1,6 +1,6 @@
 package com.acorn.erp.domain.Sales.Repository;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,9 +22,9 @@ public interface OrderRepository extends JpaRepository<OrderTable, Long> {
     List<String> findCustomerNameByCustomerId(@Param("customerId") int customerId);
 	
 	@Query("SELECT MAX(o.orderDate) FROM OrderTable o WHERE o.customerId = :customerId")
-	Date findTopByCustomerIdOrderByOrderDateDesc(@Param("customerId") int customerId);
+	LocalDateTime findTopByCustomerIdOrderByOrderDateDesc(@Param("customerId") int customerId);
 
-	 @Query("SELECT SUM(o.orderTotalPrice) FROM OrderTable o WHERE o.customerId = :customerId")
+	 @Query("SELECT COALESCE(SUM(o.orderTotalPrice), 0) FROM OrderTable o WHERE o.customerId = :customerId")
 	int sumOrderTotalPriceByCustomerId(@Param("customerId") int customerId);
 
 	@Query("SELECT o.itemName FROM OrderTable o WHERE o.customerId = :customerId GROUP BY o.itemName ORDER BY SUM(o.itemQty) DESC")
@@ -35,6 +35,8 @@ public interface OrderRepository extends JpaRepository<OrderTable, Long> {
 
 	@Query("SELECT o.itemName FROM OrderTable o WHERE o.customerId = :customerId GROUP BY o.itemName ORDER BY SUM(o.orderTotalPrice) DESC")
 	List<String> findTopByCustomerIdOrderByItemQtyDesc(@Param("customerId") int customerId);
+
+	Optional<OrderTable> findByOrderNum(Long orderNum);
 
 }
 
