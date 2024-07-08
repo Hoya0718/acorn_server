@@ -1,20 +1,17 @@
 package com.acorn.erp.domain.Customer.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.acorn.erp.domain.Customer.Entity.CustomerTransactionInfo;
 import com.acorn.erp.domain.Customer.Repository.TransactionRepository;
-import com.acorn.erp.domain.Sales.Repository.OrderRepository;
 import com.acorn.erp.domain.Sales.Entity.OrderTable;
+import com.acorn.erp.domain.Sales.Repository.OrderRepository;
 
 import jakarta.annotation.PostConstruct;
 
@@ -26,9 +23,14 @@ public class TransactionService {
     @Autowired
     private TransactionRepository repository;
     
+//    @PostConstruct
+//    @Transactional
+//    public void init() {
+//        calculateTransactionData();
+//    }
+    
     @Transactional
-	@PostConstruct
-    public void calculateTransactionData() {
+    public void calculateTransactionData(int customerId) {
 		List<OrderTable> completedOrders = orderRepository.findAll().stream()
 				.filter(order -> "Delivered".equals(order.getOrderStatus())).collect(Collectors.toList());
 
@@ -36,11 +38,10 @@ public class TransactionService {
 				.map(OrderTable::getCustomerId).distinct()
 				.collect(Collectors.toList());
 		
-        for (int customerId : customerIds) {
-            // 최근 거래일 계산
-            Date lastTransactionDate = orderRepository.findTopByCustomerIdOrderByOrderDateDesc(customerId);
+        	LocalDateTime lastTransactionDate = orderRepository.findTopByCustomerIdOrderByOrderDateDesc(customerId);
             // 이름 가져오기
             List<String> customerNames = orderRepository.findCustomerNameByCustomerId(customerId);
+            
             String customerName = customerNames.isEmpty() ? null : customerNames.get(0);
             // 총 거래 금액 계산
             int totalAmountForCustomer = orderRepository.sumOrderTotalPriceByCustomerId(customerId);
@@ -53,7 +54,7 @@ public class TransactionService {
             List<String> mostPurchasedProducts = orderRepository.findTopByCustomerIdOrderByItemQtyDesc(customerId);
             String mostPurchasedProduct = mostPurchasedProducts.isEmpty() ? null : mostPurchasedProducts.get(0);
 
-			if (!repository.existsByCustomerName(customerName)) {
+			if (!repository.existsByCustomerId(customerId)) {
             CustomerTransactionInfo info = new CustomerTransactionInfo();
             
             info.setTransactionInfoId(customerId);
@@ -64,14 +65,47 @@ public class TransactionService {
             info.setTopSellingProduct(topSellingProduct);
             info.setTotalCountForCustomer(totalCountForCustomer);
             info.setMostPurchasedProduct(mostPurchasedProduct);
+            info.setPrevRank_amount(null);
+            info.setPrevRank_count(null);
 
             repository.save(info);
-			}
+			
+        }
+    }
+    @Transactional
+    public void updatePrevRank_amount() {
+        List<CustomerTransactionInfo> allTransactions = repository.findAll();
+
+        // 현재의 랭킹을 계산
+        List<CustomerTransactionInfo> sortedByAmount = allTransactions.stream()
+                .sorted((t1, t2) -> Integer.compare(t2.getTotalAmountForCustomer(), t1.getTotalAmountForCustomer()))
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < sortedByAmount.size(); i++) {
+            CustomerTransactionInfo info = sortedByAmount.get(i);
+            info.setPrevRank_amount(i + 1);
+            repository.save(info);
+        }
+    }
+    @Transactional
+    public void updatePrevRank_count() {
+        List<CustomerTransactionInfo> allTransactions = repository.findAll();
+
+        // 현재의 랭킹을 계산
+        List<CustomerTransactionInfo> sortedByCount = allTransactions.stream()
+                .sorted((t1, t2) -> Integer.compare(t2.getTotalCountForCustomer(), t1.getTotalCountForCustomer()))
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < sortedByCount.size(); i++) {
+            CustomerTransactionInfo info = sortedByCount.get(i);
+            info.setPrevRank_count(i + 1);
+            repository.save(info);
         }
     }
 	public List<CustomerTransactionInfo> getCustomerRank() {
 		return repository.findAll();
 	}
+	
 	public List<CustomerTransactionInfo> getTop10ByTotalAmount() {
         List<CustomerTransactionInfo> allTransactions = repository.findAll();
         return allTransactions.stream()
@@ -87,4 +121,11 @@ public class TransactionService {
                 .limit(20)
                 .collect(Collectors.toList());
     }
+    public List<Integer> getCustomerIds() {
+        return orderRepository.findAll().stream()
+                .map(OrderTable::getCustomerId)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
 }

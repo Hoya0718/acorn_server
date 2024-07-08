@@ -39,8 +39,6 @@ public class AgeGroupService {
 			
 			ageGroupRepository.save(ageGroupEntity);
 			}
-            
-		 
 		}
 	}
     //새로운고객 저장용 계산 메서드

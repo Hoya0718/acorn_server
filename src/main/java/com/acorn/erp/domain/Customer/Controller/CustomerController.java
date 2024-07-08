@@ -9,8 +9,18 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,23 +35,83 @@ import com.acorn.erp.domain.Customer.Repository.RegionGroupRepository;
 import com.acorn.erp.domain.Customer.Service.CustomerDataService;
 import com.acorn.erp.domain.Customer.Service.GradeService;
 
-import jakarta.annotation.PostConstruct;
-
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
 
 	@Autowired
 	private CustomerInfoRepository repository;
+	
 	@Autowired
 	private AgeGroupRepository ageRepository;
+	
 	@Autowired
 	private CustomerDataService service;
+	
 	@Autowired
 	private GradeService gradeService;
+	
 	@Autowired
 	private RegionGroupRepository regionRepository;
-
+	
+	@GetMapping("/getAllList")
+	public List<CustomerInfo> getAllList() {
+		List<CustomerInfo> users = repository.findAll();
+		System.out.println(users);
+		return users;
+	}
+	@PostMapping("/getAllList")
+	public Page<CustomerInfo> getAllPageInfo(Model model, Pageable pageable) {
+		Page<CustomerInfo> users = repository.findAll(pageable);
+		System.out.println(users);
+		return users;
+	}
+	@PostMapping("/add")
+	 public ResponseEntity<CustomerInfo> addCustomerInfo(@RequestBody CustomerInfo customer) {
+    		    
+       CustomerInfo savedCustomerInfo = repository.save(customer); 
+       
+       return  ResponseEntity.ok(savedCustomerInfo);
+            
+   }
+	@GetMapping("/searchKeyword")
+	public List<CustomerInfo> searchCustomerInfoByKeyword(@RequestParam("keyword")String keyword) {
+        return repository.searchCustomerInfoByKeyword(keyword);
+    }
+	@GetMapping("/searchPeriod")
+	public List<CustomerInfo> searchCustomerInfoByPeriod(
+		@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+		@RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+        return repository.findByRegisterDateBetween(startDate, endDate);
+    }
+	
+	
+	@PutMapping("/info/{customerId}")
+	 public ResponseEntity<CustomerInfo> updateCustomerInfo(@PathVariable("customerId")  Integer customerId, @RequestBody CustomerInfo newInfo) {
+        return repository.findById(customerId)
+                .map(customer -> {
+                    customer.setCustomerName(newInfo.getCustomerName());
+                    customer.setCustomerGender(newInfo.getCustomerGender());
+                    customer.setCustomerBirthDate(newInfo.getCustomerBirthDate());
+                    customer.setCustomerAddr(newInfo.getCustomerAddr());
+                    customer.setCustomerTel(newInfo.getCustomerTel());
+                    customer.setRegisterDate(newInfo.getRegisterDate());
+                    
+                    repository.save(customer);
+                    
+                    return  ResponseEntity.ok(customer);
+                })
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+    }
+	@DeleteMapping("/delete/{customerId}")
+	 public ResponseEntity<?> deleteCustomerInfo(@PathVariable("customerId") Integer customerId) {
+		if (customerId == null) {
+            return ResponseEntity.badRequest().body("Customer ID cannot be null");
+        }
+       repository.deleteById(customerId);
+       return ResponseEntity.ok("Customer deleted successfully");
+   }
+	
 	@GetMapping("/getCountAll")
 	public int countAll() {
 		List<CustomerInfo> users = repository.findAll();

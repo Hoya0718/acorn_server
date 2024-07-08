@@ -27,6 +27,10 @@ public class RegionGroupService {
         List<CustomerInfo> customers = customerInfoRepository.findAll();
        
         for (CustomerInfo customer : customers) {
+        	if (customer.getCustomerAddr() == null || customer.getCustomerAddr().isEmpty()) {
+                System.out.println("Customer address is null or empty for customerId: " + customer.getCustomerId());
+                continue;
+            }
         boolean exists = regionGroupRepository.existsByCustomerId(customer.getCustomerId());
         if (!exists) {
             String[] addressParts = customer.getCustomerAddr().split(" ");
@@ -46,6 +50,10 @@ public class RegionGroupService {
     }
     @Transactional
     public void calculateAndInsertRegionGroupForCustomer(CustomerInfo customer) {
+    	 if (customer.getCustomerAddr() == null || customer.getCustomerAddr().isEmpty()) {
+             System.out.println("Customer address is null or empty for customerId: " + customer.getCustomerId());
+             return;
+         }
         boolean exists = regionGroupRepository.existsByCustomerId(customer.getCustomerId());
         if (!exists) {
         	String[] addressParts = customer.getCustomerAddr().split(" ");

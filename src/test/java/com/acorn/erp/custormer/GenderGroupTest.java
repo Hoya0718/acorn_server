@@ -1,4 +1,4 @@
-package com.acorn.erp;
+package com.acorn.erp.custormer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.acorn.erp.domain.Customer.Service.GenderGroupService;
 
 @SpringBootTest
-public class PreferenceTest implements CommandLineRunner {
+public class GenderGroupTest implements CommandLineRunner {
 
 	@Autowired
 	private GenderGroupService service;
