@@ -3,6 +3,9 @@ package com.acorn.erp.domain.Stock.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,9 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acorn.erp.domain.Stock.Entity.Distribution; // Distribution 엔티티를 임포트
+import com.acorn.erp.domain.Stock.Entity.Vendor;
 import com.acorn.erp.domain.Stock.Repository.DistributionRepository;
 
 
@@ -55,6 +60,14 @@ public class DistributionController {
     @GetMapping("/search")
     public List<Distribution> searchDistributions(@RequestParam("searchTerm") String searchTerm) {
         return distributionRepository.findByDistributionCodeContainingIgnoreCaseOrDistributionNameContainingIgnoreCase(searchTerm, searchTerm);
+    }
+    
+  //페이지네이션
+    @GetMapping("/listPage")
+    public @ResponseBody Page<Distribution> getAllVendorsPage(Model model, Pageable pageable) {
+    	Page<Distribution>pages =  distributionRepository.findAll(pageable);
+    	System.out.println(pages);
+    	return pages;
     }
     
 }
