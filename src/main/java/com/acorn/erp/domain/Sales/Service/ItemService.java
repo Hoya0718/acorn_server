@@ -1,7 +1,6 @@
 package com.acorn.erp.domain.Sales.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +28,7 @@ public class ItemService {
     }
 
     public ItemTable createItem(ItemTable item) {
+        item.calculateStockQty(); // 재고 합계 계산
         return itemRepository.save(item);
     }
 
@@ -39,6 +39,8 @@ public class ItemService {
         itemtbl.setItemStatus(newItem.getItemStatus());
         itemtbl.setItemPrice(newItem.getItemPrice());
         itemtbl.setItemQty(newItem.getItemQty());
+        itemtbl.setStockOut(newItem.getStockOut());
+        itemtbl.calculateStockQty(); // 재고 합계 계산
         return itemRepository.save(itemtbl);
     }
 
@@ -47,9 +49,4 @@ public class ItemService {
         ItemTable item = getItemByCode(itemCode);
         itemRepository.delete(item);
     }
-    
-    public Optional<ItemTable> findItemByCode(Long itemCode) {
-        return itemRepository.findById(itemCode);
-    }
 }
-

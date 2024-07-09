@@ -19,6 +19,7 @@ public class InventoryService {
     }
 
     public InventoryTable createInventoryItem(InventoryTable inventory) {
+        inventory.calculateStockQty(); // 재고 합계 계산
         return inventoryRepository.save(inventory);
     }
 
@@ -31,6 +32,7 @@ public class InventoryService {
             updatedInventory.setItemQty(inventory.getItemQty());
             updatedInventory.setStockOut(inventory.getStockOut());
             updatedInventory.setStockQty(inventory.getStockQty());
+            updatedInventory.calculateStockQty(); // 재고 합계 계산
             return Optional.of(inventoryRepository.save(updatedInventory));
         }
         return Optional.empty();
@@ -44,41 +46,3 @@ public class InventoryService {
         return false;
     }
 }
-
-
-    /*
-    @Autowired
-    public InventoryService(InventoryRepository inventoryRepository) {
-        this.inventoryRepository = inventoryRepository;
-    }
-
-    public List<InventoryTable> getAllInventory() {
-        return inventoryRepository.findAll();
-    }
-
-    public InventoryTable getInventoryByCode(Long itemCode) {
-        return inventoryRepository.findByItemCode(itemCode).orElse(null);
-    }
-
-    public InventoryTable createInventory(InventoryTable inventory) {
-        return inventoryRepository.save(inventory);
-    }
-
-    public InventoryTable updateInventory(Long itemCode, InventoryTable inventory) {
-        Optional<InventoryTable> existingInventory = inventoryRepository.findByItemCode(itemCode);
-        if (existingInventory.isPresent()) {
-            InventoryTable updatedInventory = existingInventory.get();
-            updatedInventory.setItemName(inventory.getItemName());
-            updatedInventory.setItemQty(inventory.getItemQty());
-            updatedInventory.setStockOut(inventory.getStockOut());
-            updatedInventory.setStockQty(inventory.getStockQty());
-            return inventoryRepository.save(updatedInventory);
-        }
-        return null;
-    }
-
-    public void deleteInventory(Long itemCode) {
-        inventoryRepository.deleteByItemCode(itemCode);
-    }
-}
-*/
