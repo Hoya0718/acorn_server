@@ -34,10 +34,16 @@ public class ItemTable {
     @Column(name = "item_qty")
     private int itemQty;
     
+    @Column(name = "stock_out")
+    private Integer  stockOut;
+
+    @Column(name = "stock_qty")
+    private Integer  stockQty;
+    
     // 생성자
     public ItemTable() {}
-	public ItemTable(Long itemCode, String itemType, String itemName, String itemStatus, int itemPrice,
-			int itemQty) {
+	public ItemTable(Long itemCode, String itemType, String itemName, String itemStatus, int itemPrice, int itemQty,
+			Integer stockOut, Integer stockQty) {
 		super();
 		this.itemCode = itemCode;
 		this.itemType = itemType;
@@ -45,8 +51,9 @@ public class ItemTable {
 		this.itemStatus = itemStatus;
 		this.itemPrice = itemPrice;
 		this.itemQty = itemQty;
+		this.stockOut = stockOut;
+		this.stockQty = stockQty;
 	}
-	
 	public Long getItemCode() {
 		return itemCode;
 	}
@@ -83,5 +90,21 @@ public class ItemTable {
 	public void setItemQty(int itemQty) {
 		this.itemQty = itemQty;
 	}
+	public Integer getStockOut() {
+		return stockOut;
+	}
+	public void setStockOut(Integer stockOut) {
+		this.stockOut = stockOut;
+	}
+	public Integer getStockQty() {
+		return stockQty;
+	}
+	public void setStockQty(Integer stockQty) {
+		this.stockQty = stockQty;
+	}
 	
+    // 재고합계를 계산하는 메서드 추가
+    public void calculateStockQty() {
+        this.stockQty = this.itemQty - this.stockOut;
+    }
 }
