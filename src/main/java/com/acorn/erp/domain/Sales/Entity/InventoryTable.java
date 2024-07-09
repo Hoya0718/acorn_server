@@ -90,5 +90,10 @@ public class InventoryTable {
 	public void setStockQty(Integer stockQty) {
 		this.stockQty = stockQty;
 	}
+	
+    // calculateStockQty 메서드 추가
+    public void calculateStockQty() {
+        this.stockQty = this.itemQty - this.stockOut;
+    }
 
 }
