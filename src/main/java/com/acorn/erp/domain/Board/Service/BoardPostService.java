@@ -1,12 +1,16 @@
 package com.acorn.erp.domain.Board.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.acorn.erp.domain.Board.Entity.BoardPost;
 import com.acorn.erp.domain.Board.Repository.BoardPostRepository;
+
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class BoardPostService {
@@ -53,5 +57,17 @@ public class BoardPostService {
 	    public List<BoardPost> getPageOfBoardPosts(int page, int size) {
 	        // 페이지 번호를 0부터 시작하므로 실제 조회할 페이지 번호는 (page - 1)
 	        return boardPostRepository.findPageOfBoardPosts((page - 1) * size, size);
+	    }
+	    
+	    @Transactional
+	    public void incrementViews(Long postId) {
+	        Optional<BoardPost> optionalPost = boardPostRepository.findById(postId); // postId에 해당하는 게시물을 찾음
+	        if (optionalPost.isPresent()) { // 게시물이 존재하면
+	            BoardPost post = optionalPost.get(); // Optional에서 게시물을 가져옴
+	            post.setViews(post.getViews() + 1); // 조회수를 1 증가시킴
+	            boardPostRepository.save(post); // 변경된 게시물을 저장함
+	        } else {
+	            throw new EntityNotFoundException("Post not found with id: " + postId); // 게시물이 존재하지 않으면 예외를 던짐
+	        }
 	    }
 }

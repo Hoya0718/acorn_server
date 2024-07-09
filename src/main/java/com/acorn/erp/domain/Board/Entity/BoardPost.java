@@ -23,5 +23,7 @@ public class BoardPost {
 	private String content; // 게시글 내용 
 	private String lastModifiedDate; // 수정일
 	private String status; // 상태 
+	private String userId;
 
 }
+  
