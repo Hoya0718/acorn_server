@@ -2,15 +2,17 @@ package com.acorn.erp.domain.Sales.Service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.acorn.erp.domain.Sales.Entity.ItemTable;
 import com.acorn.erp.domain.Sales.Repository.ItemRepository;
 
 @Service
 public class ItemService {
+
     private final ItemRepository itemRepository;
 
     @Autowired
@@ -21,32 +23,48 @@ public class ItemService {
     public List<ItemTable> getAllItems() {
         return itemRepository.findAll();
     }
+    
+    public Page<ItemTable> getItems(Pageable pageable) {
+        return itemRepository.findAll(pageable);
+    }
 
     public ItemTable getItemByCode(Long itemCode) {
-        return itemRepository.findById(itemCode)
-                .orElseThrow(() -> new RuntimeException("Item not found with code: " + itemCode));
+        return itemRepository.findById(itemCode).orElseThrow(() -> new RuntimeException("Item not found"));
     }
 
     public ItemTable createItem(ItemTable item) {
-        item.calculateStockQty(); // 재고 합계 계산
         return itemRepository.save(item);
     }
 
-    public ItemTable updateItem(Long itemCode, ItemTable newItem) {
-        ItemTable itemtbl = getItemByCode(itemCode);
-        itemtbl.setItemType(newItem.getItemType());
-        itemtbl.setItemName(newItem.getItemName());
-        itemtbl.setItemStatus(newItem.getItemStatus());
-        itemtbl.setItemPrice(newItem.getItemPrice());
-        itemtbl.setItemQty(newItem.getItemQty());
-        itemtbl.setStockOut(newItem.getStockOut());
-        itemtbl.calculateStockQty(); // 재고 합계 계산
-        return itemRepository.save(itemtbl);
+    public ItemTable updateItem(Long itemCode, ItemTable item) {
+        ItemTable existingItem = itemRepository.findById(itemCode).orElseThrow(() -> new RuntimeException("Item not found"));
+        
+        existingItem.setItemType(item.getItemType());
+        existingItem.setItemStatus(item.getItemStatus());
+        existingItem.setItemName(item.getItemName());
+        existingItem.setItemQty(item.getItemQty());
+        existingItem.setItemPrice(item.getItemPrice());
+        existingItem.setStockOut(item.getStockOut());
+        existingItem.setStockQty(item.getStockQty());
+
+        // ?먮ℓ ?곹깭媛 "?덉젅"?????섎웾??0?쇰줈 ?ㅼ젙
+        if ("?덉젅".equals(item.getItemStatus())) {
+            existingItem.setItemQty(0);
+            existingItem.setStockOut(0);
+            existingItem.setStockQty(0);
+        }
+
+        return itemRepository.save(existingItem);
     }
 
-    @Transactional
     public void deleteItem(Long itemCode) {
-        ItemTable item = getItemByCode(itemCode);
-        itemRepository.delete(item);
+        itemRepository.deleteById(itemCode);
     }
+    
+    public ItemTable saveItem(ItemTable item) {
+        item.calculateStockQty(); // ?ш퀬?⑷퀎瑜?怨꾩궛
+        return itemRepository.save(item); // DB?????
+    }
+    
+
 }

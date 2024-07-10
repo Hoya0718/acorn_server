@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +17,6 @@ import lombok.Setter;
 public class ItemTable {
     @Id //primary key
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "item_code", nullable = false)
     private Long itemCode;
     
     @Column(name = "item_type", length = 10)
@@ -40,7 +40,7 @@ public class ItemTable {
     @Column(name = "stock_qty")
     private Integer  stockQty;
     
-    // 생성자
+    // ?앹꽦??
     public ItemTable() {}
 	public ItemTable(Long itemCode, String itemType, String itemName, String itemStatus, int itemPrice, int itemQty,
 			Integer stockOut, Integer stockQty) {
@@ -103,7 +103,7 @@ public class ItemTable {
 		this.stockQty = stockQty;
 	}
 	
-    // 재고합계를 계산하는 메서드 추가
+    // ?ш퀬?⑷퀎瑜?怨꾩궛?섎뒗 硫붿꽌??
     public void calculateStockQty() {
         this.stockQty = this.itemQty - this.stockOut;
     }

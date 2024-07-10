@@ -3,16 +3,21 @@ package com.acorn.erp.domain.Sales.Service;
 import com.acorn.erp.domain.Sales.Entity.OrderTable;
 import com.acorn.erp.domain.Sales.Repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    public Page<OrderTable> getOrders(Pageable pageable) {
+        return orderRepository.findAll(pageable);
+    }
 
     public List<OrderTable> getAllOrders() {
         return orderRepository.findAll();
@@ -22,25 +27,16 @@ public class OrderService {
         return orderRepository.findById(orderNum).orElse(null);
     }
 
-    public OrderTable addOrder(OrderTable order) {
-        return orderRepository.save(order);
+    public OrderTable addOrder(OrderTable orderTable) {
+        return orderRepository.save(orderTable);
     }
 
-    public OrderTable updateOrder(Long orderNum, OrderTable order) {
-        Optional<OrderTable> existingOrderOptional = orderRepository.findById(orderNum);
-        if (existingOrderOptional.isPresent()) {
-            OrderTable existingOrder = existingOrderOptional.get();
-            existingOrder.setItemName(order.getItemName());
-            existingOrder.setCustomerName(order.getCustomerName());
-            existingOrder.setCustomerTel(order.getCustomerTel());
-            existingOrder.setItemQty(order.getItemQty());
-            existingOrder.setOrderPrice(order.getOrderPrice());
-            existingOrder.setOrderDate(order.getOrderDate());
-            existingOrder.setOrderStatus(order.getOrderStatus());
-            existingOrder.calculateTotalPrice();
-            return orderRepository.save(existingOrder);
+    public OrderTable updateOrder(Long orderNum, OrderTable orderTable) {
+        if (orderRepository.existsById(orderNum)) {
+            orderTable.setOrderNum(orderNum);
+            return orderRepository.save(orderTable);
         } else {
-            return null;
+            throw new RuntimeException("Order not found with orderNum " + orderNum);
         }
     }
 
@@ -48,7 +44,8 @@ public class OrderService {
         if (orderRepository.existsById(orderNum)) {
             orderRepository.deleteById(orderNum);
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 }

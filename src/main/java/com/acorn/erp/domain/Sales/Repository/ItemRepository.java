@@ -10,4 +10,5 @@ import com.acorn.erp.domain.Sales.Entity.ItemTable;
 @Repository
 public interface ItemRepository extends JpaRepository<ItemTable, Long> {
     Optional<ItemTable> findByItemCode(Long itemCode);
+    boolean existsByItemName(String itemName);
 }

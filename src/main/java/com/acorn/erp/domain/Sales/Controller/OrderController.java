@@ -3,15 +3,12 @@ package com.acorn.erp.domain.Sales.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.*;
 
 import com.acorn.erp.domain.Sales.Entity.OrderTable;
 import com.acorn.erp.domain.Sales.Service.OrderService;
@@ -27,10 +24,19 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    // 紐⑤뱺 二쇰Ц??媛?몄삤??硫붿냼??
     @GetMapping
     public List<OrderTable> getAllOrders() {
         return orderService.getAllOrders();
     }
+
+    // ?섏씠吏뺣꽕?댁뀡??吏?먰븯??硫붿냼??
+    @GetMapping("/paged")
+    public Page<OrderTable> getOrders(@RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "7") int size) {
+			Pageable pageable = PageRequest.of(page, size, Sort.by("orderNum").descending());
+			return orderService.getOrders(pageable);
+	}
 
     @GetMapping("/{orderNum}")
     public OrderTable getOrderByOrderNum(@PathVariable("orderNum") Long orderNum) {
