@@ -64,7 +64,7 @@ public class DistributionController {
     
   //페이지네이션
     @GetMapping("/listPage")
-    public @ResponseBody Page<Distribution> getAllVendorsPage(Model model, Pageable pageable) {
+    public @ResponseBody Page<Distribution> getAllDistributionPage(Model model, Pageable pageable) {
     	Page<Distribution>pages =  distributionRepository.findAll(pageable);
     	System.out.println(pages);
     	return pages;

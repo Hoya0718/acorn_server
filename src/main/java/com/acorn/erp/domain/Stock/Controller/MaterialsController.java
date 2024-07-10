@@ -3,6 +3,9 @@ package com.acorn.erp.domain.Stock.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,6 +59,14 @@ public class MaterialsController {
     @GetMapping("/search")
     public List<Materials> searchMaterials(@RequestParam("searchTerm") String searchTerm) {
         return materialsRepository.findByMaterialsCodeContainingIgnoreCaseOrMaterialsNameContainingIgnoreCase(searchTerm, searchTerm);
+    }
+    
+  //페이지네이션
+    @GetMapping("/listPage")
+    public @ResponseBody Page<Materials> getAllMaterialsPage(Model model, Pageable pageable) {
+    	Page<Materials>pages =  materialsRepository.findAll(pageable);
+    	System.out.println(pages);
+    	return pages;
     }
     
 }
