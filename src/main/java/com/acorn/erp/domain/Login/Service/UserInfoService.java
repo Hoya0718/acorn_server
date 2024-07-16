@@ -1,48 +1,64 @@
 package com.acorn.erp.domain.Login.Service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.acorn.erp.domain.Login.Entity.UserInfo;
+import com.acorn.erp.domain.Login.Repository.UserInfoRepository;
+
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.acorn.erp.domain.Login.Entity.userInfo;
-import com.acorn.erp.domain.Login.Repository.UserInfoMapper;
-
 @Service
+@Transactional
 public class UserInfoService {
-	
+
+    private final UserInfoRepository userInfoRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+
     @Autowired
-    private UserInfoMapper userInfoMapper;
-	
-    public List<userInfo> getAllUserInfo() {
-        return userInfoMapper.getAllUserInfo();
+    public UserInfoService(UserInfoRepository userInfoRepository, BCryptPasswordEncoder passwordEncoder) {
+        this.userInfoRepository = userInfoRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public void insertUserInfo(userInfo userinfo) {
-        userInfoMapper.insertUserInfo(userinfo);
+    public List<UserInfo> getAllUserInfo() {
+        return userInfoRepository.findAll();
     }
-	
+
+    public void insertUserInfo(UserInfo userinfo) {
+        // 비밀번호 암호화
+        String encryptedPassword = passwordEncoder.encode(userinfo.getPassword());
+        userinfo.setPassword(encryptedPassword);
+        
+        // 사용자 정보 저장
+        userInfoRepository.save(userinfo);
+    }
+
     public void deleteUserInfo(String email) {
-        userInfoMapper.deleteUserInfo(email);
+        userInfoRepository.deleteByEmail(email);
     }
-	
-    public void updateUserInfo(userInfo userinfo) {
-        userInfoMapper.updateUserInfo(userinfo);
+
+    public void updateUserInfo(UserInfo userinfo) {
+        // 비밀번호 암호화
+        String encryptedPassword = passwordEncoder.encode(userinfo.getPassword());
+        userinfo.setPassword(encryptedPassword);
+
+        userInfoRepository.save(userinfo);
         System.out.println("업데이트 성공");
     }
-    
-    //로그인 관련 매퍼
-    
-    public UserInfoService(UserInfoMapper userInfoMapper) {
-        this.userInfoMapper = userInfoMapper;
+
+    public UserInfo login(String email, String password) {
+        UserInfo userinfo = userInfoRepository.findByEmail(email);
+        if (userinfo != null && passwordEncoder.matches(password, userinfo.getPassword())) {
+            return userinfo;
+        } else {
+            return null;
+        }
     }
 
-    public userInfo login(String email, String password) {
-        return userInfoMapper.getUserByEmailAndPassword(email, password);
-    }
-    
-  
     public String getShopname(String email) {
-    	return userInfoMapper.getShopname(email);
+        return userInfoRepository.findShopNameByEmail(email);
     }
 }

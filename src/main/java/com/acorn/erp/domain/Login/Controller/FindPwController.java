@@ -13,12 +13,21 @@ import com.acorn.erp.domain.Login.Service.FindPwService;
 @RestController
 @RequestMapping("/api")
 public class FindPwController {
-    @Autowired
+    /*
+	@Autowired
     private FindPwService findPwService;
-
+	*/
+	
+	private final FindPwService findPwService;
+	
+	@Autowired
+	public FindPwController(FindPwService findPwService) {
+		this.findPwService = findPwService;
+	}
+	
     @GetMapping("/findPw/{registrationNum}/{email}")
     public String getFindPw(@PathVariable("registrationNum") String registrationNum, @PathVariable("email") String email) {
-        System.out.println("비밀번호 찾기 실행");
+        System.out.println("비밀번호 찾기 실행 -> 이메일 반환");
         return findPwService.getFindPw(registrationNum, email);
     }
 }

@@ -19,6 +19,10 @@ public class AgeGroupService {
 
     @Autowired
     private AgeGroupRepository ageGroupRepository;
+    public AgeGroupService(CustomerInfoRepository customerInfoRepository) {
+        this.customerInfoRepository = customerInfoRepository;
+    }
+
     @Autowired
     private CustomerInfoRepository customerInfoRepository;
     //생년월일을 기준으로 연령그룹 구분하기
@@ -31,6 +35,9 @@ public class AgeGroupService {
 			 // 고객이 이미 age_group 테이블에 있는지 확인
             boolean exists = ageGroupRepository.existsByCustomerId(customer.getCustomerId());
             if (!exists) {
+            	 if (customer.getCustomerBirthDate() == null) {
+                     throw new IllegalArgumentException("Birth date must not be null for customer: " + customer.getCustomerId());
+                 }
 			String ageGroup = AgeGroupUtil.calculateAgeGroup(customer.getCustomerBirthDate());
 
 			AgeGroup ageGroupEntity = new AgeGroup();
@@ -46,6 +53,9 @@ public class AgeGroupService {
     public void calculateAndInsertAgeGroupForCustomer(CustomerInfo customer) {
         boolean exists = ageGroupRepository.existsByCustomerId(customer.getCustomerId());
         if (!exists) {
+        	 if (customer.getCustomerBirthDate() == null) {
+                 throw new IllegalArgumentException("Birth date must not be null for customer: " + customer.getCustomerId());
+             }
             String ageGroup = AgeGroupUtil.calculateAgeGroup(customer.getCustomerBirthDate());
             
             AgeGroup ageGroupEntity = new AgeGroup();
@@ -58,6 +68,9 @@ public class AgeGroupService {
     // 새로운 고객시 저장메서드 호출
     @Transactional
     public void addNewCustomer(CustomerInfo customerInfo) {
+    	if (customerInfo.getCustomerBirthDate() == null) {
+            throw new IllegalArgumentException("Birth date must not be null for customer: " + customerInfo.getCustomerId());
+        }
         customerInfoRepository.save(customerInfo);
         calculateAndInsertAgeGroupForCustomer(customerInfo);
     }
