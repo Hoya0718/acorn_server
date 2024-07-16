@@ -1,3 +1,4 @@
+
 package com.acorn.erp.domain.Customer.Util;
 
 import java.util.Date;
@@ -6,12 +7,20 @@ import java.util.Calendar;
 public class AgeGroupUtil {
 
     public static String calculateAgeGroup(Date birthDate) {
-        Calendar cal = Calendar.getInstance();
-        int currentYear = cal.get(Calendar.YEAR);
-        cal.setTime(birthDate);
-        int birthYear = cal.get(Calendar.YEAR);
-        int age = currentYear - birthYear;
+     if (birthDate == null) {
+             throw new IllegalArgumentException("Birth date must not be null");
+         }
 
+         Calendar birthCal = Calendar.getInstance();
+         birthCal.setTime(birthDate);
+
+         Calendar todayCal = Calendar.getInstance();
+         
+         int age = todayCal.get(Calendar.YEAR) - birthCal.get(Calendar.YEAR);
+
+         if (todayCal.get(Calendar.DAY_OF_YEAR) < birthCal.get(Calendar.DAY_OF_YEAR)) {
+             age--;
+         }
         if (age < 10) {
             return "10대 이하";
         } else if (age < 20) {

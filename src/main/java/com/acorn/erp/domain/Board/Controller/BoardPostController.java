@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 
 import com.acorn.erp.domain.Board.Entity.BoardPost;
 import com.acorn.erp.domain.Board.Service.BoardPostService;
-import com.acorn.erp.domain.Login.Entity.userInfo;
+import com.acorn.erp.domain.Login.Entity.UserInfo;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -54,7 +54,7 @@ public class BoardPostController {
     // 게시물 등록
     @PostMapping("/posts")
     public ResponseEntity<BoardPost> createBoardPost(@RequestBody BoardPost boardPost, HttpSession session) {
-        userInfo userInfo = (userInfo) session.getAttribute("user");
+        UserInfo userInfo = (UserInfo) session.getAttribute("user");
         if (userInfo != null) {
             // 세션에서 사용자 정보 가져와서 게시물에 추가
             boardPost.setUserId(userInfo.getShopName());

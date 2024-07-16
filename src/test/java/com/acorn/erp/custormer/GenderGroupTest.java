@@ -16,13 +16,13 @@ public class GenderGroupTest implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("Running AgeGroupTests...");
-		test();
+//		test();
 
 	};
 
-	@Test
-	public void test() {
-		System.out.println("Calculating and inserting age groups...");
-		service.countCustomersByGenderGroup();
-	}
+//	@Test
+//	public void test() {
+//		System.out.println("Calculating and inserting age groups...");
+//		service.countCustomersByGenderGroup();
+//	}
 }

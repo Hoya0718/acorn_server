@@ -3,14 +3,20 @@ package com.acorn.erp.domain.Login.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.acorn.erp.domain.Login.Repository.FindIdMapper;
+import com.acorn.erp.domain.Login.Repository.FindIdRepository;
 
 @Service
 public class FindIdService {
+    
+    private final FindIdRepository findIdRepository;
+    
     @Autowired
-    private FindIdMapper findIdMapper;
+    public FindIdService(FindIdRepository findIdRepository) {
+    	this.findIdRepository = findIdRepository;
+    }
     
     public String getFindId(String registrationNum) {
-        return findIdMapper.getFindId(registrationNum);
+    	return findIdRepository.getFindId(registrationNum);
     }
+      
 }

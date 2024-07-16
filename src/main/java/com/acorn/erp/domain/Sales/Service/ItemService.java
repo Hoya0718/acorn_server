@@ -48,7 +48,7 @@ public class ItemService {
         existingItem.setStockQty(item.getStockQty());
 
         // ?먮ℓ ?곹깭媛 "?덉젅"?????섎웾??0?쇰줈 ?ㅼ젙
-        if ("?덉젅".equals(item.getItemStatus())) {
+        if ("품절".equals(item.getItemStatus())) {
             existingItem.setItemQty(0);
             existingItem.setStockOut(0);
             existingItem.setStockQty(0);

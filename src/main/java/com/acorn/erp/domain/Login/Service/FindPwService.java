@@ -3,14 +3,19 @@ package com.acorn.erp.domain.Login.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.acorn.erp.domain.Login.Repository.FindPwMapper;
+import com.acorn.erp.domain.Login.Repository.FindPwRepository;
 
 @Service
 public class FindPwService {
+    
+    private final FindPwRepository findPwRepository;
+    
     @Autowired
-    private FindPwMapper findPwMapper;
+    public FindPwService(FindPwRepository findPwRepository) {
+    	this.findPwRepository = findPwRepository;
+    }
     
     public String getFindPw(String registrationNum, String email) {
-        return findPwMapper.getFindPw(registrationNum, email);
+        return findPwRepository.getFindPw(registrationNum, email);
     }
 }

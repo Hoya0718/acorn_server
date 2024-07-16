@@ -1,87 +1,32 @@
 package com.acorn.erp.domain.Login.Controller;
 
-
-import java.util.List;
-
-
+import com.acorn.erp.domain.Login.Entity.UserInfo;
+import com.acorn.erp.domain.Login.Service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttributes;
-
-import com.acorn.erp.domain.Login.Entity.userInfo;
-import com.acorn.erp.domain.Login.Service.UserInfoService;
+import org.springframework.web.bind.annotation.*;
 
 //세션 추가
 import jakarta.servlet.http.HttpSession;
 
-
-@CrossOrigin(origins = "http://localhost:3000") //3000번 포트의 접근은 허락한다.
+@SessionAttributes("user")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
-@SessionAttributes("user")
+
 public class UserInfoController {
-	@Autowired
-	private UserInfoService userInfoService;
-	
-	
-	 @GetMapping
-	    public List<userInfo> getAllUserInfo() {
-	        System.out.println("로그인!!!");
-	        return userInfoService.getAllUserInfo();
-	    }
-	
-	@PostMapping("/Login")
-	public String insertUserInfo(@RequestBody userInfo userinfo) {
-		userInfoService.insertUserInfo(userinfo);
-		System.out.println("추가실행");
-		return "Success";
-	}
-	
-	@DeleteMapping("/{email}")
-	public String deleteExam(@PathVariable("email") String email) {
-		userInfoService.deleteUserInfo(email);
-		System.out.println("삭제실행");
-		return "Success";
-	}
-	
-	@PutMapping("/{email}")
-    public String updateExam(@RequestBody userInfo userinfo) {
-		userInfoService.updateUserInfo(userinfo);
-        return "성공";
+
+    private final UserInfoService userInfoService;
+
+    @Autowired
+    public UserInfoController(UserInfoService userInfoService) {
+        this.userInfoService = userInfoService;
     }
-	
-	//로그인 구현
-	@PostMapping("/signin")
-    public ResponseEntity<userInfo> login(@RequestParam("email") String email, @RequestParam("password") String password, HttpSession session) {
-        System.out.println("로그인 시도: " + email);
-        userInfo userinfo = userInfoService.login(email, password);
-        if (userinfo != null) {
-            System.out.println("성공");
-            session.setAttribute("user", userinfo);
-            System.out.println("세션 값 :" + userinfo);
-            return ResponseEntity.ok(userinfo);
-        } else {
-            System.out.println("실패");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-    }
-	
-    // id 가져오기
-    
+
     @GetMapping("/userinfo")
-    public ResponseEntity<userInfo> getUserInfo(HttpSession session) {
-        userInfo userinfo = (userInfo) session.getAttribute("user");
+    public ResponseEntity<UserInfo> getUserInfo(HttpSession session) {
+        UserInfo userinfo = (UserInfo) session.getAttribute("user");
         if (userinfo != null) {
             return ResponseEntity.ok(userinfo);
         } else {
@@ -89,24 +34,63 @@ public class UserInfoController {
         }
     }
 
+    @PostMapping("/Login")
+    public ResponseEntity<String> insertUserInfo(@RequestBody UserInfo userinfo) {
+        userInfoService.insertUserInfo(userinfo);
+        System.out.println("추가 실행");
+        return ResponseEntity.ok("Success");
+    }
 
+    @DeleteMapping("/{email}")
+    public ResponseEntity<String> deleteUserInfo(@PathVariable("email") String email) {
+        userInfoService.deleteUserInfo(email);
+        System.out.println("삭제 실행");
+        return ResponseEntity.ok("Success");
+    }
 
-	//로그아웃 구현
+    @PutMapping("/{email}")
+    public ResponseEntity<String> updateUserInfo(@PathVariable("email") String email, @RequestBody UserInfo userinfo) {
+        userinfo.setEmail(email); // PathVariable을 이용해 email 설정
+        userInfoService.updateUserInfo(userinfo);
+        System.out.println("업데이트 실행");
+        return ResponseEntity.ok("Success");
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<UserInfo> login(@RequestParam("email") String email, @RequestParam("password") String password, HttpSession session) {
+        System.out.println("로그인 시도: " + email);
+
+        // 입력된 이메일과 비밀번호가 null 또는 빈 값인지 확인
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
+            System.out.println("이메일 또는 비밀번호가 입력되지 않음");
+            return ResponseEntity.badRequest().build();
+        }
+
+        UserInfo userinfo = userInfoService.login(email, password);
+        if (userinfo != null) {
+            System.out.println("로그인 성공");
+            session.setAttribute("user", userinfo);
+            System.out.println("세션 값: " + userinfo);
+            return ResponseEntity.ok(userinfo);
+        } else {
+            System.out.println("로그인 실패 - 이메일 또는 비밀번호가 올바르지 않음");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpSession session) {
         session.invalidate();
         return ResponseEntity.ok("로그아웃 성공");
     }
-	
-	//현재 사용자 정보
-	@GetMapping("/current-user")
-    public userInfo getCurrentUser(HttpSession session) {
-        return (userInfo) session.getAttribute("userInfo");
+
+    @GetMapping("/getShopname")
+    public ResponseEntity<String> getShopname(@RequestParam("email") String email) {
+        String shopname = userInfoService.getShopname(email);
+        if (shopname != null) {
+            return ResponseEntity.ok(shopname);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
-	
-	//토스트팝업 내 매장명 정보
-	@GetMapping("/getShopname")
-	public String getShopname(@RequestParam("email") String email) {
-		return userInfoService.getShopname(email);
-	}
 }
